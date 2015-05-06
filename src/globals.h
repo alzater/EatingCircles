@@ -1,0 +1,3 @@
+static const int GAMEZONE 1800;
+#define GAMEZONE_LEFT -GAMEZONE/2
+#define GAMEZONE_RIGHT GAMEZONE/2
