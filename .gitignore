@@ -1,3 +1,7 @@
+data-ram
+build
+*.swp
+
 # Compiled Object files
 *.slo
 *.lo
