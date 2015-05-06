@@ -70,7 +70,6 @@ bool Game::check_main_circle(){
         return false;
       if(main_size > size_i){
         main_circle->eatCircle(circles[i]);
-        //delete(circles[i]);
         circles[i] = new Circle( getRandomCoords() );
         getStage()->addChild(circles[i]->getGui());
         getStage()->update();
@@ -93,14 +92,12 @@ void Game::check_eaters(){
       if(size_i + size_j >= distance){
         if(size_j < size_i){
           circles[i]->eatCircle(circles[j]);
-          //delete(circles[j]);
           circles[j] = new Circle( getRandomCoords() );
           getStage()->addChild(circles[j]->getGui());
           getStage()->update();
         }
         if(size_j > size_i){
           circles[j]->eatCircle(circles[i]);
-          //delete(circles[i]);
           circles[i] = new Circle( getRandomCoords() );
           getStage()->addChild(circles[i]->getGui());
           getStage()->update();
@@ -111,18 +108,21 @@ void Game::check_eaters(){
 }
 
 Vector2 Game::getRandomCoords(){
-  double x, y;
-  x = rand() % 1800;
-  if( x < 901 )
-    x *= -1;
-  else
-    x += stage_size.x - 900;
+  int x, y, sx = stage_size.x, sy = stage_size.y;
   
-  y = rand() % 1800;
-  if( y < 901 )
+  x = rand() % ( sx * 2 - 200);
+  if( x < sx - 100 ){
+    x *= -1;
+    x -= 100;
+  }  else
+    x += 200;
+  
+  y = rand() % ( sy * 2 - 200);
+  if( y < sy - 100 ){
     y *= -1;
-  else
-    y += stage_size.y - 900;
+    y -= 100;
+  }  else
+    y += 200;
   
   return Vector2(x, y);
 }
