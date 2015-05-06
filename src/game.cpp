@@ -11,6 +11,9 @@
 
 using namespace oxygine;
 
+
+
+
 Game::Game(int l):
   level(l),
   score(0),
@@ -18,6 +21,18 @@ Game::Game(int l):
   circles(num_of_bots),
   stage_size(core::getDisplaySize())
 {
+  
+    int num = 7;
+  poly = new oxygine::Polygon;
+  poly->addTween(Actor::TweenRotation(MATH_PI * 2), 16000, -1);
+  getStage()->addChild(poly);
+  vertexPCT2 *vertices = createVertices(num);
+  poly->setPosition(Vector2(300, 300) );
+  poly->setVertices(vertices, sizeof(vertexPCT2) * num * 4, vertexPCT2::FORMAT, true);
+  
+  
+  
+  
   main_circle = new Circle(50, stage_size.x/2, stage_size.y/2, Color(255, 255, 255)); 
   getStage()->addChild(main_circle->getGui());
   srand(time(0));
@@ -26,7 +41,8 @@ Game::Game(int l):
       Color(rand()%226 + 30, rand() % 226 + 30, rand() % 226+ 30));
     getStage()->addChild(circles[i]->getGui());
   }
-    
+  
+
   
 }
 
