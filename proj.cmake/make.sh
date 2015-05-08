@@ -8,3 +8,5 @@ cmake ..
 
 #build it
 make
+
+cd ../../data

@@ -7,18 +7,23 @@ using namespace oxygine;
 //in real project you would have more than one Resources declarations. 
 //It is important on mobile devices with limited memory and you would load/unload them
 
+static Resources gameResources;
+
+
 Circle::Circle(int s, int x, int y, Color color):
     velocity(0,0),
     size(s),
     position( Vector2(x, y) )
   {
-  gui = new ColorRectSprite();
-  gui->setWidth(size * 2);
-  gui->setHeight(size * 2);
+  if( !gameResources.getUseLoadCounter() )
+    gameResources.loadXML("res.xml");
+  gui = new Sprite();
   gui->setColor(color);
   gui->setPosition(position - Vector2(size, size));
   gui->setInputEnabled(false);
   gui->setUserData(0);
+  gui->setAnimFrame(gameResources.getResAnim("circle"));
+  gui->setScale(size/60);
 }
 
 Circle::Circle(Vector2 vect):
@@ -26,13 +31,13 @@ Circle::Circle(Vector2 vect):
     size(rand() % 57 + 4),
     position( vect - Vector2(size, size) )
   {
-  gui = new ColorRectSprite();
-  gui->setWidth(size * 2);
-  gui->setHeight(size * 2);
+  gui = new Sprite();
   gui->setColor(Color(rand()%226 + 30, rand() % 226 + 30, rand() % 226+ 30));
   gui->setPosition(position);
   gui->setInputEnabled(false);
   gui->setUserData(0);
+  gui->setAnimFrame(gameResources.getResAnim("circle"));
+  gui->setScale(size/60);
 }
 
 Circle::~Circle(){
@@ -54,7 +59,7 @@ void Circle::update_gui(){
   gui->setColor(color);
 }
 
-spColorRectSprite Circle::getGui(){
+spSprite Circle::getGui(){
   return gui;
 }
 
@@ -74,6 +79,7 @@ void Circle::eatCircle(spCircle& circle){
     color.r = (color.b * size + circle->getColor().b * circle->getSize()) 
       / (size + circle->getSize());
     size += circle->size / size;
+    gui->setScale(size/60);
     update_gui();
 }
 

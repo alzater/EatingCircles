@@ -13,7 +13,7 @@ public:
   Circle(Vector2 vect);
   ~Circle();
   void yscor(Vector2 ys, double time);
-  spColorRectSprite getGui();
+  spSprite getGui();
   Color getColor();
   double getSize();
   void eatCircle(spCircle& circle);
@@ -21,7 +21,7 @@ public:
   bool is_in_rect(Vector2 start, Vector2 end);
 private:
   void update_gui();
-  spColorRectSprite gui;
+  spSprite gui;
   double  size;
   Color color;
   Vector2 velocity;
