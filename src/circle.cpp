@@ -1,6 +1,7 @@
 #include "oxygine-framework.h"
 #include <functional>
 #include "circle.h"
+#include <iostream>
 using namespace oxygine;
 
 //it is our resources
@@ -17,54 +18,41 @@ Circle::Circle(int s, int x, int y, Color color):
   {
   if( !gameResources.getUseLoadCounter() )
     gameResources.loadXML("res.xml");
-  gui = new Sprite();
-  gui->setColor(color);
-  gui->setPosition(position - Vector2(size, size));
-  gui->setInputEnabled(false);
-  gui->setUserData(0);
-  gui->setAnimFrame(gameResources.getResAnim("circle"));
-  gui->setScale(size/60);
+  setColor(color);
+  setPosition(position);
+  setInputEnabled(false);
+  setUserData(0);
+  setAnimFrame(gameResources.getResAnim("circle"));
+  setScale(size/60);
 }
 
 Circle::Circle(Vector2 vect):
     velocity(0,0),
     size(rand() % 57 + 4),
-    position( vect - Vector2(size, size) )
+    position( vect )
   {
-  gui = new Sprite();
-  gui->setColor(Color(rand()%226 + 30, rand() % 226 + 30, rand() % 226+ 30));
-  gui->setPosition(position);
-  gui->setInputEnabled(false);
-  gui->setUserData(0);
-  gui->setAnimFrame(gameResources.getResAnim("circle"));
-  gui->setScale(size/60);
+  setColor(Color(rand()%226 + 30, rand() % 226 + 30, rand() % 226+ 30));
+  setPosition(position);
+  setInputEnabled(false);
+  setUserData(0);
+  setAnimFrame(gameResources.getResAnim("circle"));
+  setScale(size/60);
 }
 
 Circle::~Circle(){
-  gui->detach();
 }
 
-void Circle::yscor(Vector2 ys, double time){
-  Vector2 delta(size, size);
+void Circle::accelerate(Vector2 ys, double time){
   velocity += ys;
   position = position + velocity;
-  gui->setPosition(position- delta);
   velocity.x -=  velocity.x/size;
   velocity.y -= velocity.y/size;
+  setPosition(position);
 }
 
 void Circle::update_gui(){
-  gui->setWidth(size * 2);
-  gui->setHeight(size * 2);
-  gui->setColor(color);
-}
-
-spSprite Circle::getGui(){
-  return gui;
-}
-
-Color Circle::getColor(){
-  return gui->getColor();
+  setScale(size/60);
+  setColor(color);
 }
 
 double Circle::getSize(){
@@ -79,16 +67,16 @@ void Circle::eatCircle(spCircle& circle){
     color.r = (color.b * size + circle->getColor().b * circle->getSize()) 
       / (size + circle->getSize());
     size += circle->size / size;
-    gui->setScale(size/60);
     update_gui();
 }
 
-Vector2 Circle::getPosition(){
-  return position;
+
+Vector2 Circle::getCenter(){
+  return position + Vector2(size,size);
 }
 
 bool Circle::is_in_rect(Vector2 start, Vector2 end){
-  if(position.x < start.x || position.x > end.y ||
+  if(position.x < start.x || position.x > end.x ||
      position.y < start.y || position.y > end.y) return false;
   else
     return true;

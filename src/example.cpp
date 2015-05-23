@@ -18,7 +18,7 @@ class MainActor: public Actor
         
 public:
 	MainActor()
-	{	
+	{
                 game = new Game(1);
 	}
 };
@@ -43,7 +43,7 @@ void example_init()
 //called each frame from entry_point.cpp	
 int example_update()
 {
-        game->nextFrame();
+        return !game->nextFrame();
 }
 
 void example_destroy()

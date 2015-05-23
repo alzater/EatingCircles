@@ -13,7 +13,7 @@ public:
     bool nextFrame();
     int getScore();
 private:
-    int level, score, num_of_bots;
+    int level, score, num_of_bots, eated;
     Vector2 stage_size;
     spCircle main_circle;
     std::vector <spCircle> circles;

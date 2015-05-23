@@ -7,21 +7,18 @@ class Circle;
 
 typedef oxygine::intrusive_ptr<Circle> spCircle;
 
-class Circle : public Actor{
+class Circle : public Sprite{
 public:
   Circle(int s, int x, int y, Color color);
   Circle(Vector2 vect);
   ~Circle();
-  void yscor(Vector2 ys, double time);
-  spSprite getGui();
-  Color getColor();
+  void accelerate(Vector2 ys, double time);
   double getSize();
   void eatCircle(spCircle& circle);
-  Vector2 getPosition();
+  Vector2 getCenter();
   bool is_in_rect(Vector2 start, Vector2 end);
 private:
   void update_gui();
-  spSprite gui;
   double  size;
   Color color;
   Vector2 velocity;
