@@ -41,7 +41,7 @@ bool Game::nextFrame(){
 
 void Game::make_turn(){
   for(int i = 0; i < num_of_bots; ++i){
-    circles[i]->accelerate(Vector2(rand() % 3 - 1 , rand() % 3 - 1), 1.0/60);
+    circles[i]->accelerate(Vector2(rand() % 3 - 1 , rand() % 3 - 1), 1.0/100);
   }
   main_circle_turn();
 }
@@ -54,7 +54,7 @@ void Game::main_circle_turn(){
   if (data[SDL_SCANCODE_W] or data[SDL_SCANCODE_UP]) vec.y = 1;
   if (data[SDL_SCANCODE_S] or data[SDL_SCANCODE_DOWN]) vec.y = -1;
   for(int i = 0; i < num_of_bots; ++i){
-    circles[i]->accelerate(vec, 1.0/60);
+    circles[i]->accelerate(vec, 1.0/100, main_circle->getSize());
   }
 }
 
@@ -72,7 +72,7 @@ bool Game::check_main_circle(){
         return false;
       if(main_size > size_i){
         main_circle->eatCircle(circles[i]);
-        //circles[i]->detach();
+        circles[i]->detach();
         circles[i] = new Circle( getRandomCoords() );
         getStage()->addChild(circles[i]);
         getStage()->update();

@@ -14,6 +14,45 @@ You could start from example.cpp and example.h it has main functions being calle
 
 using namespace oxygine;
 
+Color clearColor(40, 40, 40, 255);
+
+Color update_color(){
+  static int frame;
+  ++frame;
+  if(frame % 3) 
+    return clearColor;
+  
+  int chose = rand() % 3, change = rand() % 2, color;
+  if( !change )
+    --change;
+
+  switch( chose ){
+    case 0:
+      color = clearColor.r;
+      break;
+    case 1:
+      color = clearColor.g;
+      break;
+    case 2:
+      color = clearColor.b;
+  }
+  
+  color += change * 3;
+  if(color > 255 || color < 0)
+    color = 125;
+  
+  switch( chose ){
+    case 0:
+      clearColor.r = color;
+      break;
+    case 1:
+      clearColor.g = color;
+      break;
+    case 2:
+      clearColor.b = color;
+  }
+  return clearColor;
+}
 
 //called each frame
 int mainloop()
@@ -25,10 +64,10 @@ int mainloop()
 	
 	if (core::beginRendering())
 	{		
-		Color clearColor(32, 32, 40, 255);
+		
 		Rect viewport(Point(0, 0), core::getDisplaySize());
 		//render all actors. Actor::render would be called also for all children
-		getStage()->render(clearColor, viewport);
+		getStage()->render(update_color(), viewport);
 
 		core::swapDisplayBuffers();
 	}

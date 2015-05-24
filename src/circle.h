@@ -13,9 +13,11 @@ public:
   Circle(Vector2 vect);
   ~Circle();
   void accelerate(Vector2 ys, double time);
+  void accelerate(Vector2 ys, double time, double size);
   double getSize();
   void eatCircle(spCircle& circle);
   Vector2 getCenter();
+  Vector2 getVelocity();
   bool is_in_rect(Vector2 start, Vector2 end);
 private:
   void update_gui();

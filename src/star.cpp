@@ -1,6 +1,6 @@
 #include "oxygine-framework.h"
 #include <functional>
-#include "circle.h"
+#include "star.h"
 #include <iostream>
 using namespace oxygine;
 
@@ -10,47 +10,34 @@ using namespace oxygine;
 
 static Resources gameResources;
 
-
-Circle::Circle(int s, int x, int y, Color color):
-    velocity(0,0),
-    size(s),
-    position( Vector2(x, y) )
-  {
-  if( !gameResources.getUseLoadCounter() )
-    gameResources.loadXML("res.xml");
-  setColor(color);
-  setPosition(position);
-  setInputEnabled(false);
-  setUserData(0);
-  setAnimFrame(gameResources.getResAnim("circle"));
-  setScale(size/60);
-}
-
-Circle::Circle(Vector2 vect):
-    velocity(0,0),
-    size(rand() % 57 + 4),
+Star::Star(Vector2 vect):
     position( vect )
   {
-  setColor(Color(rand()%226 + 30, rand() % 226 + 30, rand() % 226+ 30));
+  setColor(Color(rand()%216 + 20, rand() % 216 + 20, rand() % 216 + 20));
   setPosition(position);
   setInputEnabled(false);
   setUserData(0);
-  setAnimFrame(gameResources.getResAnim("circle"));
-  setScale(size/60);
 }
 
 Circle::~Circle(){
 }
 
-void Circle::accelerate(Vector2 ys, double time){
-  velocity += ys;
-  position = position + velocity;
-  velocity.x -=  velocity.x * size / 250;
-  velocity.y -= velocity.y * size / 250;
-  setPosition(position);
+void init_bigstar(){
+  setAnimFrame(gameResources.getResAnim("bigstar"));
+  setScale(rand() % 5 + 4);
 }
 
-void Circle::accelerate(Vector2 ys, double time, double size2){
+void init_littlestar(){
+  getAnimFrame(gameResources.getResAnim("littlestar"));
+  setScale(rand() % 5 + 2);
+}
+
+void init_pulstar(){
+  getAnimFrame(gameResources.getResAnim("pulstar"));
+  setScale(rand() % 5 + 2);
+}
+
+void Circle::move(Vector2 delt){
   velocity += ys;
   position = position + velocity;
   velocity.x -=  velocity.x * size2 / 250;
