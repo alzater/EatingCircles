@@ -2,6 +2,9 @@
 <resources>
 	<set path = "images" />
 	<atlas>
-		<image file="circle.png" />	
+		<image file="circle.png" />
+    <image file="bigstar.png" />	
+    <image file="littlestar.png" />	
+    <image file="pulstar.png" />	
 	</atlas>
 </resources>

@@ -17,64 +17,46 @@ Star::Star(Vector2 vect):
   setPosition(position);
   setInputEnabled(false);
   setUserData(0);
+  if( !gameResources.getUseLoadCounter() )
+    gameResources.loadXML("res.xml");
+  switch(rand() % 3){
+    case 0:
+      init_bigstar();
+      break;
+    case 1:
+      init_littlestar();
+      break;
+    case 2:
+      init_pulstar();
+  }
 }
 
-Circle::~Circle(){
+Star::~Star(){
 }
 
-void init_bigstar(){
+void Star::init_bigstar(){
   setAnimFrame(gameResources.getResAnim("bigstar"));
-  setScale(rand() % 5 + 4);
+  setScale((double)(rand() % 5 + 4)/15);
 }
 
-void init_littlestar(){
-  getAnimFrame(gameResources.getResAnim("littlestar"));
-  setScale(rand() % 5 + 2);
+void Star::init_littlestar(){
+  setAnimFrame(gameResources.getResAnim("littlestar"));
+  setScale((double)(rand() % 5 + 2)/ 20);
 }
 
-void init_pulstar(){
-  getAnimFrame(gameResources.getResAnim("pulstar"));
-  setScale(rand() % 5 + 2);
+void Star::init_pulstar(){
+  setAnimFrame(gameResources.getResAnim("pulstar"));
+  setScale((double)(rand() % 3 + 4)/20);
+  addTween( createTween(Actor::TweenScale(0.1, 0.1), 5000, -1, true));
+  addTween( createTween(Actor::TweenRotation(getRotation() + (float)MATH_PI * 2), 10000, -1));
 }
 
-void Circle::move(Vector2 delt){
-  velocity += ys;
-  position = position + velocity;
-  velocity.x -=  velocity.x * size2 / 250;
-  velocity.y -= velocity.y * size2 / 250;
+void Star::move(Vector2 delt){
+  position = position + delt;
   setPosition(position);
 }
 
-void Circle::update_gui(){
-  setScale(size/60);
-  setColor(color);
-}
-
-double Circle::getSize(){
-  return size;
-}
-
-Vector2 Circle::getVelocity(){
-  return velocity;
-}
-
-void Circle::eatCircle(spCircle& circle){
-    color.r = (color.r * size + circle->getColor().r * circle->getSize()) 
-      / (size + circle->getSize());
-    color.r = (color.g * size + circle->getColor().g * circle->getSize()) 
-      / (size + circle->getSize());
-    color.r = (color.b * size + circle->getColor().b * circle->getSize()) 
-      / (size + circle->getSize());
-    size += circle->size / size;
-    update_gui();
-}
-
-
-Vector2 Circle::getCenter(){
-  return position + Vector2(size,size);
-}
-
-bool Circle::is_in_rect(Vector2 start, Vector2 end){
+bool Star::is_in_rect(Vector2 start, Vector2 end){
   if(position.x < start.x || position.x > end.x ||
      position.y < start.y || position.y > end.y) return false;
   else

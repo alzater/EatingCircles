@@ -2,6 +2,7 @@
 #include <functional>
 #include "game.h"
 #include "circle.h"
+#include "star.h"
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
@@ -17,7 +18,9 @@ Game::Game(int l):
   level(l),
   score(0),
   num_of_bots(20),
+  num_of_stars(20),
   circles(num_of_bots),
+  stars(num_of_stars),
   stage_size(core::getDisplaySize()),
   eated(0)
 {
@@ -29,6 +32,10 @@ Game::Game(int l):
     circles[i] = new Circle(rand() % (eated + 10), rand() % 1000, rand() % 1000,
       Color(rand()%226 + 30, rand() % 226 + 30, rand() % 226+ 30));
     getStage()->addChild(circles[i]);
+  }
+  for(int i = 0; i < num_of_stars; ++i){
+    stars[i] = new Star(Vector2(rand() % 1000, rand() % 1000));
+    getStage()->addChild(stars[i]);
   }
 }
 
@@ -48,13 +55,16 @@ void Game::make_turn(){
 
 void Game::main_circle_turn(){
   const Uint8* data  = SDL_GetKeyboardState(0);
-  Vector2 vec;
+  Vector2 vec(0,0);
   if (data[SDL_SCANCODE_A] or data[SDL_SCANCODE_LEFT]) vec.x = 1;
   if (data[SDL_SCANCODE_D] or data[SDL_SCANCODE_RIGHT]) vec.x = -1;
   if (data[SDL_SCANCODE_W] or data[SDL_SCANCODE_UP]) vec.y = 1;
   if (data[SDL_SCANCODE_S] or data[SDL_SCANCODE_DOWN]) vec.y = -1;
   for(int i = 0; i < num_of_bots; ++i){
     circles[i]->accelerate(vec, 1.0/100, main_circle->getSize());
+  }
+  for(int i = 0; i < num_of_stars; ++i){
+    stars[i]->move(vec);
   }
 }
 

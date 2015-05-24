@@ -3,6 +3,7 @@
 #include <functional>
 #include "circle.h"
 #include "Polygon.h"
+#include "star.h"
 #include <vector>
 
 using namespace oxygine;
@@ -13,10 +14,11 @@ public:
     bool nextFrame();
     int getScore();
 private:
-    int level, score, num_of_bots, eated;
+    int level, score, num_of_bots, eated, num_of_stars;
     Vector2 stage_size;
     spCircle main_circle;
     std::vector <spCircle> circles;
+    std::vector <spStar> stars;
     
     Vector2 getRandomCoords();
     void main_circle_turn();
@@ -25,6 +27,5 @@ private:
     void check_bots_positions();
     void renew_circle(spCircle& circle);
     void check_eaters();
-    
     spPolygon poly;
 };

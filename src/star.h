@@ -9,8 +9,8 @@ typedef oxygine::intrusive_ptr<Star> spStar;
 
 class Star : public Sprite{
 public:
-  Circle(Vector2 vect);
-  ~Circle();
+  Star(Vector2 vect);
+  ~Star();
   void move(Vector2 delt);
   bool is_in_rect(Vector2 start, Vector2 end);
 private:
