@@ -22,7 +22,8 @@ Game::Game(int l):
   circles(num_of_bots),
   stars(num_of_stars),
   stage_size(core::getDisplaySize()),
-  eated(0)
+  eated(0),
+  velocity(Vector2(0,0))
 {
 
   main_circle = new Circle(30, stage_size.x/2, stage_size.y/2, Color(255, 255, 255));
@@ -60,11 +61,12 @@ void Game::main_circle_turn(){
   if (data[SDL_SCANCODE_D] or data[SDL_SCANCODE_RIGHT]) vec.x = -1;
   if (data[SDL_SCANCODE_W] or data[SDL_SCANCODE_UP]) vec.y = 1;
   if (data[SDL_SCANCODE_S] or data[SDL_SCANCODE_DOWN]) vec.y = -1;
+  velocity += vec - velocity * 0.04;
   for(int i = 0; i < num_of_bots; ++i){
-    circles[i]->accelerate(vec, 1.0/100, main_circle->getSize());
+    circles[i]->move(velocity);
   }
   for(int i = 0; i < num_of_stars; ++i){
-    stars[i]->move(vec);
+    stars[i]->move(velocity * 0.1);
   }
 }
 
@@ -124,33 +126,48 @@ void Game::check_eaters(){
 }
 
 Vector2 Game::getRandomCoords(){
-  int x, y, sx = stage_size.x, sy = stage_size.y, div;
-  
-  x = rand() % ( sx - 200) + 100;
-  y = rand() % ( sy - 200) + 100;
+  int x, y, sx = stage_size.x, sy = stage_size.y, div, temp_x, temp_y;
+
   div = rand() % 8;
+  /*
+   * 1 2 3
+   * 0   4
+   * 7 6 5
+   */
   
-  /*switch( div ){
+  switch( div ){
     case 0 :
-      
-      
-    
-    
-  }*/
-  
-  
-  if( x < sx - 100 ){
-    x *= -1;
-    x -= 100;
-  }  else
-    x += 200;
-  
-  y = rand() % ( sy * 2 - 200);
-  if( y < sy - 100 ){
-    y *= -1;
-    y -= 100;
-  }  else
-    y += 200;
+      x = -(rand() % (sx - 100)) - 100;
+      y = rand() % sy;
+      break;
+    case 1 :
+      x = -(rand() % (sx - 100)) - 100;
+      y = rand() % sy + sy + 100;
+      break;
+    case 2 :
+      x = rand() % sx;
+      y = rand() % sy + sy + 100;
+      break;
+    case 3 :
+      x = rand() % sx + sx + 100;
+      y = rand() % sy + sy + 100;
+      break;
+    case 4 :
+      x = rand() % sx + sx + 100;
+      y = rand() % sy;
+      break;
+    case 5 :
+      x = rand() % sx + sx + 100;
+      y = -(rand() % (sy - 100)) - 100;
+      break;
+    case 6 :
+      x = rand() % sx;
+      y = -(rand() % (sy - 100)) - 100;
+      break;
+    case 7 :
+      x = -(rand() % (sx - 100)) - 100;
+      y = -(rand() % (sy - 100)) - 100;    
+  }
   
   return Vector2(x, y);
 }

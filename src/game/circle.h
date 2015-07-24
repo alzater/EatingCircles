@@ -13,7 +13,7 @@ public:
   Circle(Vector2 vect);
   ~Circle();
   void accelerate(Vector2 ys, double time);
-  void accelerate(Vector2 ys, double time, double size);
+  void move(Vector2 delt);
   double getSize();
   void eatCircle(spCircle& circle);
   Vector2 getCenter();

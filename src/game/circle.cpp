@@ -50,11 +50,8 @@ void Circle::accelerate(Vector2 ys, double time){
   setPosition(position);
 }
 
-void Circle::accelerate(Vector2 ys, double time, double size2){
-  velocity += ys;
-  position = position + velocity;
-  velocity.x -=  velocity.x * size2 / 250;
-  velocity.y -= velocity.y * size2 / 250;
+void Circle::move(Vector2 delt){
+  position = position + delt;
   setPosition(position);
 }
 

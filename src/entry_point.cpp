@@ -8,18 +8,20 @@ You could start from example.cpp and example.h it has main functions being calle
 #include "Stage.h"
 #include "DebugActor.h"
 
-#include "example.h"
+#include "controller.h"
 
 
 
 using namespace oxygine;
 
-Color clearColor(40, 40, 40, 255);
+Color clearColor(255, 255, 255, 255);
+Controller controller();
 
 Color update_color(){
   static int frame;
+  return clearColor;
   ++frame;
-  if(frame % 3) 
+  if(!frame) 
     return clearColor;
   
   int chose = rand() % 3, change = rand() % 2, color;
@@ -37,7 +39,7 @@ Color update_color(){
       color = clearColor.b;
   }
   
-  color += change * 3;
+  color += change * 5;
   if(color > 255 || color < 0)
     color = 125;
   
@@ -57,7 +59,7 @@ Color update_color(){
 //called each frame
 int mainloop()
 {
-	bool done = example_update();
+	bool done = controller->update();
 	//update our stage
 	//update all actors. Actor::update would be called also for all children
 	getStage()->update();
@@ -97,7 +99,7 @@ void run()
 #endif
 
 
-	example_preinit();
+	controller->preinit();
 	core::init(&desc);
 
 
@@ -110,7 +112,7 @@ void run()
 	DebugActor::show();
 		
 	//initialize this example stuff. see example.cpp
-	example_init();
+	controller->init();
 
 #ifdef EMSCRIPTEN
 	/*
@@ -140,7 +142,7 @@ void run()
 	//but now we want delete it by hands
 
 	//check example.cpp
-	example_destroy();
+	controller->destroy();
 
 
 	//renderer.cleanup();

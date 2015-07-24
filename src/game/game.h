@@ -15,6 +15,7 @@ public:
     int getScore();
 private:
     int level, score, num_of_bots, eated, num_of_stars;
+    Vector2 velocity;
     Vector2 stage_size;
     spCircle main_circle;
     std::vector <spCircle> circles;
