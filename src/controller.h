@@ -17,4 +17,7 @@ class Controller{
     startGame();
     showGameResult();
     finishGame();
+    
+    Resources gameResources;
+    oxygine::intrusive_ptr<Game> spGame;
 }

@@ -9,44 +9,33 @@ using namespace oxygine;
 //it is our resources
 //in real project you would have more than one Resources declarations. 
 //It is important on mobile devices with limited memory and you would load/unload them
-Resources gameResources;
-Game* game;
 
 
-class MainActor: public Actor
-{
-        
-public:
-	MainActor()
-	{
-                game = new Game(1);
-	}
-};
-//declare spMainActor as intrusive_ptr holder of MainActor
-typedef oxygine::intrusive_ptr<MainActor> spMainActor;
 
-void example_preinit(){
+
+Controller::Controller(){
+    spGame = new Game(1);
+}
+
+void Controller::preinit(){
         
 }
 
 //called from entry_point.cpp
-void example_init()
+void Controller::init()
 {
-	spMainActor actor = new MainActor;
-
 	//and add it to Stage as child
-	getStage()->addChild(actor);
-
+	getStage()->addChild(spGame);
 }
 
 
 //called each frame from entry_point.cpp	
-int example_update()
+int Controller::update()
 {
-        return !game->nextFrame();
+    return !spGame->nextFrame();
 }
 
-void example_destroy()
+void Controller::destroy()
 {
 	//free previously loaded resources
 	gameResources.free();
