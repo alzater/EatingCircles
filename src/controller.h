@@ -1,6 +1,7 @@
 #pragma once
 #include "oxygine-framework.h"
 #include <functional>
+#include "game/game.h"
 
 using namespace oxygine;
 
@@ -12,12 +13,11 @@ class Controller{
     int update();
     Controller();
   private:
-    showMenu();
-    hideMenu();
-    startGame();
-    showGameResult();
-    finishGame();
+    //showMenu();
+    //hideMenu();
+    //startGame();
+    //showGameResult();
+    //finishGame();
     
-    Resources gameResources;
-    oxygine::intrusive_ptr<Game> spGame;
-}
+    //oxygine::intrusive_ptr<Game> spGame;
+};

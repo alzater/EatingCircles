@@ -8,7 +8,7 @@
 
 using namespace oxygine;
 
-class Game{
+class Game: public Actor{
 public:
     Game(int l);
     bool nextFrame();

@@ -15,7 +15,7 @@ You could start from example.cpp and example.h it has main functions being calle
 using namespace oxygine;
 
 Color clearColor(255, 255, 255, 255);
-Controller controller();
+Controller* controller;
 
 Color update_color(){
   static int frame;
@@ -86,6 +86,7 @@ int mainloop()
 //it is application entry point
 void run()
 {
+        controller = new Controller();
 	ObjectBase::__startTracingLeaks();
 
 	//initialize Oxygine's internal stuff
