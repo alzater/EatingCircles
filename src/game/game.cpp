@@ -26,12 +26,12 @@ Game::Game(int l):
   velocity(Vector2(0,0))
 {
 
-  main_circle = new Circle(30, stage_size.x/2, stage_size.y/2, Color(255, 255, 255));
+  main_circle = new Circle(30, stage_size.x/2, stage_size.y/2, genCircleColor());
   getStage()->addChild(main_circle);
   srand(time(0));
   for(int i = 0; i < num_of_bots; ++i){
     circles[i] = new Circle(rand() % (eated + 10), rand() % 1000, rand() % 1000,
-      Color(rand()%226 + 30, rand() % 226 + 30, rand() % 226+ 30));
+      genCircleColor());
     getStage()->addChild(circles[i]);
   }
   for(int i = 0; i < num_of_stars; ++i){
@@ -186,4 +186,12 @@ void Game::renew_circle(spCircle& circle){
   circle = new Circle( getRandomCoords() );
   getStage()->addChild(circle);
   getStage()->update();
+}
+
+Color Game::genCircleColor(){
+  return Color(rand()%200, rand() % 200, rand() % 200);
+}
+
+Color Game::genStarColor(){
+  return genCircleColor();
 }

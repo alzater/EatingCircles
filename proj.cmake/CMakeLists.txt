@@ -17,6 +17,8 @@ add_executable(EatingCircles
         ../src/game/game.h 
         ../src/game/star.cpp 
         ../src/game/star.h
+        ../src/controls/menu.h
+        ../src/controls/menu.cpp
 )
 
 if (WIN32) #disable console mode for VC++

@@ -31,7 +31,7 @@ Circle::Circle(Vector2 vect):
     size(rand() % 57 + 4),
     position( vect )
   {
-  setColor(Color(rand()%226 + 30, rand() % 226 + 30, rand() % 226+ 30));
+  setColor(Color(rand()%200, rand() % 200, rand() % 200));
   setPosition(position);
   setInputEnabled(false);
   setUserData(0);
@@ -71,9 +71,9 @@ Vector2 Circle::getVelocity(){
 void Circle::eatCircle(spCircle& circle){
     color.r = (color.r * size + circle->getColor().r * circle->getSize()) 
       / (size + circle->getSize());
-    color.r = (color.g * size + circle->getColor().g * circle->getSize()) 
+    color.g = (color.g * size + circle->getColor().g * circle->getSize()) 
       / (size + circle->getSize());
-    color.r = (color.b * size + circle->getColor().b * circle->getSize()) 
+    color.b = (color.b * size + circle->getColor().b * circle->getSize()) 
       / (size + circle->getSize());
     size += circle->size / size;
     update_gui();

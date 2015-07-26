@@ -28,5 +28,8 @@ private:
     void check_bots_positions();
     void renew_circle(spCircle& circle);
     void check_eaters();
-    spPolygon poly;
+    Color genCircleColor();
+    Color genStarColor();
 };
+
+typedef oxygine::intrusive_ptr<Game> spGame;

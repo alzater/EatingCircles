@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <resources>
+    <set path = "fonts" />
+    <font file="invaders.fnt"/>
 	<set path = "images" />
 	<atlas>
 		<image file="circle.png" />

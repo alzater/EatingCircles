@@ -14,7 +14,7 @@ You could start from example.cpp and example.h it has main functions being calle
 
 using namespace oxygine;
 
-Color clearColor(255, 255, 255, 255);
+Color clearColor(10, 10, 10, 255);
 Controller* controller;
 
 Color update_color(){

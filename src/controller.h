@@ -13,11 +13,13 @@ class Controller{
     int update();
     Controller();
   private:
-    //showMenu();
+    void showMenu();
+    void onNewGame(Event* e);
+    
+    int playing;
     //hideMenu();
     //startGame();
     //showGameResult();
     //finishGame();
-    
     //oxygine::intrusive_ptr<Game> spGame;
 };
