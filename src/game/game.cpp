@@ -27,16 +27,16 @@ Game::Game(int l):
 {
 
   main_circle = new Circle(30, stage_size.x/2, stage_size.y/2, genCircleColor());
-  getStage()->addChild(main_circle);
+  addChild(main_circle);
   srand(time(0));
   for(int i = 0; i < num_of_bots; ++i){
     circles[i] = new Circle(rand() % (eated + 10), rand() % 1000, rand() % 1000,
       genCircleColor());
-    getStage()->addChild(circles[i]);
+    addChild(circles[i]);
   }
   for(int i = 0; i < num_of_stars; ++i){
     stars[i] = new Star(Vector2(rand() % 1000, rand() % 1000));
-    getStage()->addChild(stars[i]);
+    addChild(stars[i]);
   }
 }
 
@@ -86,7 +86,7 @@ bool Game::check_main_circle(){
         main_circle->eatCircle(circles[i]);
         circles[i]->detach();
         circles[i] = new Circle( getRandomCoords() );
-        getStage()->addChild(circles[i]);
+        addChild(circles[i]);
         getStage()->update();
         ++eated;
       }
@@ -110,14 +110,14 @@ void Game::check_eaters(){
           circles[i]->eatCircle(circles[j]);
           circles[j]->detach();
           circles[j] = new Circle( getRandomCoords() );
-          getStage()->addChild(circles[j]);
+          addChild(circles[j]);
           getStage()->update();
         }
         if(size_j > size_i){
           circles[j]->eatCircle(circles[i]);
           circles[i]->detach();
           circles[i] = new Circle( getRandomCoords() );
-          getStage()->addChild(circles[i]);
+          addChild(circles[i]);
           getStage()->update();
         }
       }
@@ -184,7 +184,7 @@ void Game::check_bots_positions(){
 
 void Game::renew_circle(spCircle& circle){
   circle = new Circle( getRandomCoords() );
-  getStage()->addChild(circle);
+  addChild(circle);
   getStage()->update();
 }
 

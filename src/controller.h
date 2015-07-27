@@ -15,8 +15,10 @@ class Controller{
   private:
     void showMenu();
     void onNewGame(Event* e);
+    void onExit(Event* e);
+    void onFinishGame(Event* e);
     
-    int playing;
+    bool playing, exit;
     //hideMenu();
     //startGame();
     //showGameResult();
