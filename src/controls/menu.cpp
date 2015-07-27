@@ -10,6 +10,7 @@ Menu::Menu()
 	style.color = Color::White;
 	style.vAlign = TextStyle::VALIGN_MIDDLE;
 	style.hAlign = TextStyle::HALIGN_CENTER;
+    setPosition(getStage()->getSize().x / 2, 200);
 }
 
 void Menu::addItem(std::string text)

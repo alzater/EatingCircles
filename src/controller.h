@@ -18,6 +18,13 @@ class Controller{
     void onExit(Event* e);
     void onFinishGame(Event* e);
     
+    //void gameWait(int i);
+    
+    void gameWait3(Event* e);
+    void gameWait2(Event* e);
+    void gameWait1(Event* e);
+    void gameWaitGO(Event* e);
+    
     bool playing, exit;
     //hideMenu();
     //startGame();
