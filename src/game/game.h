@@ -11,10 +11,10 @@ using namespace oxygine;
 class Game: public Actor{
 public:
     Game(int l);
-    bool nextFrame();
+    int nextFrame();
     int getScore();
 private:
-    int level, score, num_of_bots, eated, num_of_stars;
+    int level, score, num_of_bots, eated, num_of_stars, max_main_size;
     Vector2 velocity;
     Vector2 stage_size;
     spCircle main_circle;

@@ -25,7 +25,7 @@ Game::Game(int l):
   eated(0),
   velocity(Vector2(0,0))
 {
-
+  max_main_size = 40;
   main_circle = new Circle(30, stage_size.x/2, stage_size.y/2, genCircleColor());
   addChild(main_circle);
   srand(time(0));
@@ -40,11 +40,15 @@ Game::Game(int l):
   }
 }
 
-bool Game::nextFrame(){
+int Game::nextFrame(){
   make_turn();
   check_eaters();
   check_bots_positions();
-  return check_main_circle();
+  if(!check_main_circle())
+    return 1; //game losed
+  if(main_circle->getSize() > max_main_size)
+    return 2; //level passed
+  return 0;
 }
 
 void Game::make_turn(){

@@ -36,11 +36,18 @@ void Controller::init()
 //called each frame from entry_point.cpp
 int Controller::update()
 {
-  bool temp = true;
-  if (playing)
+  int temp = 0;
+  if (playing){
     temp = game->nextFrame();
-  if(!temp)
-    onFinishGame(NULL);
+    switch( temp ){
+      case 1: 
+        onLoseGame(NULL);
+        break;
+      case 2:
+        onWinGame(NULL);
+        break;
+    }
+  }
   return exit;
 }
 
@@ -94,7 +101,7 @@ void Controller::onExit(Event* e){
   exit = true;
 }
 
-void Controller::onFinishGame(Event* e){
+void Controller::onLoseGame(Event* e){
   playing = false;
   spTween t = game->addTween(Actor::TweenAlpha(0), 2000);
   menu = new Menu();
@@ -102,4 +109,16 @@ void Controller::onFinishGame(Event* e){
   menu->addItem(std::string("new game"), CLOSURE(this, &Controller::onNewGame));
   menu->addItem(std::string("Exit"), CLOSURE(this, &Controller::onExit));
   getStage()->addChild(menu);
+  nextLevel = 1;
+}
+
+void Controller::onWinGame(Event* e){
+  playing = false;
+  spTween t = game->addTween(Actor::TweenAlpha(0), 2000);
+  menu = new Menu();
+  menu->addItem(std::string("You win"));
+  menu->addItem(std::string("next level"), CLOSURE(this, &Controller::onNewGame));
+  menu->addItem(std::string("Exit"), CLOSURE(this, &Controller::onExit));
+  getStage()->addChild(menu);
+  ++nextLevel;
 }

@@ -17,11 +17,12 @@ class Controller{
     void showMenu();
     void onNewGame(Event* e);
     void onExit(Event* e);
-    void onFinishGame(Event* e);
+    void onLoseGame(Event* e);
+    void onWinGame(Event* e);
     void gameWait(Event* e);
     
     bool playing, exit;
-    int secondsLeft;
+    int secondsLeft, nextLevel;
     //hideMenu();
     //startGame();
     //showGameResult();
