@@ -12,20 +12,16 @@ class Controller{
     void destroy();
     int update();
     Controller();
+
   private:
     void showMenu();
     void onNewGame(Event* e);
     void onExit(Event* e);
     void onFinishGame(Event* e);
-    
-    //void gameWait(int i);
-    
-    void gameWait3(Event* e);
-    void gameWait2(Event* e);
-    void gameWait1(Event* e);
-    void gameWaitGO(Event* e);
+    void gameWait(Event* e);
     
     bool playing, exit;
+    int secondsLeft;
     //hideMenu();
     //startGame();
     //showGameResult();

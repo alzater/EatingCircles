@@ -4,6 +4,8 @@
 #include "game/game.h"
 #include "controls/menu.h"
 #include <iostream>
+#include <string>
+#include <iostream>
 using namespace oxygine;
 
 Resources gameResources;
@@ -15,6 +17,7 @@ spMenu menu;
 Controller::Controller(){
   playing = false;
   exit = false;
+  
 }
 
 void Controller::preinit(){
@@ -54,7 +57,8 @@ void Controller::showMenu(){
 void Controller::onNewGame(Event* e)
 {
   spTween t = menu->addTween(Actor::TweenAlpha(0), 1000);
-  t->addEventListener(TweenEvent::DONE, CLOSURE(this, &Controller::gameWait3));
+  secondsLeft = 3;
+  t->addEventListener(TweenEvent::DONE, CLOSURE(this, &Controller::gameWait));
   //------------
   
   //--------------
@@ -63,45 +67,27 @@ void Controller::onNewGame(Event* e)
 
 }
 
-void Controller::gameWait3(Event* e){
+void Controller::gameWait(Event* e){
+  if(!secondsLeft)
+    playing = true;
   getStage()->removeChild(menu);
   menu = new Menu();
-  menu->addItem(std::string("3"));
+  if(secondsLeft){
+    char c[2];
+    c[0] = (char)(secondsLeft + 48);
+    c[1] = '\0';
+    menu->addItem(std::string(c));
+  }
+  else
+    menu->addItem(std::string("GO"));
   menu->setAlpha(0);
   getStage()->addChild(menu);
   spTween t = menu->addTween(Actor::TweenAlpha(250), 1000, 1, true, 0);
-  t->addEventListener(TweenEvent::DONE, CLOSURE(this, &Controller::gameWait2));
-}
-
-void Controller::gameWait2(Event* e){
-  getStage()->removeChild(menu);
-  menu = new Menu();
-  menu->addItem(std::string("2"));
-  menu->setAlpha(0);
-  getStage()->addChild(menu);
-  spTween t = menu->addTween(Actor::TweenAlpha(250), 1000, 1, true, 0);
-  t->addEventListener(TweenEvent::DONE, CLOSURE(this, &Controller::gameWait1));
-}
-
-void Controller::gameWait1(Event* e){
-  getStage()->removeChild(menu);
-  menu = new Menu();
-  menu->addItem(std::string("1"));
-  menu->setAlpha(0);
-  getStage()->addChild(menu);
-  spTween t = menu->addTween(Actor::TweenAlpha(250), 1000, 1, true, 0);
-  t->addEventListener(TweenEvent::DONE, CLOSURE(this, &Controller::gameWaitGO));
-}
-  
-void Controller::gameWaitGO(Event* e){
-  playing = true;
-  getStage()->removeChild(menu);
-  menu = new Menu();
-  menu->addItem(std::string("GO"));
-  menu->setAlpha(0);
-  getStage()->addChild(menu);
-  spTween t = menu->addTween(Actor::TweenAlpha(250), 1000, 1, true, 0);
-  spTween t2 = menu->addTween(Actor::TweenScale(5), 1000, 1, true, 0);
+  if(!secondsLeft)
+    spTween t2 = menu->addTween(Actor::TweenScale(5), 1000, 1, true, 0);
+  if(secondsLeft)
+    t->addEventListener(TweenEvent::DONE, CLOSURE(this, &Controller::gameWait));
+  --secondsLeft;
 }
 
 void Controller::onExit(Event* e){
@@ -117,4 +103,3 @@ void Controller::onFinishGame(Event* e){
   menu->addItem(std::string("Exit"), CLOSURE(this, &Controller::onExit));
   getStage()->addChild(menu);
 }
-
