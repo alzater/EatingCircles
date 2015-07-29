@@ -52,7 +52,6 @@ void Circle::accelerate(Vector2 ys, double time){
   velocity.x -=  velocity.x * size / 250;
   velocity.y -= velocity.y * size / 250;
   setPosition(position);
-  loseMass();
 }
 
 void Circle::move(Vector2 delt){
@@ -111,4 +110,8 @@ void Circle::loseMass(){
     delta_size = 0;
     update_gui();
   }
+}
+
+void Circle::boost(){
+  velocity *= 2;
 }

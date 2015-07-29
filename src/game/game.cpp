@@ -66,6 +66,7 @@ void Game::main_circle_turn(){
   if (data[SDL_SCANCODE_D] or data[SDL_SCANCODE_RIGHT]) vec.x = -1;
   if (data[SDL_SCANCODE_W] or data[SDL_SCANCODE_UP]) vec.y = 1;
   if (data[SDL_SCANCODE_S] or data[SDL_SCANCODE_DOWN]) vec.y = -1;
+  if (data[SDL_SCANCODE_SPACE]) velocity *= 1.1;
   velocity += vec - velocity * 0.04;
   for(int i = 0; i < num_of_bots; ++i){
     circles[i]->move(velocity);
@@ -180,6 +181,7 @@ Vector2 Game::getRandomCoords(){
 
 void Game::check_bots_positions(){
   for(int i = 0; i < num_of_bots; ++i){
+    circles[i]->loseMass();
     if( !circles[i]->is_in_rect( Vector2(-900, -900), 
         Vector2(stage_size.x+900, stage_size.y + 900) )
       ){
