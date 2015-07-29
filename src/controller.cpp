@@ -61,17 +61,17 @@ void Controller::showMenu(){
   menu->addItem(std::string("Exit"), CLOSURE(this, &Controller::onExit));
 }
 
-void Controller::onNewGame(Event* e)
-{
+void Controller::onNewGame(Event* e){
+  nextLevel = 1;
+  onNextLevel(NULL);
+}
+
+void Controller::onNextLevel(Event* e){
   spTween t = menu->addTween(Actor::TweenAlpha(0), 1000);
   secondsLeft = 3;
   t->addEventListener(TweenEvent::DONE, CLOSURE(this, &Controller::gameWait));
-  //------------
-  
-  //--------------
   game = new Game(1);
 	getStage()->addChild(game);
-
 }
 
 void Controller::gameWait(Event* e){
@@ -117,7 +117,8 @@ void Controller::onWinGame(Event* e){
   spTween t = game->addTween(Actor::TweenAlpha(0), 2000);
   menu = new Menu();
   menu->addItem(std::string("You win"));
-  menu->addItem(std::string("next level"), CLOSURE(this, &Controller::onNewGame));
+  menu->addItem(std::string("next level"), CLOSURE(this, &Controller::onNextLevel));
+  menu->addItem(std::string("reset game"), CLOSURE(this, &Controller::onNewGame));
   menu->addItem(std::string("Exit"), CLOSURE(this, &Controller::onExit));
   getStage()->addChild(menu);
   ++nextLevel;

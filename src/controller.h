@@ -16,6 +16,7 @@ class Controller{
   private:
     void showMenu();
     void onNewGame(Event* e);
+    void onNextLevel(Event* e);
     void onExit(Event* e);
     void onLoseGame(Event* e);
     void onWinGame(Event* e);
