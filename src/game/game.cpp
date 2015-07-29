@@ -9,6 +9,7 @@
 #include <iostream>
 #include "SDL.h"
 #include "SDL_keyboard.h"
+#include "../controls/DTO.h"
 
 using namespace oxygine;
 
@@ -25,7 +26,7 @@ Game::Game(int l):
   eated(0),
   velocity(Vector2(0,0))
 {
-  max_main_size = 40;
+  max_main_size = 70;
   main_circle = new Circle(30, stage_size.x/2, stage_size.y/2, genCircleColor());
   addChild(main_circle);
   srand(time(0));
@@ -72,6 +73,7 @@ void Game::main_circle_turn(){
   for(int i = 0; i < num_of_stars; ++i){
     stars[i]->move(velocity * 0.1);
   }
+  main_circle->loseMass();
 }
 
 bool Game::check_main_circle(){
@@ -193,9 +195,17 @@ void Game::renew_circle(spCircle& circle){
 }
 
 Color Game::genCircleColor(){
-  return Color(rand()%200, rand() % 200, rand() % 200);
+  return Color(rand() % 200 + 55, rand() % 200 + 55, rand() % 200 + 55);
 }
 
 Color Game::genStarColor(){
   return genCircleColor();
+}
+
+const GameResults Game::getResult(){
+  return GameResults(level, eated, score);
+}
+
+int Game::getMainCircleSize(){
+  return main_circle->getSize();
 }

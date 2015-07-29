@@ -20,7 +20,7 @@ void Menu::addItem(std::string text)
 	if(!items.empty())
 	{
 		position = items.back()->getY();
-		position += style.font->getSize() / style.font->getScale() * 3;
+		position += style.font->getSize() / style.font->getScale() * 2;
 	}
 	addChild(item);
 	item->setPosition(0, position);

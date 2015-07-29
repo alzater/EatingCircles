@@ -19,11 +19,15 @@ public:
   Vector2 getCenter();
   Vector2 getVelocity();
   bool is_in_rect(Vector2 start, Vector2 end);
+  void boost(); //from blue-mana
+  void loseMass(); //from red-power
 private:
   void update_gui();
-  double  size;
+  void setAbilitiesFromColor();
+  double  size, delta_size;
   Color color;
   Vector2 velocity;
   Vector2 position;
+  int mana, agility, power;
 };
 

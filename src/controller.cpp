@@ -6,18 +6,31 @@
 #include <iostream>
 #include <string>
 #include <iostream>
+
 using namespace oxygine;
 
 Resources gameResources;
 
 spGame game;
 spMenu menu;
+spTextField item;
 
+std::string size(int size){
+  char s[3];
+  if(size > 9){
+    s[0] = (char)(size/10 + 48);
+    s[1] = (char)(size%10 + 48);
+    s[2] = '\0';
+  } else {
+    s[0] = (char)(size + 48);
+    s[1] = '\0';
+  }
+  return std::string(s);
+}
 
 Controller::Controller(){
   playing = false;
   exit = false;
-  
 }
 
 void Controller::preinit(){
@@ -30,15 +43,20 @@ void Controller::init()
   menu = new Menu();
   showMenu();
   getStage()->addChild(menu);
+  item = new TextField();
+  item->setPosition(0, 600);
+  getStage()->addChild(item);
 }
 
 
 //called each frame from entry_point.cpp
 int Controller::update()
 {
+  
   int temp = 0;
   if (playing){
     temp = game->nextFrame();
+    item->setText(size(game->getMainCircleSize()));
     switch( temp ){
       case 1: 
         onLoseGame(NULL);
@@ -123,3 +141,6 @@ void Controller::onWinGame(Event* e){
   getStage()->addChild(menu);
   ++nextLevel;
 }
+
+
+    

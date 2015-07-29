@@ -24,6 +24,8 @@ Circle::Circle(int s, int x, int y, Color color):
   setUserData(0);
   setAnimFrame(gameResources.getResAnim("circle"));
   setScale(size/60);
+  delta_size = 0;
+  setAbilitiesFromColor();
 }
 
 Circle::Circle(Vector2 vect):
@@ -31,12 +33,14 @@ Circle::Circle(Vector2 vect):
     size(rand() % 57 + 4),
     position( vect )
   {
-  setColor(Color(rand()%200, rand() % 200, rand() % 200));
+  setColor(Color(rand()%200 + 55, rand() % 200 + 55, rand() % 200 + 55));
   setPosition(position);
   setInputEnabled(false);
   setUserData(0);
   setAnimFrame(gameResources.getResAnim("circle"));
   setScale(size/60);
+  delta_size = 0;
+  setAbilitiesFromColor();
 }
 
 Circle::~Circle(){
@@ -48,6 +52,7 @@ void Circle::accelerate(Vector2 ys, double time){
   velocity.x -=  velocity.x * size / 250;
   velocity.y -= velocity.y * size / 250;
   setPosition(position);
+  loseMass();
 }
 
 void Circle::move(Vector2 delt){
@@ -76,6 +81,7 @@ void Circle::eatCircle(spCircle& circle){
     color.b = (color.b * size + circle->getColor().b * circle->getSize()) 
       / (size + circle->getSize());
     size += circle->size / size;
+    setAbilitiesFromColor();
     update_gui();
 }
 
@@ -90,5 +96,19 @@ bool Circle::is_in_rect(Vector2 start, Vector2 end){
   else
     return true;
 }
-  
 
+void Circle::setAbilitiesFromColor(){
+  power = color.r - 55;
+  agility = color.g - 55;
+  mana = color.b - 55;
+}
+
+void Circle::loseMass(){
+  double change_size = size * ((double)(200 - power)) / 2000000.0;
+  delta_size += change_size;
+  size -= change_size;
+  if(delta_size > 0.5){
+    delta_size = 0;
+    update_gui();
+  }
+}

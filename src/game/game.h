@@ -5,6 +5,7 @@
 #include "Polygon.h"
 #include "star.h"
 #include <vector>
+#include "../controls/DTO.h"
 
 using namespace oxygine;
 
@@ -12,7 +13,8 @@ class Game: public Actor{
 public:
     Game(int l);
     int nextFrame();
-    int getScore();
+    const GameResults getResult();
+    int getMainCircleSize();
 private:
     int level, score, num_of_bots, eated, num_of_stars, max_main_size;
     Vector2 velocity;
