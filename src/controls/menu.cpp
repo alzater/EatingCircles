@@ -29,7 +29,7 @@ void Menu::addItem(std::string text, EventCallback onClick)
     spButton b = new Button();
     b->setResAnim(gameResources.getResAnim("button"));
 	addChild(b);
-	b->setPosition(Vector2(-120, lastHPos));
+	b->setPosition(Vector2(-95, lastHPos));
     spTextField item = new TextField();
 	item->setText(text);
     item->setSize(b->getSize());
@@ -44,6 +44,7 @@ void Menu::setDefaultStyle(TextStyle& style){
     style.color = Color::White;
     style.vAlign = TextStyle::VALIGN_MIDDLE;
     style.hAlign = TextStyle::HALIGN_CENTER;
+    style.fontSize2Scale = 20;
 }
 
 void Menu::setFont(Font* f, int sw){  // 0 - both, 1 - label, 2 - button
