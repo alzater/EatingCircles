@@ -7,6 +7,7 @@
 		<image file="circle.png" />
     <image file="bigstar.png" />	
     <image file="littlestar.png" />	
-    <image file="pulstar.png" />	
+    <image file="pulstar.png" />
+		<image file="button.png" cols = "3" />
 	</atlas>
 </resources>

@@ -15,6 +15,7 @@ public:
     int nextFrame();
     const GameResults getResult();
     int getMainCircleSize();
+    double getFrameTimeMultiplier();
 private:
     int level, score, num_of_bots, eated, num_of_stars, max_main_size;
     Vector2 velocity;
@@ -22,6 +23,8 @@ private:
     spCircle main_circle;
     std::vector <spCircle> circles;
     std::vector <spStar> stars;
+    timeMS lastTime;
+    double timeMultiplier;
     
     Vector2 getRandomCoords();
     void main_circle_turn();
@@ -32,6 +35,7 @@ private:
     void check_eaters();
     Color genCircleColor();
     Color genStarColor();
+    bool updateFrameTimeMultiplier();
 };
 
 typedef oxygine::intrusive_ptr<Game> spGame;

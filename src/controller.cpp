@@ -56,7 +56,7 @@ int Controller::update()
   int temp = 0;
   if (playing){
     temp = game->nextFrame();
-    item->setText(size(game->getMainCircleSize()));
+    item->setText(size(game->getFrameTimeMultiplier()*1000));
     switch( temp ){
       case 1: 
         onLoseGame(NULL);
@@ -76,7 +76,7 @@ void Controller::destroy()
 
 void Controller::showMenu(){
   menu->addItem(std::string("play"), CLOSURE(this, &Controller::onNewGame));
-  menu->addItem(std::string("Exit"), CLOSURE(this, &Controller::onExit));
+  //menu->addItem(std::string("Exit"), CLOSURE(this, &Controller::onExit));
 }
 
 void Controller::onNewGame(Event* e){

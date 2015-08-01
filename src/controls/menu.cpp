@@ -31,7 +31,30 @@ void Menu::addItem(std::string text)
 
 void Menu::addItem(std::string text, EventCallback onClick)
 {
-	addItem(text);
-	items.back()->addEventListener(TouchEvent::CLICK, onClick);
+    spButton b = new Button();
+    int position = 0;
+	addChild(b);
+	b->setPosition(0, position);
+    spTextField item = new TextField();
+	item->setText(text);
+    item->attachTo(b);
+    b->setResAnim(gameResources.getResAnim("button"));
+	b->addEventListener(TouchEvent::CLICK, onClick);
+}
+
+void Menu::setFont(Font* f){
+    style.font = f;
+}
+
+void Menu::setTextColor(Color c){
+    style.color = c;
+}
+
+void Menu::setHAlign(TextStyle::HorizontalAlign ha){
+    style.hAlign = ha;
+}
+
+void Menu::setVAlign(TextStyle::VerticalAlign va){
+    style.vAlign = va;
 }
 

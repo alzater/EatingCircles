@@ -26,6 +26,7 @@ Game::Game(int l):
   eated(0),
   velocity(Vector2(0,0))
 {
+  lastTime = getTimeMS();
   max_main_size = 70;
   main_circle = new Circle(30, stage_size.x/2, stage_size.y/2, genCircleColor());
   addChild(main_circle);
@@ -42,6 +43,8 @@ Game::Game(int l):
 }
 
 int Game::nextFrame(){
+  if(!updateFrameTimeMultiplier())
+    return 0;
   make_turn();
   check_eaters();
   check_bots_positions();
@@ -210,4 +213,19 @@ const GameResults Game::getResult(){
 
 int Game::getMainCircleSize(){
   return main_circle->getSize();
+}
+
+bool Game::updateFrameTimeMultiplier(){
+  timeMS newTime = getTimeMS();
+  if(lastTime == newTime)
+    return false;
+  timeMS deltaTime = newTime - lastTime;
+  timeMultiplier = (double)deltaTime/1000;
+  lastTime = newTime; 
+  std::cout << timeMultiplier << std::endl;
+  return true;  
+}
+
+double Game::getFrameTimeMultiplier(){
+  return timeMultiplier;
 }
