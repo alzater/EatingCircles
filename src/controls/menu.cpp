@@ -8,7 +8,8 @@ Menu::Menu()
         gameResources.loadXML("res.xml");
     setPosition(getStage()->getSize().x / 2, 200);
     setDefaultStyle(labelStyle);
-    setDefaultStyle(buttonStyle);
+    buttonStyle.font = labelStyle.font;
+    //buttonStyle.hAlign = labelStyle.hAlign;
     lastHPos = 0;
 }
 
@@ -26,15 +27,16 @@ void Menu::addItem(std::string text)
 void Menu::addItem(std::string text, EventCallback onClick)
 {
     spButton b = new Button();
+    b->setResAnim(gameResources.getResAnim("button"));
 	addChild(b);
-	b->setPosition(Vector2(0, lastHPos));
+	b->setPosition(Vector2(-120, lastHPos));
     spTextField item = new TextField();
 	item->setText(text);
     item->setSize(b->getSize());
+    item->setStyle(labelStyle);
     b->addChild(item);
-    b->setResAnim(gameResources.getResAnim("button"));
 	b->addEventListener(TouchEvent::CLICK, onClick);
-    lastHPos += 50;
+    lastHPos += 70;
 }
 
 void Menu::setDefaultStyle(TextStyle& style){
