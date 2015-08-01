@@ -76,7 +76,7 @@ void Controller::destroy()
 
 void Controller::showMenu(){
   menu->addItem(std::string("play"), CLOSURE(this, &Controller::onNewGame));
-  //menu->addItem(std::string("Exit"), CLOSURE(this, &Controller::onExit));
+  menu->addItem(std::string("Exit"), CLOSURE(this, &Controller::onExit));
 }
 
 void Controller::onNewGame(Event* e){

@@ -6,55 +6,97 @@ Menu::Menu()
 {
     if( !gameResources.getUseLoadCounter() )
         gameResources.loadXML("res.xml");
-	style.font = gameResources.getResFont("invaders")->getFont();
-	style.color = Color::White;
-	style.vAlign = TextStyle::VALIGN_MIDDLE;
-	style.hAlign = TextStyle::HALIGN_CENTER;
     setPosition(getStage()->getSize().x / 2, 200);
+    setDefaultStyle(labelStyle);
+    setDefaultStyle(buttonStyle);
+    lastHPos = 0;
 }
 
 void Menu::addItem(std::string text)
 {
-	spTextField item = new TextField();
-	int position = 0;
-	if(!items.empty())
-	{
-		position = items.back()->getY();
-		position += style.font->getSize() / style.font->getScale() * 2;
-	}
-	addChild(item);
-	item->setPosition(0, position);
-	item->setText(text);
-	item->setStyle(style);
-	items.push_back(item);
+	spTextField label = new TextField();
+	addChild(label);
+	label->setPosition(0, lastHPos);
+	label->setText(text);
+	label->setStyle(labelStyle);
+    lastHPos += 50;
+
 }
 
 void Menu::addItem(std::string text, EventCallback onClick)
 {
     spButton b = new Button();
-    int position = 0;
 	addChild(b);
-	b->setPosition(0, position);
+	b->setPosition(Vector2(0, lastHPos));
     spTextField item = new TextField();
 	item->setText(text);
-    item->attachTo(b);
+    item->setSize(b->getSize());
+    b->addChild(item);
     b->setResAnim(gameResources.getResAnim("button"));
 	b->addEventListener(TouchEvent::CLICK, onClick);
+    lastHPos += 50;
 }
 
-void Menu::setFont(Font* f){
-    style.font = f;
+void Menu::setDefaultStyle(TextStyle& style){
+    style.font = gameResources.getResFont("invaders")->getFont();
+    style.color = Color::White;
+    style.vAlign = TextStyle::VALIGN_MIDDLE;
+    style.hAlign = TextStyle::HALIGN_CENTER;
 }
 
-void Menu::setTextColor(Color c){
-    style.color = c;
+void Menu::setFont(Font* f, int sw){  // 0 - both, 1 - label, 2 - button
+    switch(sw){
+    case 0:
+        labelStyle.font = f;
+        buttonStyle.font = f;
+        break;
+    case 1:
+        labelStyle.font = f;
+        break;
+    case 2:
+        buttonStyle.font = f;
+    }
 }
 
-void Menu::setHAlign(TextStyle::HorizontalAlign ha){
-    style.hAlign = ha;
+void Menu::setTextColor(Color c, int sw){  // 0 - both, 1 - label, 2 - button
+    switch(sw){
+    case 0:
+        labelStyle.color = c;
+        buttonStyle.color = c;
+        break;
+    case 1:
+        labelStyle.color = c;
+        break;
+    case 2:
+        buttonStyle.color = c;
+    }
+}
+void Menu::setHAlign(TextStyle::HorizontalAlign ha, int sw){  // 0 - both, 1 - label, 2 - button
+    switch(sw){
+    case 0:
+        labelStyle.hAlign = ha;
+        buttonStyle.hAlign = ha;
+        break;
+    case 1:
+        labelStyle.hAlign = ha;
+        break;
+    case 2:
+        buttonStyle.hAlign = ha;
+    }
+}
+void Menu::setVAlign(TextStyle::VerticalAlign va, int sw){  // 0 - both, 1 - label, 2 - button
+    switch(sw){
+    case 0:
+        labelStyle.vAlign = va;
+        buttonStyle.vAlign = va;
+        break;
+    case 1:
+        labelStyle.vAlign = va;
+        break;
+    case 2:
+        buttonStyle.vAlign = va;
+    }
 }
 
-void Menu::setVAlign(TextStyle::VerticalAlign va){
-    style.vAlign = va;
-}
+
 
