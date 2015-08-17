@@ -118,7 +118,7 @@ void Game::check_eaters(){
         }
         if(size_j > size_i){
           circles[j]->eatCircle(circles[i]);
-          circles[i]->reinit( getRandomCoords() );
+          circles[j]->reinit( getRandomCoords() );
         }
       }
     }
@@ -134,39 +134,42 @@ Vector2 Game::getRandomCoords(){
    * 0   4
    * 7 6 5
    */
+  const int EX = 400;
+  const int EY = 400;
+  const int ES = 100;
   
   switch( div ){
     case 0 :
-      x = -(rand() % (sx - 100)) - 100;
+      x = -(rand() % EX) - ES;
       y = rand() % sy;
       break;
     case 1 :
-      x = -(rand() % (sx - 100)) - 100;
-      y = rand() % sy + sy + 100;
+      x = -(rand() % EX) - ES;
+      y = rand() % EY + sy + ES;
       break;
     case 2 :
       x = rand() % sx;
-      y = rand() % sy + sy + 100;
+      y = rand() % EY + sy + ES;
       break;
     case 3 :
-      x = rand() % sx + sx + 100;
-      y = rand() % sy + sy + 100;
+      x = rand() % EX + sx + ES;
+      y = rand() % EY + sy + ES;
       break;
     case 4 :
-      x = rand() % sx + sx + 100;
+      x = rand() % EX + sx + ES;
       y = rand() % sy;
       break;
     case 5 :
-      x = rand() % sx + sx + 100;
-      y = -(rand() % (sy - 100)) - 100;
+      x = rand() % EX + sx + ES;
+      y = -(rand() % EY) - ES;
       break;
     case 6 :
       x = rand() % sx;
-      y = -(rand() % (sy - 100)) - 100;
+      y = -(rand() % EY) - ES;
       break;
     case 7 :
-      x = -(rand() % (sx - 100)) - 100;
-      y = -(rand() % (sy - 100)) - 100;    
+      x = -(rand() % EX) - ES;
+      y = -(rand() % EY) - ES;    
   }
   
   return Vector2(x, y);

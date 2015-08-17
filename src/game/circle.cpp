@@ -29,12 +29,13 @@ void Circle::reinit(Vector2 vect)
 {
   position = vect;
   rand_init();
+  update_gui();
 }
 
 void Circle::rand_init(){
   size = rand() % 57 + 4;
   setColor(Color(rand()%200 + 55, rand() % 200 + 55, rand() % 200 + 55));
-  all_init();  
+  all_init();
 }
 
 void Circle::all_init(){
