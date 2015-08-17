@@ -137,7 +137,7 @@ void Controller::onWinGame(Event* e){
   menu = new Menu();
   menu->addItem(std::string("You win"));
   menu->addItem(std::string("next level"), CLOSURE(this, &Controller::onNextLevel));
-  menu->addItem(std::string("reset game"), CLOSURE(this, &Controller::onNewGame));
+  menu->addItem(std::string("new game"), CLOSURE(this, &Controller::onNewGame));
   menu->addItem(std::string("Exit"), CLOSURE(this, &Controller::onExit));
   getStage()->addChild(menu);
   ++nextLevel;

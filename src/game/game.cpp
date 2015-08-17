@@ -14,9 +14,9 @@
 using namespace oxygine;
 
 
-
-Game::Game(int l):
+Game::Game(int l, int gs):
   level(l),
+  game_strategy(gs),
   score(0),
   num_of_bots(20),
   num_of_stars(20),
@@ -27,13 +27,12 @@ Game::Game(int l):
   velocity(Vector2(0,0))
 {
   lastTime = getTimeMS();
-  max_main_size = 70;
+  max_main_size = 71;
   main_circle = new Circle(30, stage_size.x/2, stage_size.y/2, genCircleColor());
   addChild(main_circle);
   srand(time(0));
   for(int i = 0; i < num_of_bots; ++i){
-    circles[i] = new Circle(rand() % (eated + 10), rand() % 1000, rand() % 1000,
-      genCircleColor());
+    circles[i] = new Circle(rand() % (eated + 10), rand() % 1000, rand() % 1000, genCircleColor());
     addChild(circles[i]);
   }
   for(int i = 0; i < num_of_stars; ++i){
@@ -57,7 +56,7 @@ int Game::nextFrame(){
 
 void Game::make_turn(){
   for(int i = 0; i < num_of_bots; ++i){
-    circles[i]->accelerate(Vector2(rand() % 3 - 1 , rand() % 3 - 1), 1.0/100);
+    circles[i]->make_line_turn();
   }
   main_circle_turn();
 }
@@ -94,10 +93,7 @@ bool Game::check_main_circle(){
         return false;
       if(main_size > size_i){
         main_circle->eatCircle(circles[i]);
-        circles[i]->detach();
-        circles[i] = new Circle( getRandomCoords() );
-        addChild(circles[i]);
-        getStage()->update();
+        circles[i]->reinit( getRandomCoords() );
         ++eated;
       }
     }
@@ -118,17 +114,11 @@ void Game::check_eaters(){
       if(size_i + size_j >= distance){
         if(size_j < size_i){
           circles[i]->eatCircle(circles[j]);
-          circles[j]->detach();
-          circles[j] = new Circle( getRandomCoords() );
-          addChild(circles[j]);
-          getStage()->update();
+          circles[i]->reinit( getRandomCoords() );
         }
         if(size_j > size_i){
           circles[j]->eatCircle(circles[i]);
-          circles[i]->detach();
-          circles[i] = new Circle( getRandomCoords() );
-          addChild(circles[i]);
-          getStage()->update();
+          circles[i]->reinit( getRandomCoords() );
         }
       }
     }
@@ -184,19 +174,12 @@ Vector2 Game::getRandomCoords(){
 
 void Game::check_bots_positions(){
   for(int i = 0; i < num_of_bots; ++i){
-    circles[i]->loseMass();
     if( !circles[i]->is_in_rect( Vector2(-900, -900), 
         Vector2(stage_size.x+900, stage_size.y + 900) )
       ){
-        renew_circle(circles[i]);
+        circles[i]->reinit(getRandomCoords());
       }
   }
-}
-
-void Game::renew_circle(spCircle& circle){
-  circle = new Circle( getRandomCoords() );
-  addChild(circle);
-  getStage()->update();
 }
 
 Color Game::genCircleColor(){

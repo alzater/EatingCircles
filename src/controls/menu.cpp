@@ -8,8 +8,8 @@ Menu::Menu()
         gameResources.loadXML("res.xml");
     setPosition(getStage()->getSize().x / 2, 200);
     setDefaultStyle(labelStyle);
-    buttonStyle.font = labelStyle.font;
-    //buttonStyle.hAlign = labelStyle.hAlign;
+    setDefaultStyle(buttonStyle);
+    buttonStyle.fontSize2Scale = 20;
     lastHPos = 0;
 }
 
@@ -20,23 +20,23 @@ void Menu::addItem(std::string text)
 	label->setPosition(0, lastHPos);
 	label->setText(text);
 	label->setStyle(labelStyle);
-    lastHPos += 50;
+    lastHPos += 40;
 
 }
 
 void Menu::addItem(std::string text, EventCallback onClick)
 {
     spButton b = new Button();
-    b->setResAnim(gameResources.getResAnim("button"));
 	addChild(b);
-	b->setPosition(Vector2(-95, lastHPos));
+    b->setResAnim(gameResources.getResAnim("button"));
+	b->setPosition(Vector2(-95, lastHPos -15));
     spTextField item = new TextField();
 	item->setText(text);
     item->setSize(b->getSize());
-    item->setStyle(labelStyle);
+    item->setStyle(buttonStyle);
     b->addChild(item);
 	b->addEventListener(TouchEvent::CLICK, onClick);
-    lastHPos += 70;
+    lastHPos += 60;
 }
 
 void Menu::setDefaultStyle(TextStyle& style){
@@ -44,7 +44,7 @@ void Menu::setDefaultStyle(TextStyle& style){
     style.color = Color::White;
     style.vAlign = TextStyle::VALIGN_MIDDLE;
     style.hAlign = TextStyle::HALIGN_CENTER;
-    style.fontSize2Scale = 20;
+    style.fontSize2Scale = 30;
 }
 
 void Menu::setFont(Font* f, int sw){  // 0 - both, 1 - label, 2 - button
@@ -74,6 +74,7 @@ void Menu::setTextColor(Color c, int sw){  // 0 - both, 1 - label, 2 - button
         buttonStyle.color = c;
     }
 }
+
 void Menu::setHAlign(TextStyle::HorizontalAlign ha, int sw){  // 0 - both, 1 - label, 2 - button
     switch(sw){
     case 0:
@@ -87,6 +88,7 @@ void Menu::setHAlign(TextStyle::HorizontalAlign ha, int sw){  // 0 - both, 1 - l
         buttonStyle.hAlign = ha;
     }
 }
+
 void Menu::setVAlign(TextStyle::VerticalAlign va, int sw){  // 0 - both, 1 - label, 2 - button
     switch(sw){
     case 0:
@@ -98,6 +100,20 @@ void Menu::setVAlign(TextStyle::VerticalAlign va, int sw){  // 0 - both, 1 - lab
         break;
     case 2:
         buttonStyle.vAlign = va;
+    }
+}
+
+void Menu::setTextScale(int sc, int sw){  // 0 - both, 1 - label, 2 - button
+    switch(sw){
+    case 0:
+        labelStyle.fontSize2Scale = sc;
+        buttonStyle.fontSize2Scale = sc;
+        break;
+    case 1:
+        labelStyle.fontSize2Scale = sc;
+        break;
+    case 2:
+        buttonStyle.fontSize2Scale = sc;
     }
 }
 

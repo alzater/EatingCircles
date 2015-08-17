@@ -12,28 +12,34 @@ static Resources gameResources;
 
 
 Circle::Circle(int s, int x, int y, Color color):
-    velocity(0,0),
     size(s),
     position( Vector2(x, y) )
-  {
-  if( !gameResources.getUseLoadCounter() )
-    gameResources.loadXML("res.xml");
+{
   setColor(color);
-  setPosition(position);
-  setInputEnabled(false);
-  setUserData(0);
-  setAnimFrame(gameResources.getResAnim("circle"));
-  setScale(size/60);
-  delta_size = 0;
-  setAbilitiesFromColor();
+  all_init();
 }
 
 Circle::Circle(Vector2 vect):
-    velocity(0,0),
-    size(rand() % 57 + 4),
     position( vect )
-  {
+{
+  rand_init();
+}
+
+void Circle::reinit(Vector2 vect)
+{
+  position = vect;
+  rand_init();
+}
+
+void Circle::rand_init(){
+  size = rand() % 57 + 4;
   setColor(Color(rand()%200 + 55, rand() % 200 + 55, rand() % 200 + 55));
+  all_init();  
+}
+
+void Circle::all_init(){
+  if( !gameResources.getUseLoadCounter() )
+    gameResources.loadXML("res.xml");
   setPosition(position);
   setInputEnabled(false);
   setUserData(0);
@@ -41,13 +47,14 @@ Circle::Circle(Vector2 vect):
   setScale(size/60);
   delta_size = 0;
   setAbilitiesFromColor();
+  velocity = Vector2(0,0);
 }
 
 Circle::~Circle(){
 }
 
 void Circle::accelerate(Vector2 ys, double time){
-  velocity += ys;
+  velocity += ys/2;
   position = position + velocity;
   velocity.x -=  velocity.x * size / 250;
   velocity.y -= velocity.y * size / 250;
@@ -114,4 +121,40 @@ void Circle::loseMass(){
 
 void Circle::boost(){
   velocity *= 2;
+}
+
+void Circle::make_rand_turn(){
+  accelerate(Vector2(rand() % 3 - 1 , rand() % 3 - 1), 1.0/100);
+  loseMass();
+}
+
+void Circle::make_line_turn(float delt){
+  if(velocity.x == 0 && velocity.y == 0)
+    make_rand_turn();
+    
+  if(delt < 0 || delt > 1)
+    delt = 0;
+    
+  Vector2 res = velocity/std::sqrt( velocity.x * velocity.x + velocity.y * velocity.y );
+  
+  res.x += (rand() % 3 - 1) * delt;
+  if (res.x > 1)
+    res.x = 1;
+  if (res.x < -1)
+    res.x = -1;
+    
+  res.y += (rand() % 3 - 1) * delt;
+  if (res.y > 1)
+    res.y = 1;
+  if (res.y < -1)
+    res.y = -1;
+    
+  accelerate(res, 1.0/100);
+  loseMass();
+}
+
+void Circle::make_intel_turn(const std::vector<spCircle>& circle, const float& stupid){
+  
+  
+  loseMass();
 }
