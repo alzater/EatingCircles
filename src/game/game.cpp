@@ -56,7 +56,7 @@ int Game::nextFrame(){
 
 void Game::make_turn(){
   for(int i = 0; i < num_of_bots; ++i){
-    circles[i]->make_line_turn();
+    circles[i]->makeLinerTurn();
   }
   main_circle_turn();
 }
@@ -93,7 +93,7 @@ bool Game::check_main_circle(){
         return false;
       if(main_size > size_i){
         main_circle->eatCircle(circles[i]);
-        circles[i]->reinit( getRandomCoords() );
+        circles[i]->reInitialize( getRandomCoords() );
         ++eated;
       }
     }
@@ -114,11 +114,11 @@ void Game::check_eaters(){
       if(size_i + size_j >= distance){
         if(size_j < size_i){
           circles[i]->eatCircle(circles[j]);
-          circles[i]->reinit( getRandomCoords() );
+          circles[i]->reInitialize( getRandomCoords() );
         }
         if(size_j > size_i){
           circles[j]->eatCircle(circles[i]);
-          circles[j]->reinit( getRandomCoords() );
+          circles[j]->reInitialize( getRandomCoords() );
         }
       }
     }
@@ -177,10 +177,10 @@ Vector2 Game::getRandomCoords(){
 
 void Game::check_bots_positions(){
   for(int i = 0; i < num_of_bots; ++i){
-    if( !circles[i]->is_in_rect( Vector2(-900, -900), 
+    if( !circles[i]->isInRectangle( Vector2(-900, -900), 
         Vector2(stage_size.x+900, stage_size.y + 900) )
       ){
-        circles[i]->reinit(getRandomCoords());
+        circles[i]->reInitialize(getRandomCoords());
       }
   }
 }
