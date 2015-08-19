@@ -11,7 +11,7 @@ using namespace oxygine;
 static Resources gameResources;
 
 Circle::Circle(int s, int x, int y, Color color):
-    size_(s)
+    _size(s)
 {
   setPosition(Vector2(x, y));
   setColor(color);
@@ -27,12 +27,16 @@ Circle::Circle(Vector2 vect)
 void Circle::reInitialize(Vector2 vect)
 {
   setPosition(vect);
-  randomInitialize();
+  _size = rand() % 57 + 4;
+  setColor( Color( rand() % 200 + 55, rand() % 200 + 55, rand() % 200 + 55) );
+  setScale(_size/60);
+  _lostSize = 0;
+  velocity = Vector2(0,0);
 }
 
 void Circle::randomInitialize()
 {
-  size_ = rand() % 57 + 4;
+  _size = rand() % 57 + 4;
   setColor( Color( rand() % 200 + 55, rand() % 200 + 55, rand() % 200 + 55) );
   allInitialize();
 }
@@ -46,8 +50,8 @@ void Circle::allInitialize()
   setInputEnabled(false);
   setUserData(0);
   setAnimFrame(gameResources.getResAnim("circle"));
-  setScale(size_/60);
-  lostSize_ = 0;
+  setScale(_size / 60);
+  _lostSize = 0;
   velocity = Vector2(0,0);
 }
 
@@ -59,8 +63,8 @@ void Circle::accelerate(Vector2 acceleration, double time)
 {
   velocity += acceleration / 2;
   setPosition( getPosition() + velocity );
-  velocity.x -=  velocity.x * size_ / 250;
-  velocity.y -= velocity.y * size_ / 250;
+  velocity.x -=  velocity.x * _size / 250;
+  velocity.y -= velocity.y * _size / 250;
 }
 
 void Circle::move(Vector2 deltaPosition)
@@ -70,12 +74,12 @@ void Circle::move(Vector2 deltaPosition)
 
 void Circle::updateGui()
 {
-  setScale(size_ / 60);
+  setScale(_size / 60);
 }
 
 double Circle::getSize()
 {
-  return size_;
+  return _size;
 }
 
 Vector2 Circle::getVelocity()
@@ -89,10 +93,10 @@ void Circle::eatCircle(spCircle& circle)
   double cSize = circle->getSize();
   Color cColor = circle->getColor();
   
-  color.r = (color.r * size_ + cColor.r * cSize) / (size_ + cSize);
-  color.g = (color.g * size_ + cColor.g * cSize) / (size_ + cSize);
-  color.b = (color.b * size_ + cColor.b * cSize) / (size_ + cSize);
-  size_ += cSize / size_;
+  color.r = (color.r * _size + cColor.r * cSize) / (_size + cSize);
+  color.g = (color.g * _size + cColor.g * cSize) / (_size + cSize);
+  color.b = (color.b * _size + cColor.b * cSize) / (_size + cSize);
+  _size += cSize / _size;
   
   setColor(color);
   updateGui();
@@ -101,7 +105,7 @@ void Circle::eatCircle(spCircle& circle)
 
 Vector2 Circle::getCenter()
 {
-  return getPosition() + Vector2(size_, size_);
+  return getPosition() + Vector2(_size, _size);
 }
 
 bool Circle::isInRectangle(Vector2 start, Vector2 end)
@@ -118,12 +122,12 @@ bool Circle::isInRectangle(Vector2 start, Vector2 end)
 
 void Circle::loseMass()
 {
-  double changeSize = size_ * ((double)( 200 - getPower() )) / 2000000.0;
-  lostSize_ += changeSize;
-  size_ -= changeSize;
+  double changeSize = _size * ((double)( 200 - getPower() )) / 2000000.0;
+  _lostSize += changeSize;
+  _size -= changeSize;
   
-  if(lostSize_ > 0.5){
-    lostSize_ = 0;
+  if(_lostSize > 0.5){
+    _lostSize = 0;
     updateGui();
   }
 }

@@ -21,6 +21,8 @@ class Controller{
     void onLoseGame(Event* e);
     void onWinGame(Event* e);
     void gameWait(Event* e);
+    void removeGameFromStage(Event* e);
+    void removeMenuFromStage(Event* e);
     
     bool playing, exit;
     int secondsLeft, nextLevel;

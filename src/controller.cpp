@@ -29,6 +29,8 @@ std::string size(int size){
 }
 
 Controller::Controller(){
+  game = 0;
+  menu = 0;
   playing = false;
   exit = false;
 }
@@ -82,7 +84,7 @@ void Controller::showMenu(){
 
 void Controller::onNewGame(Event* e){
   nextLevel = 1;
-  onNextLevel(NULL);
+  onNextLevel(0);
 }
 
 void Controller::onNextLevel(Event* e){
@@ -109,10 +111,14 @@ void Controller::gameWait(Event* e){
   menu->setAlpha(0);
   getStage()->addChild(menu);
   spTween t = menu->addTween(Actor::TweenAlpha(250), 1000, 1, true, 0);
-  if(!secondsLeft)
-    spTween t2 = menu->addTween(Actor::TweenScale(5), 1000, 1, true, 0);
-  if(secondsLeft)
+  
+  if(secondsLeft > 0){
     t->addEventListener(TweenEvent::DONE, CLOSURE(this, &Controller::gameWait));
+  }
+  else {
+    spTween t2 = menu->addTween(Actor::TweenScale(5), 1000, 1, true, 0);
+    t->addEventListener(TweenEvent::DONE, CLOSURE(this, &Controller::removeMenuFromStage));
+  }
   --secondsLeft;
 }
 
@@ -123,6 +129,7 @@ void Controller::onExit(Event* e){
 void Controller::onLoseGame(Event* e){
   playing = false;
   spTween t = game->addTween(Actor::TweenAlpha(0), 2000);
+  t->addEventListener(TweenEvent::DONE, CLOSURE(this, &Controller::removeGameFromStage));
   menu = new Menu();
   menu->addItem(std::string("Game over"));
   menu->addItem(std::string("new game"), CLOSURE(this, &Controller::onNewGame));
@@ -131,9 +138,11 @@ void Controller::onLoseGame(Event* e){
   nextLevel = 1;
 }
 
-void Controller::onWinGame(Event* e){
+void Controller::onWinGame(Event* e)
+{
   playing = false;
   spTween t = game->addTween(Actor::TweenAlpha(0), 2000);
+  t->addEventListener(TweenEvent::DONE, CLOSURE(this, &Controller::removeGameFromStage));
   menu = new Menu();
   menu->addItem(std::string("You win"));
   menu->addItem(std::string("next level"), CLOSURE(this, &Controller::onNextLevel));
@@ -141,6 +150,16 @@ void Controller::onWinGame(Event* e){
   menu->addItem(std::string("Exit"), CLOSURE(this, &Controller::onExit));
   getStage()->addChild(menu);
   ++nextLevel;
+}
+
+void Controller::removeGameFromStage(Event* e)
+{
+  getStage()->removeChild(game);
+}
+
+void Controller::removeMenuFromStage(Event* e)
+{
+  getStage()->removeChild(menu);
 }
 
 

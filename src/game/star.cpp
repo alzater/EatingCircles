@@ -10,57 +10,65 @@ using namespace oxygine;
 
 static Resources gameResources;
 
-Star::Star(Vector2 vect):
-    position( vect )
-  {
-  setColor(Color(rand()%216 + 20, rand() % 216 + 20, rand() % 216 + 20));
+Star::Star(Vector2 position)
+{
   setPosition(position);
+  setColor( Color(rand() % 216 + 20, rand() % 216 + 20, rand() % 216 + 20) );
   setInputEnabled(false);
   setUserData(0);
   if( !gameResources.getUseLoadCounter() )
     gameResources.loadXML("res.xml");
   switch(rand() % 3){
     case 0:
-      init_bigstar();
+      initializeBig();
       break;
     case 1:
-      init_littlestar();
+      initializeLittle();
       break;
     case 2:
-      init_pulstar();
+      initializePulsar();
   }
 }
 
-Star::~Star(){
+Star::~Star()
+{
 }
 
-void Star::init_bigstar(){
+void Star::initializeBig()
+{
   setAnimFrame(gameResources.getResAnim("bigstar"));
-  setScale((double)(rand() % 5 + 4)/15);
+  setScale( (double)(rand() % 5 + 4) / 15 );
 }
 
-void Star::init_littlestar(){
+void Star::initializeLittle()
+{
   setAnimFrame(gameResources.getResAnim("littlestar"));
-  setScale((double)(rand() % 5 + 2)/ 20);
+  setScale( (double)(rand() % 5 + 2) / 20 );
 }
 
-void Star::init_pulstar(){
+void Star::initializePulsar()
+{
   setAnimFrame(gameResources.getResAnim("pulstar"));
-  setScale((double)(rand() % 3 + 4)/20);
-  addTween( createTween(Actor::TweenScale(0.1, 0.1), 5000, -1, true));
-  addTween( createTween(Actor::TweenRotation(getRotation() + (float)MATH_PI * 2), 10000, -1));
+  setScale( (double)(rand() % 3 + 4) / 20 );
+  addTween( createTween(Actor::TweenScale(0.1, 0.1), 5000, -1, true) );
+  addTween( createTween( Actor::TweenRotation( getRotation() + (float)MATH_PI * 2 ), 10000, -1 ) );
 }
 
-void Star::move(Vector2 delt){
-  position = position + delt;
-  setPosition(position);
+void Star::move(Vector2 deltaPosition)
+{
+  setPosition( getPosition() + deltaPosition );
 }
 
-bool Star::is_in_rect(Vector2 start, Vector2 end){
-  if(position.x < start.x || position.x > end.x ||
-     position.y < start.y || position.y > end.y) return false;
-  else
+bool Star::isInRectangle(Vector2 start, Vector2 end)
+{
+  Vector2 currentPosition = getPosition();
+  if( currentPosition.x < start.x || currentPosition.x > end.x ||
+      currentPosition.y < start.y || currentPosition.y > end.y){
+    return false;
+  }
+  else {
     return true;
+  }
 }
   
 

@@ -10,39 +10,38 @@
 using namespace oxygine;
 
 class Game: public Actor{
-public:
-    Game(int l, int gs = 0);
+  public:
+    Game(int level, int gameStrategy = 0);
     int nextFrame();
-    const GameResults getResult();
-    int getMainCircleSize();
+    GameResults getResult();
     double getFrameTimeMultiplier();
-private:
-    int level, score, num_of_bots, eated, num_of_stars, max_main_size;
-    int game_strategy;
-    Vector2 velocity;
-    Vector2 stage_size;
-    spCircle main_circle;
-    std::vector <spCircle> circles;
-    std::vector <spStar> stars;
-    timeMS lastTime;
-    double timeMultiplier;
+  private:
+    int _level, _score, _nBots, _nEated, _nStars, _maxMainSize;
+    int _gameStrategy;
+    Vector2 _velocity;
+    Vector2 _stageSize;
+    spCircle _mainCircle;
+    std::vector <spCircle> _circles;
+    std::vector <spStar> _stars;
+    timeMS _lastTime;
+    double _timeMultiplier;
     
     Vector2 getRandomCoords();
-    void main_circle_turn();
-    void make_turn();
-    bool check_main_circle();
-    void check_bots_positions();
-    void check_eaters();
+    void mainCircleTurn();
+    void makeTurn();
+    bool checkMainCircle();
+    void checkBotsPositions();
+    void checkEaters();
     Color genCircleColor();
     Color genStarColor();
     bool updateFrameTimeMultiplier();
     
     //---game strategy----
-    void game_beginer();
-    void game_easy();
-    void game_medium();
-    void game_hard();
-    void game_ultra_hard();    
+    void gameBeginer();
+    void gameEasy();
+    void gameMedium();
+    void gameHard();
+    void gameUltraHard();    
 };
 
-typedef oxygine::intrusive_ptr<Game> spGame;
+typedef oxygine::intrusive_ptr <Game> spGame;

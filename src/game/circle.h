@@ -1,13 +1,16 @@
 #pragma once
+
 #include "oxygine-framework.h"
 #include <functional>
+
 using namespace oxygine;
 
 class Circle;
 
 typedef oxygine::intrusive_ptr <Circle> spCircle;
 
-class Circle : public Sprite{
+class Circle : public Sprite
+{
   public:
     Circle(int s, int x, int y, Color color);
     Circle(Vector2 vect);
@@ -34,7 +37,7 @@ class Circle : public Sprite{
     int getPower();
     int getMana();
     int getAgility();
-    double  size_, lostSize_;
+    double _size, _lostSize;
     Vector2 velocity;
 };
 

@@ -1,144 +1,170 @@
 #include "oxygine-framework.h"
 #include <functional>
-#include "game.h"
-#include "circle.h"
-#include "star.h"
-#include <cstdlib>
+#include "SDL.h"
+#include "SDL_keyboard.h"
+
 #include <ctime>
 #include <cmath>
 #include <iostream>
-#include "SDL.h"
-#include "SDL_keyboard.h"
+#include <cstdlib>
+
+#include "game.h"
+#include "circle.h"
+#include "star.h"
 #include "../controls/DTO.h"
 
 using namespace oxygine;
 
 
-Game::Game(int l, int gs):
-  level(l),
-  game_strategy(gs),
-  score(0),
-  num_of_bots(20),
-  num_of_stars(20),
-  circles(num_of_bots),
-  stars(num_of_stars),
-  stage_size(core::getDisplaySize()),
-  eated(0),
-  velocity(Vector2(0,0))
+Game::Game(int level, int gameStrategy):
+  _level(level),
+  _gameStrategy(gameStrategy),
+  _score(0),
+  _nBots(20),
+  _nStars(20),
+  _circles(_nBots),
+  _stars(_nStars),
+  _stageSize(core::getDisplaySize()),
+  _nEated(0),
+  _velocity(Vector2(0,0))
 {
-  lastTime = getTimeMS();
-  max_main_size = 71;
-  main_circle = new Circle(30, stage_size.x/2, stage_size.y/2, genCircleColor());
-  addChild(main_circle);
+  _lastTime = getTimeMS();
+  _maxMainSize = 71;
+  _mainCircle = new Circle(30, _stageSize.x / 2, _stageSize.y / 2, genCircleColor());
+  addChild(_mainCircle);
   srand(time(0));
-  for(int i = 0; i < num_of_bots; ++i){
-    circles[i] = new Circle(rand() % (eated + 10), rand() % 1000, rand() % 1000, genCircleColor());
-    addChild(circles[i]);
+  for(int i = 0; i < _nBots; ++i){
+    _circles[i] = new Circle(rand() % (_nEated + 10), rand() % 1000, rand() % 1000, genCircleColor());
+    addChild(_circles[i]);
   }
-  for(int i = 0; i < num_of_stars; ++i){
-    stars[i] = new Star(Vector2(rand() % 1000, rand() % 1000));
-    addChild(stars[i]);
+  for(int i = 0; i < _nStars; ++i){
+    _stars[i] = new Star(Vector2(rand() % 1000, rand() % 1000));
+    addChild(_stars[i]);
   }
 }
 
-int Game::nextFrame(){
+int Game::nextFrame()
+{
   if(!updateFrameTimeMultiplier())
     return 0;
-  make_turn();
-  check_eaters();
-  check_bots_positions();
-  if(!check_main_circle())
+  makeTurn();
+  checkEaters();
+  checkBotsPositions();
+  if(!checkMainCircle())
     return 1; //game losed
-  if(main_circle->getSize() > max_main_size)
+  if(_mainCircle->getSize() > _maxMainSize)
     return 2; //level passed
   return 0;
 }
 
-void Game::make_turn(){
-  for(int i = 0; i < num_of_bots; ++i){
-    circles[i]->makeLinerTurn();
+void Game::makeTurn()
+{
+  for(int i = 0; i < _nBots; ++i){
+    _circles[i]->makeLinerTurn();
   }
-  main_circle_turn();
+  mainCircleTurn();
 }
 
-void Game::main_circle_turn(){
+void Game::mainCircleTurn()
+{
   const Uint8* data  = SDL_GetKeyboardState(0);
-  Vector2 vec(0,0);
-  if (data[SDL_SCANCODE_A] or data[SDL_SCANCODE_LEFT]) vec.x = 1;
-  if (data[SDL_SCANCODE_D] or data[SDL_SCANCODE_RIGHT]) vec.x = -1;
-  if (data[SDL_SCANCODE_W] or data[SDL_SCANCODE_UP]) vec.y = 1;
-  if (data[SDL_SCANCODE_S] or data[SDL_SCANCODE_DOWN]) vec.y = -1;
-  if (data[SDL_SCANCODE_SPACE]) velocity *= 1.1;
-  velocity += vec - velocity * 0.04;
-  for(int i = 0; i < num_of_bots; ++i){
-    circles[i]->move(velocity);
+  Vector2 displacement(0,0);
+  
+  if (data[SDL_SCANCODE_A] or data[SDL_SCANCODE_LEFT]) displacement.x = 1;
+  if (data[SDL_SCANCODE_D] or data[SDL_SCANCODE_RIGHT]) displacement.x = -1;
+  if (data[SDL_SCANCODE_W] or data[SDL_SCANCODE_UP]) displacement.y = 1;
+  if (data[SDL_SCANCODE_S] or data[SDL_SCANCODE_DOWN]) displacement.y = -1;
+  if (data[SDL_SCANCODE_SPACE]) _velocity *= 1.1;
+  _velocity += displacement - _velocity * 0.04;
+  
+  for(int i = 0; i < _nBots; ++i)
+  {
+    _circles[i]->move(_velocity);
   }
-  for(int i = 0; i < num_of_stars; ++i){
-    stars[i]->move(velocity * 0.1);
+  
+  for(int i = 0; i < _nBots; ++i)
+  {
+    _stars[i]->move(_velocity * 0.1);
   }
-  main_circle->loseMass();
+  
+  _mainCircle->loseMass();
 }
 
-bool Game::check_main_circle(){
-  for(int i = 0; i < num_of_bots; ++i){
-    Vector2 main_coords = main_circle->getCenter();
-    Vector2 coords_i = circles[i]->getCenter();
-    double main_size = main_circle->getSize();
-    double size_i = circles[i]->getSize();
-    double distance = std::sqrt(std::pow(main_coords.x - coords_i.x, 2) +
-      std::pow(main_coords.y - coords_i.y, 2) );
+bool Game::checkMainCircle()
+{
+  for(int i = 0; i < _nBots; ++i)
+  {
+    Vector2 mainCoords = _mainCircle->getCenter();
+    Vector2 iCoords = _circles[i]->getCenter();
+    double mainSize = _mainCircle->getSize();
+    double iSize = _circles[i]->getSize();
+    
+    double distance = std::sqrt(std::pow(mainCoords.x - iCoords.x, 2) +
+      std::pow(mainCoords.y - iCoords.y, 2) );
     getStage()->update();
-    if(size_i + main_size >= distance){
-      if(main_size < size_i)
+    
+    if(iSize + mainSize >= distance)
+    {
+      if(mainSize < iSize)
         return false;
-      if(main_size > size_i){
-        main_circle->eatCircle(circles[i]);
-        circles[i]->reInitialize( getRandomCoords() );
-        ++eated;
+        
+      if(mainSize > iSize)
+      {
+        _mainCircle->eatCircle(_circles[i]);
+        _circles[i]->reInitialize( getRandomCoords() );
+        _nEated++;
       }
     }
   }
   return true;
 }
 
-void Game::check_eaters(){
-  for(int i = 1; i < num_of_bots; ++i){
-    for(int j = 0; j < i; ++j){
-      Vector2 coords_j = circles[j]->getCenter();
-      Vector2 coords_i = circles[i]->getCenter();
-      double size_j = circles[j]->getSize();
-      double size_i = circles[i]->getSize();
-      double distance = std::sqrt(std::pow(coords_i.x - coords_j.x, 2) +
-        std::pow(coords_i.y - coords_j.y, 2) );
+void Game::checkEaters()
+{
+  for(int i = 1; i < _nBots; ++i)
+  {
+    for(int j = 0; j < i; ++j)
+    {
+      Vector2 jCoords = _circles[j]->getCenter();
+      Vector2 iCoords = _circles[i]->getCenter();
+      double jSize = _circles[j]->getSize();
+      double iSize = _circles[i]->getSize();
+      double distance = std::sqrt(std::pow(iCoords.x - jCoords.x, 2) +
+        std::pow(iCoords.y - jCoords.y, 2) );
       
-      if(size_i + size_j >= distance){
-        if(size_j < size_i){
-          circles[i]->eatCircle(circles[j]);
-          circles[i]->reInitialize( getRandomCoords() );
+      if(iSize + jSize >= distance)
+      {
+        if(jSize < iSize)
+        {
+          _circles[i]->eatCircle(_circles[j]);
+          _circles[j]->reInitialize( getRandomCoords() );
         }
-        if(size_j > size_i){
-          circles[j]->eatCircle(circles[i]);
-          circles[j]->reInitialize( getRandomCoords() );
+        if(jSize > iSize)
+        {
+          _circles[j]->eatCircle(_circles[i]);
+          _circles[i]->reInitialize( getRandomCoords() );
         }
       }
     }
   }
 }
 
-Vector2 Game::getRandomCoords(){
-  int x, y, sx = stage_size.x, sy = stage_size.y, div, temp_x, temp_y;
+Vector2 Game::getRandomCoords()
+{
+  int x, y, sx = _stageSize.x, sy = _stageSize.y, division, tempX, tempY;
 
-  div = rand() % 8;
-  /*
-   * 1 2 3
-   * 0   4
-   * 7 6 5
-   */
+  division = rand() % 8;
+
+  // 1 2 3
+  // 0   4
+  // 7 6 5
+  
   const int EX = 400;
   const int EY = 400;
   const int ES = 100;
   
-  switch( div ){
+  switch( division )
+  {
     case 0 :
       x = -(rand() % EX) - ES;
       y = rand() % sy;
@@ -172,46 +198,50 @@ Vector2 Game::getRandomCoords(){
       y = -(rand() % EY) - ES;    
   }
   
-  return Vector2(x, y);
+  return Vector2((float)x, (float)y);
 }
 
-void Game::check_bots_positions(){
-  for(int i = 0; i < num_of_bots; ++i){
-    if( !circles[i]->isInRectangle( Vector2(-900, -900), 
-        Vector2(stage_size.x+900, stage_size.y + 900) )
-      ){
-        circles[i]->reInitialize(getRandomCoords());
-      }
+void Game::checkBotsPositions()
+{
+  for(int i = 0; i < _nBots; ++i)
+  {
+    if( !_circles[i]->isInRectangle( Vector2(-400, -400), 
+        Vector2(_stageSize.x + 400, _stageSize.y + 400) ) )
+    {
+      _circles[i]->reInitialize(getRandomCoords());
+    }
   }
 }
 
-Color Game::genCircleColor(){
+Color Game::genCircleColor()
+{
   return Color(rand() % 200 + 55, rand() % 200 + 55, rand() % 200 + 55);
 }
 
-Color Game::genStarColor(){
+Color Game::genStarColor()
+{
   return genCircleColor();
 }
 
-const GameResults Game::getResult(){
-  return GameResults(level, eated, score);
+GameResults Game::getResult()
+{
+  return GameResults(_level, _nEated, _score);
 }
 
-int Game::getMainCircleSize(){
-  return main_circle->getSize();
-}
-
-bool Game::updateFrameTimeMultiplier(){
+bool Game::updateFrameTimeMultiplier()
+{
   timeMS newTime = getTimeMS();
-  if(lastTime == newTime)
+  if(_lastTime == newTime)
     return false;
-  timeMS deltaTime = newTime - lastTime;
-  timeMultiplier = (double)deltaTime/1000;
-  lastTime = newTime; 
-  std::cout << timeMultiplier << std::endl;
+
+  timeMS deltaTime = newTime - _lastTime;
+  _timeMultiplier = (double)deltaTime / 1000;
+  _lastTime = newTime; 
+  //std::cout << timeMultiplier << std::endl;
   return true;  
 }
 
-double Game::getFrameTimeMultiplier(){
-  return timeMultiplier;
+double Game::getFrameTimeMultiplier()
+{
+  return _timeMultiplier;
 }
