@@ -62,6 +62,8 @@ void Game::makeTurn()
   for(int i = 0; i < _nBots; ++i){
     _circles[i]->makeLinerTurn();
   }
+  Vector2 t = _circles[8]->getPosition();
+  //std::cout << t.x << " " << t.y << std::endl;
   mainCircleTurn();
 }
 
@@ -110,6 +112,7 @@ bool Game::checkMainCircle()
         
       if(mainSize > iSize)
       {
+        std::cout << i << " was eated by MAIN" << std::endl;
         _mainCircle->eatCircle(_circles[i]);
         _circles[i]->reInitialize( getRandomCoords() );
         _nEated++;
@@ -138,11 +141,13 @@ void Game::checkEaters()
         {
           _circles[i]->eatCircle(_circles[j]);
           _circles[j]->reInitialize( getRandomCoords() );
+          std::cout << i << " was eated by " << j << std::endl;
         }
         if(jSize > iSize)
         {
           _circles[j]->eatCircle(_circles[i]);
           _circles[i]->reInitialize( getRandomCoords() );
+          std::cout << j << " was eated by " << i << std::endl;
         }
       }
     }
@@ -151,7 +156,7 @@ void Game::checkEaters()
 
 Vector2 Game::getRandomCoords()
 {
-  int x, y, sx = _stageSize.x, sy = _stageSize.y, division, tempX, tempY;
+  int x = 0, y = 0, sx = _stageSize.x, sy = _stageSize.y, division, tempX, tempY;
 
   division = rand() % 8;
 

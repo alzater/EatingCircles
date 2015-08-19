@@ -26,6 +26,7 @@ Circle::Circle(Vector2 vect)
 
 void Circle::reInitialize(Vector2 vect)
 {
+  //std::cout << vect.x << " " << vect.y << std::endl;
   setPosition(vect);
   _size = rand() % 57 + 4;
   setColor( Color( rand() % 200 + 55, rand() % 200 + 55, rand() % 200 + 55) );
@@ -146,12 +147,20 @@ void Circle::makeRandomTurn()
 void Circle::makeLinerTurn(float deviation)
 {
   if(velocity.x == 0 && velocity.y == 0)
+  {
     makeRandomTurn();
+    return;
+  }
     
   if(deviation < 0 || deviation > 1)
     deviation = 0;
-    
-  Vector2 result = velocity / std::sqrt( velocity.x * velocity.x + velocity.y * velocity.y );
+  
+  Vector2 result;
+  float znam = std::sqrt( velocity.x * velocity.x + velocity.y * velocity.y );
+  if(znam > 0)
+     result = velocity / znam ;
+  else
+    result = velocity;
   
   result.x += (rand() % 3 - 1) * deviation;
   if (result.x > 1)
@@ -164,7 +173,7 @@ void Circle::makeLinerTurn(float deviation)
     result.y = 1;
   if (result.y < -1)
     result.y = -1;
-    
+  std::cout << result.x << " " << result.y << " velocity: " << velocity.x << " " << velocity.y << std::endl;
   accelerate(result, 1.0 / 100);
   loseMass();
 }
