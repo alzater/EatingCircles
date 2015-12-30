@@ -1,7 +1,9 @@
 #pragma once
 #include "oxygine-framework.h"
 #include <functional>
+
 #include "game/game.h"
+#include "controls/menu.h"
 
 using namespace oxygine;
 
@@ -14,6 +16,13 @@ class Controller{
     Controller();
 
   private:
+    spGame game;
+    spMenu menu;
+    spTextField item;
+    
+    bool playing, exit;
+    int secondsLeft, nextLevel;
+    
     void showMenu();
     void onNewGame(Event* e);
     void onNextLevel(Event* e);
@@ -24,8 +33,7 @@ class Controller{
     void removeGameFromStage(Event* e);
     void removeMenuFromStage(Event* e);
     
-    bool playing, exit;
-    int secondsLeft, nextLevel;
+
     //hideMenu();
     //startGame();
     //showGameResult();
