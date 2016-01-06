@@ -6,7 +6,7 @@
 #include <sstream>
 
 #include "controller.h"
-#include "game/game.h"
+#include "game/Game.h"
 #include "controls/menu.h"
 
 using namespace oxygine;
@@ -25,8 +25,8 @@ std::string size(int d)
 
 Controller::Controller()
 {
-    game = 0;
-    menu = 0;
+    game = nullptr;
+    menu = nullptr;
     playing = false;
     exit = false;
 }
@@ -89,10 +89,9 @@ void Controller::onNewGame(Event* e)
 void Controller::onNextLevel(Event* e)
 {
     spTween t = menu->addTween(Actor::TweenAlpha(0), 1000);
-    secondsLeft = 3;
+    secondsLeft = 1;
     t->addEventListener(TweenEvent::DONE, CLOSURE(this, &Controller::gameWait));
     game = new Game(1);
-    getStage()->addChild(game);
 }
 
 void Controller::gameWait(Event* e)
@@ -131,8 +130,8 @@ void Controller::onExit(Event* e)
 void Controller::onLoseGame(Event* e)
 {
     playing = false;
-    spTween t = game->addTween(Actor::TweenAlpha(0), 2000);
-    t->addEventListener(TweenEvent::DONE, CLOSURE(this, &Controller::removeGameFromStage));
+    game = nullptr;
+    CLOSURE(this, &Controller::removeGameFromStage);
     menu = new Menu();
     menu->addItem(std::string("Game over"));
     menu->addItem(std::string("new game"), CLOSURE(this, &Controller::onNewGame));
@@ -144,8 +143,8 @@ void Controller::onLoseGame(Event* e)
 void Controller::onWinGame(Event* e)
 {
     playing = false;
-    spTween t = game->addTween(Actor::TweenAlpha(0), 2000);
-    t->addEventListener(TweenEvent::DONE, CLOSURE(this, &Controller::removeGameFromStage));
+    game = nullptr;
+    CLOSURE(this, &Controller::removeGameFromStage);
     menu = new Menu();
     menu->addItem(std::string("You win"));
     menu->addItem(std::string("next level"), CLOSURE(this, &Controller::onNextLevel));
@@ -157,7 +156,6 @@ void Controller::onWinGame(Event* e)
 
 void Controller::removeGameFromStage(Event* e)
 {
-    getStage()->removeChild(game);
 }
 
 void Controller::removeMenuFromStage(Event* e)

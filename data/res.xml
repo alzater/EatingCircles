@@ -5,9 +5,12 @@
 	<set path = "images" />
 	<atlas>
 		<image file="circle.png" />
+		<image file="packman.png" cols="4"/>
+		<image file="oct3.png" cols="2"/>
+		<image file="oct4.png" cols="2"/>
     <image file="bigstar.png" />	
     <image file="littlestar.png" />	
     <image file="pulstar.png" />
-		<image file="button.png" cols = "3" />
+		<image file="button.png" cols="3" />
 	</atlas>
 </resources>

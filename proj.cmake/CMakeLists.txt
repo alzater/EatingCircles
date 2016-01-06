@@ -9,17 +9,19 @@ link_directories(${OXYGINE_LIBRARY_DIRS})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 add_executable(EatingCircles  
         ../src/entry_point.cpp 
-        ../src/controller.cpp  
-        ../src/controller.h 
-        ../src/game/circle.cpp  
-        ../src/game/circle.h 
-        ../src/game/game.cpp  
-        ../src/game/game.h 
-        ../src/game/star.cpp 
-        ../src/game/star.h
-        ../src/controls/menu.h
+        ../src/controller.cpp   
+        ../src/game/Game.cpp
+        ../src/game/GameObject.cpp 
+        ../src/game/PlayerObject.cpp
+        ../src/game/gui/Circle.cpp
+        ../src/game/gui/Packman.cpp
+        ../src/game/gui/GuiObject.cpp
+        ../src/game/gui/GuiController.cpp
+        ../src/game/Bot.cpp
+        ../src/game/AI.cpp
+        ../src/game/Player.cpp
+        ../src/game/extraObjects/star.cpp 
         ../src/controls/menu.cpp
-        ../src/controls/DTO.h
 )
 
 if (WIN32) #disable console mode for VC++

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __STAR_H__
+#define __STAR_H__
+
 #include "oxygine-framework.h"
 #include <functional>
 using namespace oxygine;
@@ -21,3 +23,4 @@ class Star : public Sprite
     double  size_;
 };
 
+#endif

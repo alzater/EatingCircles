@@ -2,7 +2,7 @@
 #include "oxygine-framework.h"
 #include <functional>
 
-#include "game/game.h"
+#include "game/Game.h"
 #include "controls/menu.h"
 
 using namespace oxygine;
