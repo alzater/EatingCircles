@@ -1,11 +1,10 @@
 #include "Circle.h"
 
+extern Resources gameResources;
+
 Circle::Circle(const Vector2& position, const double size, const Color& color):
     GuiObject(position)
 {
-  if( !gameResources.getUseLoadCounter() )
-    gameResources.loadXML("res.xml");
-
     circle = new Sprite();
     gui->addChild(circle);
     circle->setAnimFrame(gameResources.getResAnim("circle"));

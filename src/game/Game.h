@@ -11,15 +11,20 @@
 
 using namespace oxygine;
 
-class Game : public Object{
+class Game : public Object
+{
     public:
         Game(int level, int gameStrategy = 0);
         int nextFrame();
         GameResults getResult();
         double getFrameTimeMultiplier();
+        void attachTo(spActor actor);
+        void pause();
+        void resume();
     private:
         int _level, _score, _nBots, _nEated, _nStars, _maxMainSize;
         int _gameStrategy;
+        bool _pause;
         Vector2 _velocity;
         Vector2 _stageSize;
         spPlayer _player;

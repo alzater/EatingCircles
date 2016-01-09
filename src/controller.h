@@ -1,42 +1,47 @@
-#pragma once
+#ifndef __CONTROLLER_H__
+#define __CONTROLLER_H__
+
 #include "oxygine-framework.h"
-#include <functional>
+#include "flow.h"
 
 #include "game/Game.h"
 #include "controls/menu.h"
+
+#include "scenes/MainMenuScene.h"
+#include "scenes/GameScene.h"
 
 using namespace oxygine;
 
 class Controller{
   public:
+    static Controller& getController()
+    {
+      if (_instance == NULL) _instance = new Controller();
+      return *_instance;
+    }
+
     void preinit();
     void init();
     void destroy();
     int update();
-    Controller();
+
+    static void setGame(spGame game);
+    static void removeGame();
 
   private:
-    spGame game;
-    spMenu menu;
-    spTextField item;
-    
-    bool playing, exit;
-    int secondsLeft, nextLevel;
-    
-    void showMenu();
-    void onNewGame(Event* e);
-    void onNextLevel(Event* e);
-    void onExit(Event* e);
-    void onLoseGame(Event* e);
-    void onWinGame(Event* e);
-    void gameWait(Event* e);
-    void removeGameFromStage(Event* e);
-    void removeMenuFromStage(Event* e);
-    
+    Controller();
+    static Controller* _instance;
 
-    //hideMenu();
-    //startGame();
-    //showGameResult();
-    //finishGame();
-    //oxygine::intrusive_ptr<Game> spGame;
+    spGameScene _gameScene;
+    spMainMenuScene _mainMenuScene;
+
+    spTextField _item;
+    static spGame _game;
+
+
+
+    bool exit;
+    int nextLevel;
 };
+
+#endif

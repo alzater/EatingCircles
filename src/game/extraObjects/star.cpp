@@ -8,7 +8,7 @@ using namespace oxygine;
 //in real project you would have more than one Resources declarations. 
 //It is important on mobile devices with limited memory and you would load/unload them
 
-static Resources gameResources;
+extern Resources gameResources;
 
 Star::Star(Vector2 position)
 {
@@ -16,8 +16,7 @@ Star::Star(Vector2 position)
   setColor( Color(rand() % 216 + 20, rand() % 216 + 20, rand() % 216 + 20) );
   setInputEnabled(false);
   setUserData(0);
-  if( !gameResources.getUseLoadCounter() )
-    gameResources.loadXML("res.xml");
+
   switch(rand() % 3){
     case 0:
       initializeBig();

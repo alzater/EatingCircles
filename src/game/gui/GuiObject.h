@@ -5,7 +5,6 @@
 
 using namespace oxygine;
 
-extern Resources gameResources;
 
 class GuiObject: public Object
 {

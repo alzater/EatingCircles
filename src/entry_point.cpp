@@ -15,7 +15,6 @@ You could start from example.cpp and example.h it has main functions being calle
 using namespace oxygine;
 
 Color clearColor(10, 10, 10, 255);
-Controller* controller;
 
 Color update_color(){
   static int frame;
@@ -59,7 +58,7 @@ Color update_color(){
 //called each frame
 int mainloop()
 {
-	bool done = controller->update();
+	bool done = getController()->update();
 	//update our stage
 	//update all actors. Actor::update would be called also for all children
 	getStage()->update();
@@ -86,7 +85,6 @@ int mainloop()
 //it is application entry point
 void run()
 {
-        controller = new Controller();
 	ObjectBase::__startTracingLeaks();
 
 	//initialize Oxygine's internal stuff
@@ -100,7 +98,7 @@ void run()
 #endif
 
 
-	controller->preinit();
+    Controller::getController()->preinit();
 	core::init(&desc);
 
 
@@ -113,7 +111,7 @@ void run()
 	DebugActor::show();
 		
 	//initialize this example stuff. see example.cpp
-	controller->init();
+	getController()->init();
 
 #ifdef EMSCRIPTEN
 	/*
@@ -143,7 +141,7 @@ void run()
 	//but now we want delete it by hands
 
 	//check example.cpp
-	controller->destroy();
+	getController()->destroy();
 
 
 	//renderer.cleanup();

@@ -26,6 +26,7 @@ Game::Game(int level, int gameStrategy):
     _stars(_nStars),
     _stageSize(core::getDisplaySize()),
     _nEated(0),
+    _pause(true),
     _velocity(Vector2(0,0)),
     _gameStage(new Actor())
 {
@@ -52,8 +53,12 @@ Game::Game(int level, int gameStrategy):
 
 int Game::nextFrame()
 {
+    if(_pause)
+        return 0;
+
     if(!updateFrameTimeMultiplier())
         return 0;
+
     makeTurn();
     checkEaters();
     checkBotsPositions();
@@ -253,4 +258,19 @@ bool Game::updateFrameTimeMultiplier()
 double Game::getFrameTimeMultiplier()
 {
     return _timeMultiplier;
+}
+
+void Game::attachTo(spActor actor)
+{
+    actor->addChild(_gameStage);
+}
+
+void Game::pause()
+{
+    _pause = true;
+}
+
+void Game::resume()
+{
+    _pause = false;
 }

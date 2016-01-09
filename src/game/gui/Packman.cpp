@@ -1,11 +1,10 @@
 #include "Packman.h"
 
+extern Resources gameResources;
+
 Packman::Packman(const Vector2& position, const double size, const Color& color):
     GuiObject(position)
 {
-  if( !gameResources.getUseLoadCounter() )
-    gameResources.loadXML("res.xml");
-
     packman = new Sprite();
     gui->addChild(packman);
     packman->setAnimFrame(gameResources.getResAnim("packman"));
