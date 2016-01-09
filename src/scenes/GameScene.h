@@ -10,6 +10,7 @@ class GameScene : public flow::Scene
 {
     public:
         GameScene();
+        virtual ~GameScene();
 
     private:
         void gameWait(Event *e);

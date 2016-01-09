@@ -13,7 +13,13 @@ using namespace oxygine;
 
 Resources gameResources;
 
-spGame Controller::_game = nullptr;
+Controller* Controller::_instance;
+
+Controller* Controller::getController()
+{
+  if (_instance == NULL) _instance = new Controller();
+  return _instance;
+}
 
 Controller::Controller()
 {

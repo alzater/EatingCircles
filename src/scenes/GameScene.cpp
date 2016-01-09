@@ -11,8 +11,13 @@ GameScene::GameScene() :
     _view = new Actor;
     _view->attachTo(_holder);
     _game->attachTo(_view);
-    Controller::setGame(_game);
+    Controller::getController()->setGame(_game);
     gameWait(nullptr);
+}
+
+GameScene::~GameScene()
+{
+    Controller::getController()->removeGame();
 }
 
 void GameScene::gameWait(Event *e)

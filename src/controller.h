@@ -14,31 +14,25 @@ using namespace oxygine;
 
 class Controller{
   public:
-    static Controller& getController()
-    {
-      if (_instance == NULL) _instance = new Controller();
-      return *_instance;
-    }
+    static Controller* getController();
 
     void preinit();
     void init();
     void destroy();
     int update();
 
-    static void setGame(spGame game);
-    static void removeGame();
+    void setGame(spGame game);
+    void removeGame();
 
   private:
-    Controller();
     static Controller* _instance;
+    Controller();
 
     spGameScene _gameScene;
     spMainMenuScene _mainMenuScene;
 
     spTextField _item;
-    static spGame _game;
-
-
+    spGame _game;
 
     bool exit;
     int nextLevel;

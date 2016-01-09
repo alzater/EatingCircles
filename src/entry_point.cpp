@@ -16,49 +16,10 @@ using namespace oxygine;
 
 Color clearColor(10, 10, 10, 255);
 
-Color update_color(){
-  static int frame;
-  return clearColor;
-  ++frame;
-  if(!frame) 
-    return clearColor;
-  
-  int chose = rand() % 3, change = rand() % 2, color;
-  if( !change )
-    --change;
-
-  switch( chose ){
-    case 0:
-      color = clearColor.r;
-      break;
-    case 1:
-      color = clearColor.g;
-      break;
-    case 2:
-      color = clearColor.b;
-  }
-  
-  color += change * 5;
-  if(color > 255 || color < 0)
-    color = 125;
-  
-  switch( chose ){
-    case 0:
-      clearColor.r = color;
-      break;
-    case 1:
-      clearColor.g = color;
-      break;
-    case 2:
-      clearColor.b = color;
-  }
-  return clearColor;
-}
-
 //called each frame
 int mainloop()
 {
-	bool done = getController()->update();
+	bool done = Controller::getController()->update();
 	//update our stage
 	//update all actors. Actor::update would be called also for all children
 	getStage()->update();
@@ -68,7 +29,7 @@ int mainloop()
 		
 		Rect viewport(Point(0, 0), core::getDisplaySize());
 		//render all actors. Actor::render would be called also for all children
-		getStage()->render(update_color(), viewport);
+		getStage()->render(clearColor, viewport);
 
 		core::swapDisplayBuffers();
 	}
@@ -111,7 +72,7 @@ void run()
 	DebugActor::show();
 		
 	//initialize this example stuff. see example.cpp
-	getController()->init();
+    Controller::getController()->init();
 
 #ifdef EMSCRIPTEN
 	/*
@@ -141,7 +102,7 @@ void run()
 	//but now we want delete it by hands
 
 	//check example.cpp
-	getController()->destroy();
+    Controller::getController()->destroy();
 
 
 	//renderer.cleanup();
