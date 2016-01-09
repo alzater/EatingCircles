@@ -1,4 +1,5 @@
 #include "MainMenuScene.h"
+#include "../Controller.h"
 
 MainMenuScene::MainMenuScene()
 {

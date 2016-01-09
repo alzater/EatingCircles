@@ -5,7 +5,7 @@
 #include <string>
 #include <sstream>
 
-#include "controller.h"
+#include "Controller.h"
 #include "game/Game.h"
 #include "controls/menu.h"
 
@@ -35,9 +35,7 @@ void Controller::init()
     gameResources.loadXML("res.xml");
 
     flow::init();
-    _gameScene = new GameScene;
-    _mainMenuScene = new MainMenuScene;
-    flow::show(_gameScene);
+    changeScene(Scenes::MAIN_MENU_SCENE);
 
     _item = new TextField();
     _item->setPosition(0, 600);
@@ -70,4 +68,22 @@ void Controller::setGame(spGame game)
 void Controller::removeGame()
 {
     Controller::_game = nullptr;
+}
+
+void Controller::changeScene(Scenes newScene)
+{
+    switch(newScene)
+    {
+        case Scenes::GAME_SCENE:
+            _gameScene = new GameScene;
+            flow::show(_gameScene, [this](Event *e){_gameScene = nullptr;});
+            break;
+        case Scenes::MAIN_MENU_SCENE:
+            _mainMenuScene = new MainMenuScene;
+            flow::show(_mainMenuScene, [this](Event *e){_mainMenuScene = nullptr;});
+            break;
+        default:
+            flow::show(_mainMenuScene);
+            break;
+    }
 }

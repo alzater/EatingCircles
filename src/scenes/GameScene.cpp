@@ -1,5 +1,5 @@
 #include "GameScene.h"
-#include "../controller.h"
+#include "../Controller.h"
 
 extern Resources gameResources;
 
@@ -30,7 +30,7 @@ void GameScene::gameWait(Event *e)
         style.hAlign = TextStyle::HALIGN_CENTER;
 
         _gameWaitTimer = new TextField;
-        getStage()->addChild(_gameWaitTimer);
+        _gameWaitTimer->attachTo(_view);
         _gameWaitTimer->setStyle(style);
         _gameWaitTimer->setAnchor(Vector2(0.5, 0.5));
         Vector2 pos = getStage()->getSize()/2;

@@ -8,7 +8,7 @@ You could start from example.cpp and example.h it has main functions being calle
 #include "Stage.h"
 #include "DebugActor.h"
 
-#include "controller.h"
+#include "Controller.h"
 
 
 
