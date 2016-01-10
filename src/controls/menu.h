@@ -22,6 +22,7 @@ private:
     TextStyle labelStyle, buttonStyle;
     void setDefaultStyle(TextStyle& style);
     spActor menu;
+    spColorRectSprite background;
 };
 
 typedef oxygine::intrusive_ptr<Menu> spMenu;

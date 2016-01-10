@@ -1,4 +1,5 @@
 #include "MainMenuScene.h"
+#include "ConfirmDialog.h"
 #include "../Controller.h"
 
 MainMenuScene::MainMenuScene()
@@ -8,6 +9,13 @@ MainMenuScene::MainMenuScene()
             Controller::getController()->changeScene(Scenes::GAME_SCENE);
         });
     _menu->addItem(std::string("EXIT"), [](Event *e){
-            core::requestQuit();
+            std::string confirm("EXIT");
+            spConfirmDialog dialog = new ConfirmDialog(std::string("REALY EXIT?"), confirm);
+            flow::show(dialog, [=](Event* ev) {
+                    if (ev->target->getName() == confirm)
+                    {
+                        core::requestQuit();
+                    }
+                });
         });
 }

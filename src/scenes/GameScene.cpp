@@ -9,6 +9,7 @@ GameScene::GameScene() :
 {
     _game = new Game(1);
     _view = new Actor;
+    _view->setSize(getStage()->getSize());
     _view->attachTo(_holder);
     _game->attachTo(_view);
     Controller::getController()->setGame(_game);

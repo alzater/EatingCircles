@@ -12,6 +12,12 @@ Menu::Menu(const Vector2& position)
     setDefaultStyle(buttonStyle);
     buttonStyle.fontSize2Scale = 20;
     lastHPos = 0;
+
+    background = new ColorRectSprite;
+    background->setColor(Color(50, 15, 15));
+    background->setAnchor(Vector2(0.5, 0.5));
+    background->setPosition(0, 100);
+    background->attachTo(menu);
 }
 
 void Menu::addItem(std::string text)
@@ -22,6 +28,7 @@ void Menu::addItem(std::string text)
     label->setText(text);
     label->setStyle(labelStyle);
     lastHPos += 40;
+    background->setSize(300, lastHPos + 100);
 
 }
 
@@ -38,6 +45,7 @@ void Menu::addItem(std::string text, EventCallback onClick)
     b->addChild(item);
     b->addEventListener(TouchEvent::CLICK, onClick);
     lastHPos += 60;
+    background->setSize(300, lastHPos + 100);
 }
 
 void Menu::addToActor(spActor actor)
