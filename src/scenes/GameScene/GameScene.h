@@ -2,7 +2,7 @@
 #define __GAME_SCENE_H__
 
 #include "Scene.h"
-#include "../game/Game.h"
+#include "../../game/Game.h"
 
 DECLARE_SMART(GameScene, spGameScene);
 

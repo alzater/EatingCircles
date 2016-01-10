@@ -14,10 +14,10 @@ add_executable(EatingCircles
         ../src/entry_point.cpp
         ../src/Controller.cpp
 
-        ../src/scenes/GameScene.cpp
-        ../src/scenes/MenuSceneBase.cpp
-        ../src/scenes/MainMenuScene.cpp
-        ../src/scenes/ConfirmDialog.cpp
+        ../src/scenes/GameScene/GameScene.cpp
+        ../src/scenes/MainMenuScene/MainMenuScene.cpp
+        ../src/scenes/MainMenuScene/ConfirmExitDialog.cpp
+        ../src/scenes/MainMenuScene/ConfirmNewGameDialog.cpp
 
         ../src/game/Game.cpp
         ../src/game/GameObject.cpp

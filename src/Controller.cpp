@@ -48,7 +48,7 @@ int Controller::update()
 {
 
     int temp = 0;
-
+    flow::update();
     if(Controller::_game)
         Controller::_game->nextFrame();
 
@@ -57,6 +57,7 @@ int Controller::update()
 
 void Controller::destroy()
 {
+    flow::free();
     gameResources.free();
 }
 
@@ -74,7 +75,11 @@ void Controller::changeScene(Scenes newScene)
 {
     switch(newScene)
     {
-        case Scenes::GAME_SCENE:
+        case Scenes::CONTINUE_GAME_SCENE:
+            _gameScene = new GameScene;
+            flow::show(_gameScene, [this](Event *e){_gameScene = nullptr;});
+            break;
+        case Scenes::NEW_GAME_SCENE:
             _gameScene = new GameScene;
             flow::show(_gameScene, [this](Event *e){_gameScene = nullptr;});
             break;

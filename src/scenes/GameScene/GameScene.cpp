@@ -1,5 +1,5 @@
 #include "GameScene.h"
-#include "../Controller.h"
+#include "../../Controller.h"
 
 extern Resources gameResources;
 

@@ -7,12 +7,12 @@
 #include "game/Game.h"
 #include "controls/menu.h"
 
-#include "scenes/MainMenuScene.h"
-#include "scenes/GameScene.h"
+#include "scenes/MainMenuScene/MainMenuScene.h"
+#include "scenes/GameScene/GameScene.h"
 
 using namespace oxygine;
 
-enum class Scenes {GAME_SCENE, MAIN_MENU_SCENE};
+enum class Scenes {CONTINUE_GAME_SCENE, NEW_GAME_SCENE, MAIN_MENU_SCENE};
 
 class Controller{
   public:
