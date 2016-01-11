@@ -11,12 +11,13 @@ class GuiObject: public Object
   public:
     GuiObject(const Vector2& position, const double size = 0, const Color& color = Color(255, 255, 255));
     virtual ~GuiObject();
-    void addTo(spActor actor);
+    void addChild(spActor actor);
 
     virtual void update(const Vector2& position, const double size, const Color& color) = 0;
 
   protected:
-    spActor gui;
+    spActor _gui;
+    Vector2 _lastCoords;
 };
 
 typedef oxygine::intrusive_ptr <GuiObject> spGuiObject;

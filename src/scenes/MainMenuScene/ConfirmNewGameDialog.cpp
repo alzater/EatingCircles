@@ -2,8 +2,6 @@
 #include "Transition.h"
 #include "../../Controller.h"
 
-extern Resources gameResources;
-
 ConfirmNewGameDialog::ConfirmNewGameDialog()
 {
     _dialog = true;

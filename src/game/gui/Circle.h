@@ -11,6 +11,6 @@ class Circle : public GuiObject
 
     virtual void update(const Vector2& position, const double size, const Color& color);
   private:
-    spSprite circle;
+    spSprite _circle;
 };
 

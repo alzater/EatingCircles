@@ -35,6 +35,7 @@ void Menu::addItem(std::string text)
 void Menu::addItem(std::string text, EventCallback onClick)
 {
     spButton b = new Button();
+    b->setName(std::string("Button") + text);
     menu->addChild(b);
     b->setResAnim(gameResources.getResAnim("button"));
     b->setPosition(Vector2(-95, lastHPos -15));

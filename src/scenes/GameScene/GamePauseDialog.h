@@ -1,14 +1,14 @@
-#ifndef __MAIN_MENU_SCENE_H__
-#define __MAIN_MENU_SCENE_H__
+#ifndef __GAME_PAUSE_DIALOG_H__
+#define __GAME_PAUSE_DIALOG_H__
 
-#include "MenuSceneBase.h"
+#include "../MenuSceneBase.h"
 
-DECLARE_SMART(MainMenuScene, spMainMenuScene);
+DECLARE_SMART(GamePauseDialog, spGamePauseDialog);
 
-class MainMenuScene : public MenuSceneBase
+class GamePauseDialog : public MenuSceneBase
 {
     public:
-        MainMenuScene();
+        GamePauseDialog();
 };
 
 #endif

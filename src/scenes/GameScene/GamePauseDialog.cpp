@@ -1,13 +1,23 @@
-#include "MainMenuScene.h"
-#include "../Controller.h"
+#include "GamePauseDialog.h"
+#include "Transition.h"
+#include "../../Controller.h"
 
-MainMenuScene::MainMenuScene()
+GamePauseDialog::GamePauseDialog()
 {
-    _menu->addItem(std::string("EATING CIRCLES"));
-    _menu->addItem(std::string("NEW GAME"), [](Event *e){
-            Controller::getController()->changeScene(Scenes::GAME_SCENE);
+    _dialog = true;
+    flow::TransitionMove::assign(this);
+
+    _menu->addItem(std::string("GAME PAUSED"));
+    _menu->addItem(std::string("RESUME"), [this](Event*){finish();});
+    _menu->addItem(std::string("RESTART GAME"), [this](Event*){
+            finish();
+            Controller::getController()->changeScene(Scenes::CONTINUE_GAME_SCENE);
         });
-    _menu->addItem(std::string("EXIT"), [](Event *e){
+    _menu->addItem(std::string("MAIN MENU"), [this](Event*){
+            finish();
+            Controller::getController()->changeScene(Scenes::MAIN_MENU_SCENE);
+        });
+    _menu->addItem(std::string("EXIT"), [](Event*){
             core::requestQuit();
         });
 }

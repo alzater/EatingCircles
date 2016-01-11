@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include "../../Controller.h"
+#include "KeyEvent.h"
 
 extern Resources gameResources;
 
@@ -11,14 +12,23 @@ GameScene::GameScene() :
     _view = new Actor;
     _view->setSize(getStage()->getSize());
     _view->attachTo(_holder);
+
+    spColorRectSprite crs = new ColorRectSprite;
+    crs->setSize(getStage()->getSize());
+    crs->setColor(Color(0, 0, 0));
+    crs->attachTo(_view);
+
     _game->attachTo(_view);
     Controller::getController()->setGame(_game);
     gameWait(nullptr);
+    //Input::instance.addEventListener(Input::event_platform, onPause);
+    getStage()->addEventListener(KeyEvent::KEY_EVENT::KEY_DOWN, CLOSURE(this, &GameScene::onPause));
 }
 
 GameScene::~GameScene()
 {
-    Controller::getController()->removeGame();
+    getStage()->removeEventListener(KeyEvent::KEY_EVENT::KEY_DOWN, CLOSURE(this, &GameScene::onPause));
+    Controller::getController()->removeGame(_game);
 }
 
 void GameScene::gameWait(Event *e)
@@ -56,4 +66,18 @@ void GameScene::gameWait(Event *e)
         _game->resume();
     }
     _secondsLeft--;
+}
+
+void GameScene::onPause(Event* e)
+{
+    KeyEvent *event = (KeyEvent*)e;
+    log::messageln("here");
+    if (event->data->keysym.sym != SDLK_ESCAPE)
+        return;
+
+    _game->pause();
+    _gamePauseDialog = new GamePauseDialog();
+    flow::show(_gamePauseDialog, [this](Event* ev){
+            _game->resume();
+        });
 }

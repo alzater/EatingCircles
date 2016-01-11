@@ -1,8 +1,6 @@
 #include "ConfirmExitDialog.h"
 #include "Transition.h"
 
-extern Resources gameResources;
-
 ConfirmExitDialog::ConfirmExitDialog()
 {
     _dialog = true;

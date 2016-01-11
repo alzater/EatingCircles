@@ -24,7 +24,7 @@ class Controller{
     int update();
 
     void setGame(spGame game);
-    void removeGame();
+    void removeGame(spGame game);
 
     void changeScene(Scenes newScene);
 

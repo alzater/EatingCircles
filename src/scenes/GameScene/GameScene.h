@@ -3,6 +3,7 @@
 
 #include "Scene.h"
 #include "../../game/Game.h"
+#include "GamePauseDialog.h"
 
 DECLARE_SMART(GameScene, spGameScene);
 
@@ -14,6 +15,7 @@ class GameScene : public flow::Scene
 
     private:
         void gameWait(Event *e);
+        void onPause(Event* e);
 
         bool _playing;
         int _secondsLeft;
@@ -21,6 +23,8 @@ class GameScene : public flow::Scene
         spActor _view;
         spGame _game;
         spTextField _gameWaitTimer;
+
+        spGamePauseDialog _gamePauseDialog;
 };
 
 #endif

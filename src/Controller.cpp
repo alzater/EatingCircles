@@ -63,31 +63,37 @@ void Controller::destroy()
 
 void Controller::setGame(spGame game)
 {
-    Controller::_game = game;
+    _game = game;
 }
 
-void Controller::removeGame()
+void Controller::removeGame(spGame game)
 {
-    Controller::_game = nullptr;
+    if(_game == game)
+        _game = nullptr;
 }
 
 void Controller::changeScene(Scenes newScene)
 {
+    if(_gameScene)
+        _gameScene->finish();
+    _gameScene = nullptr;
+
+    if(_mainMenuScene)
+        _mainMenuScene->finish();
+    _mainMenuScene = nullptr;
+
     switch(newScene)
     {
         case Scenes::CONTINUE_GAME_SCENE:
             _gameScene = new GameScene;
-            flow::show(_gameScene, [this](Event *e){_gameScene = nullptr;});
+            flow::show(_gameScene);
             break;
         case Scenes::NEW_GAME_SCENE:
             _gameScene = new GameScene;
-            flow::show(_gameScene, [this](Event *e){_gameScene = nullptr;});
+            flow::show(_gameScene);
             break;
         case Scenes::MAIN_MENU_SCENE:
             _mainMenuScene = new MainMenuScene;
-            flow::show(_mainMenuScene, [this](Event *e){_mainMenuScene = nullptr;});
-            break;
-        default:
             flow::show(_mainMenuScene);
             break;
     }
