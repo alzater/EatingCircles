@@ -17,7 +17,4 @@ GamePauseDialog::GamePauseDialog()
             finish();
             Controller::getController()->changeScene(Scenes::MAIN_MENU_SCENE);
         });
-    _menu->addItem(std::string("EXIT"), [](Event*){
-            core::requestQuit();
-        });
 }

@@ -5,11 +5,11 @@ extern Resources gameResources;
 Packman::Packman(const Vector2& position, const double size, const Color& color):
     GuiObject(position)
 {
-    packman = new Sprite();
-    gui->addChild(packman);
-    packman->setAnimFrame(gameResources.getResAnim("packman"));
-    packman->setAnchor(Vector2(0.5, 0.5));
-    packman->addTween(TweenAnim(gameResources.getResAnim("packman")), 1000, 0, true);
+    _packman = new Sprite();
+    _gui->addChild(_packman);
+    _packman->setAnimFrame(gameResources.getResAnim("packman"));
+    _packman->setAnchor(Vector2(0.5, 0.5));
+    _packman->addTween(TweenAnim(gameResources.getResAnim("packman")), 1000, 0, true);
 
 
     update(position, size, color);
@@ -26,8 +26,8 @@ Packman::~Packman()
 
 void Packman::update(const Vector2& position, const double size, const Color& color)
 {
-    gui->setPosition(position);
-    packman->setScale(size / 60);
-    packman->setColor(color);
+    _gui->setPosition(position);
+    _packman->setScale(size / 60);
+    _packman->setColor(color);
+    updateRotation(position);
 }
-

@@ -11,6 +11,6 @@ class Packman : public GuiObject
 
     virtual void update(const Vector2& position, const double size, const Color& color);
   private:
-    spSprite packman;
+    spSprite _packman;
 };
 

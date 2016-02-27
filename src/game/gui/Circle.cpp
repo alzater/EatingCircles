@@ -5,10 +5,10 @@ extern Resources gameResources;
 Circle::Circle(const Vector2& position, const double size, const Color& color):
     GuiObject(position)
 {
-    circle = new Sprite();
-    gui->addChild(circle);
-    circle->setAnimFrame(gameResources.getResAnim("circle"));
-    circle->setAnchor(Vector2(0.5, 0.5));
+    _circle = new Sprite();
+    _gui->addChild(_circle);
+    _circle->setAnimFrame(gameResources.getResAnim("circle"));
+    _circle->setAnchor(Vector2(0.5, 0.5));
 
     update(position, size, color);
 
@@ -24,8 +24,7 @@ Circle::~Circle()
 
 void Circle::update(const Vector2& position, const double size, const Color& color)
 {
-    gui->setPosition(position);
-    circle->setScale(size / 60);
-    circle->setColor(color);
+    _gui->setPosition(position);
+    _circle->setScale(size / 60);
+    _circle->setColor(color);
 }
-

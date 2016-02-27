@@ -111,7 +111,7 @@ void Bot::accelerate(const Vector2& ys, double time)
 
 void Bot::addGuiToScene(spActor actor)
 {
-    gui->addTo(actor);
+    gui->attachTo(actor);
 }
 
 Color Bot::generateColor()

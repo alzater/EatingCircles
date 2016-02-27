@@ -25,7 +25,7 @@ Game::Game(int level, int gameStrategy):
     _bots(_nBots),
     _stars(_nStars),
     _stageSize(core::getDisplaySize()),
-    _nEated(0),
+    _nEated(100),
     _pause(true),
     _velocity(Vector2(0,0)),
     _gameStage(new Actor())
