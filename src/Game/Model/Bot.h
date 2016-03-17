@@ -16,7 +16,9 @@ class Bot : public PlayerObject
         virtual void eat(spPlayerObject other);
         virtual void accelerate(const Vector2& ys, double time);
 
-        void addGuiToScene(spActor actor);
+        int getPower();
+        int getMana();
+        int getAgility();
 
         void updateAbilities();
         void boost(); // from blue-mana
@@ -24,20 +26,12 @@ class Bot : public PlayerObject
         double getBoosterSize();
 
     private:
-        void updateGui();
-        int getPower();
-        int getMana();
-        int getAgility();
+        double _lostSize, _booster;
+        int _power, _mana, _agility;
+        //TODO const int MAX_BOOSTER_SIZE = 1000;
+
         void loseMass(); // from red-power
         void updateBooster();
-        Color getColor();
-        void setColor(const Color& color);
-        Color generateColor();
-
-        //TODO const int MAX_BOOSTER_SIZE = 1000;
-        double _lostSize, _booster;
-        Color _color;
-        spGuiObject gui;
 };
 
 typedef oxygine::intrusive_ptr <Bot> spBot;

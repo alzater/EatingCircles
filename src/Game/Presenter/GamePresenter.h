@@ -4,6 +4,7 @@
 #include "oxygine-framework.h"
 
 #include "../Model/Game.h"
+#include "../View/GameView.h"
 
 using oxygine::EventDispatcher;
 
@@ -19,7 +20,7 @@ public:
     void resumeGame();
 private:
     spGame _game;
-    spActor _view;
+    spGameView _view;
 };
 
 DECLARE_SMART(GamePresenter, spGamePresenter)

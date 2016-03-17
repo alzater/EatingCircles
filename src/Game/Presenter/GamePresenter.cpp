@@ -4,6 +4,7 @@
 GamePresenter::GamePresenter()
 {
     _game = new Game;
+    _view = new GameView;
 }
 
 GamePresenter::~GamePresenter()

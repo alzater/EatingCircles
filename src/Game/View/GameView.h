@@ -19,3 +19,5 @@ private:
     oxygine::spColorRectSprite _background;
     vector<spGuiObject> _objects;
 };
+
+DECLARE_SMART(GameView, spGameView)

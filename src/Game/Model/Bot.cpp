@@ -2,12 +2,11 @@
 
 Bot::Bot(Vector2 position, int size, int type):
     PlayerObject(position, size),
-    _color(generateColor())
-{
-    _lostSize = 0;
-    //gui = GuiController::getGuiObject(position, size, _color, type);
-    gui->update(position, size, _color);
-}
+    _lostSize(0),
+    _mana(200),
+    _agility(200),
+    _power(200)
+{}
 
 Bot::~Bot()
 {}
@@ -16,11 +15,6 @@ void Bot::reInitialize(Vector2 position, int maxSize, int type)
 {
     _lostSize = 0;
     PlayerObject::reInitialize(position, maxSize);
-}
-
-void Bot::updateGui()
-{
-    gui->update(_position, _size, _color);
 }
 
 void Bot::updateAbilities()
@@ -37,7 +31,6 @@ void Bot::loseMass()
 
     if(_lostSize > 0.5){
         _lostSize = 0;
-        updateGui();
     }
 }
 
@@ -69,52 +62,30 @@ void Bot::boost()
 
 int Bot::getPower()
 {
-    return getColor().r;
+    return _power;
 }
 
 int Bot::getMana()
 {
-    return getColor().b;
+    return _mana;
 }
 
 int Bot::getAgility()
 {
-    return getColor().g;
+    return _agility;
 }
 
-Color Bot::getColor()
-{
-    return _color;
-}
-
-void Bot::setColor(const Color& color)
-{
-    _color = color;
-}
 void Bot::move(const Vector2& deltaPosition)
 {
     PlayerObject::move(deltaPosition);
-    updateGui();
 }
 
 void Bot::eat(spPlayerObject other)
 {
     PlayerObject::eat(other);
-    updateGui();
 }
 
 void Bot::accelerate(const Vector2& ys, double time)
 {
     PlayerObject::accelerate(ys, time);
-    updateGui();
-}
-
-void Bot::addGuiToScene(spActor actor)
-{
-    gui->attachTo(actor);
-}
-
-Color Bot::generateColor()
-{
-    return Color(rand() % 155 + 100, rand() % 155 + 100, rand() % 155 + 100);
 }
