@@ -40,6 +40,13 @@ void GuiObject::updateRotation(Vector2 newPos)
     }
 
     log::messageln(std::to_string(gradus).c_str());
-    _gui->setRotation(gradus);
+    double oldAngle = _gui->getRotation();
+    double newAngle = oldAngle - gradus;
+    if(newAngle - oldAngle < -0.03)
+        newAngle = oldAngle - 0.03;
+    if(newAngle - oldAngle > 0.03)
+        newAngle = oldAngle + 0.03;
+
+    _gui->setRotation(newAngle);
     _previousPosition = newPos;
 }

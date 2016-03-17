@@ -20,7 +20,7 @@ Game::Game(int level, int gameStrategy):
     _level(level),
     _gameStrategy(gameStrategy),
     _score(0),
-    _nBots(20),
+    _nBots(0),
     _nStars(20),
     _bots(_nBots),
     _stars(_nStars),
@@ -36,7 +36,7 @@ Game::Game(int level, int gameStrategy):
     _lastTime = getTimeMS();
 
     _maxMainSize = 71;
-    _player = new Player(20);
+    _player = new Player(40, 1);
     _player->addGuiToScene(_gameStage);
 
 

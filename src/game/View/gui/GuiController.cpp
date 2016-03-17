@@ -7,9 +7,18 @@ spGuiObject GuiController::getGuiObject(const Vector2& position, const double si
 {
     int chose = rand() % 2;
     spGuiObject gui;
-    if (chose)
+    switch(type)
+    {
+    case 0:
         gui = new Circle(position, size, color);
-    else
+        break;
+    case 1:
         gui = new Packman(position, size, color);
+        break;
+    default:
+        gui = new Circle(position, size, color);
+        break;
+    }
+
     return gui;
 }

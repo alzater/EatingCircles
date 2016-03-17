@@ -20,17 +20,19 @@ add_executable(EatingCircles
         ../src/scenes/MainMenuScene/ConfirmExitDialog.cpp
         ../src/scenes/MainMenuScene/ConfirmNewGameDialog.cpp
 
-        ../src/game/Game.cpp
-        ../src/game/GameObject.cpp
-        ../src/game/PlayerObject.cpp
-        ../src/game/gui/Circle.cpp
-        ../src/game/gui/Packman.cpp
-        ../src/game/gui/GuiObject.cpp
-        ../src/game/gui/GuiController.cpp
-        ../src/game/Bot.cpp
-        ../src/game/AI.cpp
-        ../src/game/Player.cpp
-        ../src/game/extraObjects/star.cpp
+        ../src/game/Model/Game.cpp
+        ../src/game/Model/GameObject.cpp
+        ../src/game/Model/PlayerObject.cpp
+        ../src/game/Model/Bot.cpp
+        ../src/game/Model/AI.cpp
+        ../src/game/Model/Player.cpp
+        ../src/game/Presenter/GamePresenter.cpp
+        ../src/game/View/gui/Circle.cpp
+        ../src/game/View/gui/Packman.cpp
+        ../src/game/View/gui/GuiObject.cpp
+        ../src/game/View/gui/GuiController.cpp
+        ../src/game/View/extraObjects/star.cpp
+
 
         ../src/controls/menu.cpp
 )

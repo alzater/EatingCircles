@@ -4,7 +4,7 @@
 #include "oxygine-framework.h"
 #include "flow.h"
 
-#include "game/Game.h"
+#include "game/Model/Game.h"
 #include "controls/menu.h"
 
 #include "scenes/MainMenuScene/MainMenuScene.h"

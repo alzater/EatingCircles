@@ -14,12 +14,11 @@ class GuiObject: public Object
     void attachTo(spActor actor);
 
     virtual void update(const Vector2& position, const double size, const Color& color) = 0;
-
+    virtual void updateRotation(Vector2 newPos);
   protected:
     spActor _gui;
     Vector2 _previousPosition;
 
-    virtual void updateRotation(Vector2 newPos);
 };
 
 typedef oxygine::intrusive_ptr <GuiObject> spGuiObject;
