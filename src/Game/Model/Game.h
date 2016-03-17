@@ -14,7 +14,7 @@ using namespace oxygine;
 class Game : public Object
 {
     public:
-        Game(int level, int gameStrategy = 0);
+        Game(int gameStrategy = 0);
         int update();
         GameResults getResult();
         double getFrameTimeMultiplier();

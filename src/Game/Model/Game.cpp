@@ -10,14 +10,14 @@
 
 #include "Game.h"
 #include "AI.h"
-#include "extraObjects/star.h"
-#include "../controls/DTO.h"
+#include "../View/ExtraObjects/star.h"
+#include "../../Controls/DTO.h"
 
 using namespace oxygine;
 
 
-Game::Game(int level, int gameStrategy):
-    _level(level),
+Game::Game(int gameStrategy):
+    //TODO _level(level),
     _gameStrategy(gameStrategy),
     _score(0),
     _nBots(0),
@@ -27,28 +27,19 @@ Game::Game(int level, int gameStrategy):
     _stageSize(core::getDisplaySize()),
     _nEated(100),
     _pause(true),
-    _velocity(Vector2(0,0)),
-    _gameStage(new Actor())
+    _velocity(Vector2(0,0))
 {
-    getStage()->addChild(_gameStage);
-    _gameStage->setPosition(0,0);
-    _gameStage->setSize(getStage()->getSize());
     _lastTime = getTimeMS();
 
     _maxMainSize = 71;
     _player = new Player(40, 1);
-    _player->addGuiToScene(_gameStage);
 
 
     srand(time(0));
-    for(int i = 0; i < _nBots; ++i){
+    for(int i = 0; i < _nBots; ++i)
         _bots[i] = new Bot( Vector2( rand() % 1000, rand() % 1000 ), rand() % (_nEated + 10) + 1 );
-        _bots[i]->addGuiToScene(_gameStage);
-    }
-    for(int i = 0; i < _nStars; ++i){
+    for(int i = 0; i < _nStars; ++i)
         _stars[i] = new Star(Vector2(rand() % 1000, rand() % 1000));
-        _gameStage->addChild(_stars[i]);
-    }
 }
 
 int Game::update()
@@ -258,11 +249,6 @@ bool Game::updateFrameTimeMultiplier()
 double Game::getFrameTimeMultiplier()
 {
     return _timeMultiplier;
-}
-
-void Game::attachTo(spActor actor)
-{
-    actor->addChild(_gameStage);
 }
 
 void Game::pause()

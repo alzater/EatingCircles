@@ -1,9 +1,9 @@
 #include "GamePresenter.h"
 #include "../../Controller.h"
 
-GamePresenter::GamePresenter(int level)
+GamePresenter::GamePresenter()
 {
-    _game = new Game(level);
+    _game = new Game;
 }
 
 GamePresenter::~GamePresenter()

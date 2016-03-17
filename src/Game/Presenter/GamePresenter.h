@@ -1,3 +1,6 @@
+#ifndef __GAME_PRESENTER_H__
+#define __GAME_PRESENTER_H__
+
 #include "oxygine-framework.h"
 
 #include "../Model/Game.h"
@@ -20,3 +23,5 @@ private:
 };
 
 DECLARE_SMART(GamePresenter, spGamePresenter)
+
+#endif
