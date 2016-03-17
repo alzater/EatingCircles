@@ -9,7 +9,7 @@ link_directories(${OXYGINE_LIBRARY_DIRS})
 add_subdirectory(../../oxygine/oxygine-flow oxygine-flow)
 include_directories(${OXYGINE_FLOW_INCLUDE_DIRS})
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -ggdb")
 add_executable(EatingCircles
         ../src/entry_point.cpp
         ../src/Controller.cpp
@@ -25,14 +25,13 @@ add_executable(EatingCircles
         ../src/Game/Model/PlayerObject.cpp
         ../src/Game/Model/Bot.cpp
         ../src/Game/Model/AI.cpp
-        ../src/Game/Model/Player.cpp
         ../src/Game/Presenter/GamePresenter.cpp
+        ../src/Game/View/GameView.cpp
         ../src/Game/View/Gui/Circle.cpp
         ../src/Game/View/Gui/Packman.cpp
         ../src/Game/View/Gui/GuiObject.cpp
         ../src/Game/View/Gui/GuiController.cpp
         ../src/Game/View/ExtraObjects/star.cpp
-
 
         ../src/Controls/menu.cpp
 )
