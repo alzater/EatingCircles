@@ -2,10 +2,10 @@
 #define __GAME_SCENE_H__
 
 #include "Scene.h"
-#include "../../Game/Model/Game.h"
+#include "../../Game/Presenter/GamePresenter.h"
 #include "GamePauseDialog.h"
 
-DECLARE_SMART(GameScene, spGameScene);
+DECLARE_SMART(GameScene, spGameScene)
 
 class GameScene : public flow::Scene
 {
@@ -14,17 +14,17 @@ class GameScene : public flow::Scene
         virtual ~GameScene();
 
     private:
-        void gameWait(Event *e);
-        void onPause(Event* e);
-
         bool _playing;
         int _secondsLeft;
 
-        spActor _view;
-        spGame _game;
+        spActor _sceneView;
         spTextField _gameWaitTimer;
+        spGamePresenter _gamePresenter;
 
         spGamePauseDialog _gamePauseDialog;
+
+        void onGameWait(Event *e);
+        void onPause(Event* e);
 };
 
 #endif

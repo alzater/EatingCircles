@@ -50,7 +50,7 @@ int Controller::update()
     int temp = 0;
     flow::update();
     if(Controller::_game)
-        Controller::_game->nextFrame();
+        Controller::_game->update();
 
     return exit;
 }

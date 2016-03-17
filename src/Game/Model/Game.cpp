@@ -51,7 +51,7 @@ Game::Game(int level, int gameStrategy):
     }
 }
 
-int Game::nextFrame()
+int Game::update()
 {
     if(_pause)
         return 0;

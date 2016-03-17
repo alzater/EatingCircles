@@ -8,18 +8,31 @@ GameScene::GameScene() :
     _secondsLeft(3),
     _playing(false)
 {
-    _game = new Game(1);
-    _view = new Actor;
-    _view->setSize(getStage()->getSize());
-    _view->attachTo(_holder);
+    _sceneView = new Actor;
+    _sceneView->setSize(getStage()->getSize());
+    _sceneView->attachTo(_holder);
 
-    spColorRectSprite crs = new ColorRectSprite;
-    crs->setSize(getStage()->getSize());
-    crs->setColor(Color(0, 0, 0));
-    crs->attachTo(_view);
+    _gamePresenter = new GamePresenter(1);
+    _gamePresenter->getView()->attachTo(_sceneView);
 
-    _game->attachTo(_view);
-    Controller::getController()->setGame(_game);
+    spColorRectSprite blackBackground = new ColorRectSprite;
+    blackBackground->setSize(getStage()->getSize());
+    blackBackground->setColor(Color(0, 0, 0));
+    blackBackground->attachTo(_sceneView);
+
+    TextStyle style;
+    style.font = gameResources.getResFont("invaders")->getFont();
+    style.color = Color::White;
+    style.vAlign = TextStyle::VALIGN_MIDDLE;
+    style.hAlign = TextStyle::HALIGN_CENTER;
+
+    _gameWaitTimer = new TextField;
+    _gameWaitTimer->attachTo(_sceneView);
+    _gameWaitTimer->setStyle(style);
+    _gameWaitTimer->setAnchor(Vector2(0.5, 0.5));
+    _gameWaitTimer->setPosition(getStage()->getSize().x / 2,
+                                getStage()->getSize().y / 2 - 150);
+
     gameWait(nullptr);
     //Input::instance.addEventListener(Input::event_platform, onPause);
     getStage()->addEventListener(KeyEvent::KEY_EVENT::KEY_DOWN, CLOSURE(this, &GameScene::onPause));
@@ -34,19 +47,6 @@ GameScene::~GameScene()
 void GameScene::gameWait(Event *e)
 {
     if(! _gameWaitTimer){
-        TextStyle style;
-        style.font = gameResources.getResFont("invaders")->getFont();
-        style.color = Color::White;
-        style.vAlign = TextStyle::VALIGN_MIDDLE;
-        style.hAlign = TextStyle::HALIGN_CENTER;
-
-        _gameWaitTimer = new TextField;
-        _gameWaitTimer->attachTo(_view);
-        _gameWaitTimer->setStyle(style);
-        _gameWaitTimer->setAnchor(Vector2(0.5, 0.5));
-        Vector2 pos = getStage()->getSize()/2;
-        pos.y -= 150;
-        _gameWaitTimer->setPosition(pos);
     }
     _gameWaitTimer->setAlpha(50);
 
@@ -75,9 +75,9 @@ void GameScene::onPause(Event* e)
     if (event->data->keysym.sym != SDLK_ESCAPE)
         return;
 
-    _game->pause();
+    _gamePresenter->pauseGame();
     _gamePauseDialog = new GamePauseDialog();
     flow::show(_gamePauseDialog, [this](Event* ev){
-            _game->resume();
+            _gamePresenter->resumeGame();
         });
 }

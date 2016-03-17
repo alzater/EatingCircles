@@ -15,10 +15,9 @@ class Game : public Object
 {
     public:
         Game(int level, int gameStrategy = 0);
-        int nextFrame();
+        int update();
         GameResults getResult();
         double getFrameTimeMultiplier();
-        void attachTo(spActor actor);
         void pause();
         void resume();
     private:
@@ -33,8 +32,6 @@ class Game : public Object
         timeMS _lastTime;
         double _timeMultiplier;
 
-        spActor _gameStage;
-
         Vector2 getRandomCoords();
         void mainCircleTurn();
         void makeTurn();
@@ -44,7 +41,6 @@ class Game : public Object
         Color genCircleColor();
         Color genStarColor();
         bool updateFrameTimeMultiplier();
-
 };
 
 DECLARE_SMART(Game, spGame)
