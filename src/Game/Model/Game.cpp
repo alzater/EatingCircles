@@ -32,7 +32,7 @@ Game::Game(int gameStrategy):
     _lastTime = getTimeMS();
 
     _maxMainSize = 71;
-    _player = new Player(40, 1);
+    _player = new Bot(getStage()->getSize() / 2, 40, 1);
 
 
     srand(time(0));

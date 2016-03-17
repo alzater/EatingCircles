@@ -4,9 +4,8 @@ mkdir build
 cd build
 
 #generate cmake project in the "build" folder
-cmake ..
-
+cmake -D ADDITIONAL_FLAGS=" -ggdb" ..
 #build it
-make
+make -j5
 
 cd ../../data

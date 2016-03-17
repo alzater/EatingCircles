@@ -4,7 +4,6 @@
 #include "Bot.h"
 #include "Polygon.h"
 #include "../View/ExtraObjects/star.h"
-#include "Player.h"
 #include "AI.h"
 #include <vector>
 #include "../../Controls/DTO.h"
@@ -26,7 +25,7 @@ class Game : public Object
         bool _pause;
         Vector2 _velocity;
         Vector2 _stageSize;
-        spPlayer _player;
+        spBot _player;
         std::vector <spBot> _bots;
         std::vector <spStar> _stars;
         timeMS _lastTime;
