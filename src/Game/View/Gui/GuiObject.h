@@ -6,7 +6,7 @@
 using namespace oxygine;
 
 
-class GuiObject: public Object
+class GuiObject: public Actor
 {
   public:
     GuiObject(const Vector2& position, const double size = 0, const Color& color = Color(255, 255, 255));

@@ -5,7 +5,7 @@ Bot::Bot(Vector2 position, int size, int type):
     _color(generateColor())
 {
     _lostSize = 0;
-    gui = GuiController::getGuiObject(position, size, _color, type);
+    //gui = GuiController::getGuiObject(position, size, _color, type);
     gui->update(position, size, _color);
 }
 

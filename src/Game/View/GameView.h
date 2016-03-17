@@ -1,9 +1,21 @@
 #include "oxygine-framework.h"
 
-class GameView: public oxygine::Actor
+#include <vector>
+
+#include "Gui/GuiObject.h"
+
+using oxygine::Actor;
+using oxygine::ColorRectSprite;
+using std::vector;
+
+class GameView: public Actor
 {
 public:
     GameView();
+    ~GameView();
+
+    void addGuiObject();
 private:
-    spColorRectSprite _background;
+    oxygine::spColorRectSprite _background;
+    vector<spGuiObject> _objects;
 };

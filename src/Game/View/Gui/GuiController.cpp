@@ -2,21 +2,20 @@
 #include "Circle.h"
 #include "Packman.h"
 
-spGuiObject GuiController::getGuiObject(const Vector2& position, const double size,
-        const Color& color, int type)
+spGuiObject GuiController::getGuiObject(int type)
 {
     int chose = rand() % 2;
     spGuiObject gui;
     switch(type)
     {
     case 0:
-        gui = new Circle(position, size, color);
+        gui = new Circle;
         break;
     case 1:
-        gui = new Packman(position, size, color);
+        gui = new Packman;
         break;
     default:
-        gui = new Circle(position, size, color);
+        gui = new Circle;
         break;
     }
 
