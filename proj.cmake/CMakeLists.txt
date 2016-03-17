@@ -14,27 +14,27 @@ add_executable(EatingCircles
         ../src/entry_point.cpp
         ../src/Controller.cpp
 
-        ../src/scenes/GameScene/GameScene.cpp
-        ../src/scenes/GameScene/GamePauseDialog.cpp
-        ../src/scenes/MainMenuScene/MainMenuScene.cpp
-        ../src/scenes/MainMenuScene/ConfirmExitDialog.cpp
-        ../src/scenes/MainMenuScene/ConfirmNewGameDialog.cpp
+        ../src/Scenes/GameScene/GameScene.cpp
+        ../src/Scenes/GameScene/GamePauseDialog.cpp
+        ../src/Scenes/MainMenuScene/MainMenuScene.cpp
+        ../src/Scenes/MainMenuScene/ConfirmExitDialog.cpp
+        ../src/Scenes/MainMenuScene/ConfirmNewGameDialog.cpp
 
-        ../src/game/Model/Game.cpp
-        ../src/game/Model/GameObject.cpp
-        ../src/game/Model/PlayerObject.cpp
-        ../src/game/Model/Bot.cpp
-        ../src/game/Model/AI.cpp
-        ../src/game/Model/Player.cpp
-        ../src/game/Presenter/GamePresenter.cpp
-        ../src/game/View/gui/Circle.cpp
-        ../src/game/View/gui/Packman.cpp
-        ../src/game/View/gui/GuiObject.cpp
-        ../src/game/View/gui/GuiController.cpp
-        ../src/game/View/extraObjects/star.cpp
+        ../src/Game/Model/Game.cpp
+        ../src/Game/Model/GameObject.cpp
+        ../src/Game/Model/PlayerObject.cpp
+        ../src/Game/Model/Bot.cpp
+        ../src/Game/Model/AI.cpp
+        ../src/Game/Model/Player.cpp
+        ../src/Game/Presenter/GamePresenter.cpp
+        ../src/Game/View/Gui/Circle.cpp
+        ../src/Game/View/Gui/Packman.cpp
+        ../src/Game/View/Gui/GuiObject.cpp
+        ../src/Game/View/Gui/GuiController.cpp
+        ../src/Game/View/ExtraObjects/star.cpp
 
 
-        ../src/controls/menu.cpp
+        ../src/Controls/menu.cpp
 )
 
 if (WIN32) #disable console mode for VC++
