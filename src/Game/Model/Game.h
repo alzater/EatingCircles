@@ -47,4 +47,5 @@ class Game : public Object
 
 };
 
-typedef oxygine::intrusive_ptr <Game> spGame;
+DECLARE_SMART(Game, spGame)
+
