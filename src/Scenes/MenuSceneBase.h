@@ -3,7 +3,7 @@
 
 #include "oxygine-framework.h"
 #include "Scene.h"
-#include "../controls/menu.h"
+#include "../Controls/menu.h"
 
 
 class MenuSceneBase : public flow::Scene

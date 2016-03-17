@@ -4,7 +4,7 @@
 #include "oxygine-framework.h"
 
 #include "GameObject.h"
-#include "gui/GuiController.h"
+#include "../View/Gui/GuiController.h"
 
 
 using namespace oxygine;

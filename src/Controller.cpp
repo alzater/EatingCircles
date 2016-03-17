@@ -6,8 +6,8 @@
 #include <sstream>
 
 #include "Controller.h"
-#include "game/Game.h"
-#include "controls/menu.h"
+#include "Game/Model/Game.h"
+#include "Controls/menu.h"
 
 using namespace oxygine;
 

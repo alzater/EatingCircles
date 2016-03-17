@@ -4,11 +4,11 @@
 #include "oxygine-framework.h"
 #include "flow.h"
 
-#include "game/Model/Game.h"
-#include "controls/menu.h"
+#include "Game/Model/Game.h"
+#include "Controls/menu.h"
 
-#include "scenes/MainMenuScene/MainMenuScene.h"
-#include "scenes/GameScene/GameScene.h"
+#include "Scenes/MainMenuScene/MainMenuScene.h"
+#include "Scenes/GameScene/GameScene.h"
 
 using namespace oxygine;
 

@@ -2,7 +2,7 @@
 #define __GAME_SCENE_H__
 
 #include "Scene.h"
-#include "../../game/Game.h"
+#include "../../Game/Model/Game.h"
 #include "GamePauseDialog.h"
 
 DECLARE_SMART(GameScene, spGameScene);

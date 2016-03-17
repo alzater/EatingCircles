@@ -3,7 +3,7 @@
 
 #include "flow.h"
 #include "Scene.h"
-#include "../../controls/menu.h"
+#include "../../Controls/menu.h"
 
 DECLARE_SMART(MainMenuScene, spMainMenuScene);
 

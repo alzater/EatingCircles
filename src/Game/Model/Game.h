@@ -3,11 +3,11 @@
 #include <functional>
 #include "Bot.h"
 #include "Polygon.h"
-#include "extraObjects/star.h"
+#include "../View/ExtraObjects/star.h"
 #include "Player.h"
 #include "AI.h"
 #include <vector>
-#include "../controls/DTO.h"
+#include "../../Controls/DTO.h"
 
 using namespace oxygine;
 
