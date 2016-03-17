@@ -2,10 +2,9 @@
 #define __GAME_SCENE_H__
 
 #include "Scene.h"
+#include "flow.h"
 #include "../../Game/Presenter/GamePresenter.h"
 #include "GamePauseDialog.h"
-
-DECLARE_SMART(GameScene, spGameScene)
 
 class GameScene : public flow::Scene
 {
@@ -23,8 +22,11 @@ class GameScene : public flow::Scene
 
         spGamePauseDialog _gamePauseDialog;
 
+        void gameWait();
+
         void onGameWait(Event *e);
         void onPause(Event* e);
 };
+DECLARE_SMART(GameScene, spGameScene)
 
 #endif

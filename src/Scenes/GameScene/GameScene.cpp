@@ -1,5 +1,4 @@
 #include "GameScene.h"
-#include "../../Controller.h"
 #include "KeyEvent.h"
 
 extern Resources gameResources;
@@ -12,7 +11,7 @@ GameScene::GameScene() :
     _sceneView->setSize(getStage()->getSize());
     _sceneView->attachTo(_holder);
 
-    _gamePresenter = new GamePresenter(1);
+    _gamePresenter = new GamePresenter();
     _gamePresenter->getView()->attachTo(_sceneView);
 
     spColorRectSprite blackBackground = new ColorRectSprite;
@@ -33,7 +32,7 @@ GameScene::GameScene() :
     _gameWaitTimer->setPosition(getStage()->getSize().x / 2,
                                 getStage()->getSize().y / 2 - 150);
 
-    gameWait(nullptr);
+    gameWait();
     //Input::instance.addEventListener(Input::event_platform, onPause);
     getStage()->addEventListener(KeyEvent::KEY_EVENT::KEY_DOWN, CLOSURE(this, &GameScene::onPause));
 }
@@ -41,13 +40,15 @@ GameScene::GameScene() :
 GameScene::~GameScene()
 {
     getStage()->removeEventListener(KeyEvent::KEY_EVENT::KEY_DOWN, CLOSURE(this, &GameScene::onPause));
-    Controller::getController()->removeGame(_game);
 }
 
-void GameScene::gameWait(Event *e)
+void GameScene::onGameWait(Event *e)
 {
-    if(! _gameWaitTimer){
-    }
+    gameWait();
+}
+
+void GameScene::gameWait()
+{
     _gameWaitTimer->setAlpha(50);
 
     if(_secondsLeft > 0)
@@ -58,12 +59,12 @@ void GameScene::gameWait(Event *e)
     spTween t = _gameWaitTimer->addTween(Actor::TweenAlpha(250), 1000, 1, true, 0);
 
     if(_secondsLeft > 0){
-        t->addEventListener(TweenEvent::DONE, CLOSURE(this, &GameScene::gameWait));
+        t->addEventListener(TweenEvent::DONE, CLOSURE(this, &GameScene::onGameWait));
     }
     else {
         spTween t2 = _gameWaitTimer->addTween(Actor::TweenScale(5), 1000, 1, true, 0);
         t2->addEventListener(TweenEvent::DONE, [this](Event *e){_gameWaitTimer->detach();});
-        _game->resume();
+        _gamePresenter->resumeGame();
     }
     _secondsLeft--;
 }
@@ -77,7 +78,7 @@ void GameScene::onPause(Event* e)
 
     _gamePresenter->pauseGame();
     _gamePauseDialog = new GamePauseDialog();
-    flow::show(_gamePauseDialog, [this](Event* ev){
-            _gamePresenter->resumeGame();
-        });
+    flow::show(_gamePauseDialog, [this](Event *e){
+        _gamePresenter->resumeGame();
+    });
 }

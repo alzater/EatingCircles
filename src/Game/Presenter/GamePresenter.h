@@ -8,6 +8,7 @@ class GamePresenter : public EventDispatcher
 {
 public:
     GamePresenter();
+    ~GamePresenter();
 
     spActor getView();
 
