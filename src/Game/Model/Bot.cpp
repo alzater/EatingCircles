@@ -1,6 +1,6 @@
 #include "Bot.h"
 
-Bot::Bot(Vector2 position, int size, int type):
+Bot::Bot(const Vector2& position, int size, int type):
     GameObject(position),
     _lostSize(0),
     _mana(200),
@@ -16,14 +16,17 @@ Bot::Bot(Vector2 position, int size, int type):
 }
 
 Bot::~Bot()
-{}
+{
+    dispatchEated();
+}
 
-void Bot::reInitialize(Vector2 position, int maxSize, int type)
+void Bot::reInitialize(const Vector2& position, int maxSize, int type)
 {
     _lostSize = 0;
     setPosition(position);
     _size = rand() % (maxSize + 1) + 5;
     _velocity = Vector2(0,0);
+    dispatchMoved();
 }
 
 void Bot::updateAbilities()
@@ -40,6 +43,7 @@ void Bot::loseMass()
 
     if(_lostSize > 0.5){
         _lostSize = 0;
+        dispatchNewSize();
     }
 }
 
@@ -87,15 +91,17 @@ int Bot::getAgility()
 void Bot::move(const Vector2& deltaPosition)
 {
     setPosition( getPosition() + deltaPosition );
+    dispatchMoved();
 }
 
 void Bot::eat(spBot other)
 {
     double cSize = other->getSize();
     _size += cSize / _size;
+    dispatchNewSize();
 }
 
-Vector2 Bot::getVelocity()
+const Vector2& Bot::getVelocity()
 {
     return _velocity;
 }
@@ -112,4 +118,23 @@ void Bot::accelerate(const Vector2& acceleration, double time)
     setPosition( getPosition() + _velocity );
     _velocity.x -=  _velocity.x * _size / 250;
     _velocity.y -= _velocity.y * _size / 250;
+    dispatchMoved();
+}
+
+void Bot::dispatchEated()
+{
+    BotEvent be(BotEvent::EATED);
+    dispatchEvent(&be);
+}
+
+void Bot::dispatchMoved()
+{
+    BotEvent be(BotEvent::MOVED);
+    dispatchEvent(&be);
+}
+
+void Bot::dispatchNewSize()
+{
+    BotEvent be(BotEvent::NEW_SIZE);
+    dispatchEvent(&be);
 }

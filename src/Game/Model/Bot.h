@@ -6,22 +6,35 @@
 using namespace oxygine;
 
 DECLARE_SMART(Bot, spBot)
+class BotEvent: public Event
+{
+public:
+    enum
+    {
+        EATED = eventID('B', 'E', 'E', 't'),
+        MOVED = eventID('B', 'E', 'M', 'o'),
+        NEW_SIZE  = eventID('B', 'E', 'N', 'S'),
+    };
 
-class Bot : public GameObject, public Object
+    BotEvent(int type): Event(type) {}
+};
+
+class Bot : public GameObject
 {
     public:
-        Bot(Vector2 position, int size, int type = 0);
-        void reInitialize(Vector2 position, int maxSize, int type = 0);
+        Bot(const Vector2& position, int size, int type = 0);
+        void reInitialize(const Vector2& position, int maxSize, int type = 0);
         virtual ~Bot();
 
         virtual void move(const Vector2& deltaPosition);
-        virtual void eat(spBot other);
-        virtual void accelerate(const Vector2& acceleration, double time);
+
+        void eat(spBot other);
+        void accelerate(const Vector2& acceleration, double time);
 
         double getSize();
         void setSize(double size);
-        Vector2 getVelocity();
-        void setVelocity(Vector2 velocity);
+        const Vector2& getVelocity();
+        void setVelocity(const Vector2& velocity);
 
         int getPower();
         int getMana();
@@ -31,6 +44,10 @@ class Bot : public GameObject, public Object
         void boost(); // from blue-mana
         double getBonusSpeed();
         double getBoosterSize();
+
+        void dispatchEated();
+        void dispatchMoved();
+        void dispatchNewSize();
 
     private:
         double _size;
