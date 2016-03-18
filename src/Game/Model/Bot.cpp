@@ -1,12 +1,19 @@
 #include "Bot.h"
 
 Bot::Bot(Vector2 position, int size, int type):
-    PlayerObject(position, size),
+    GameObject(position),
     _lostSize(0),
     _mana(200),
     _agility(200),
     _power(200)
-{}
+{
+    if(size <= 0 || size > 100)
+        _size = rand() % 85 + 4; //TODO
+    else
+        _size = size;
+
+    _velocity = Vector2(0,0);
+}
 
 Bot::~Bot()
 {}
@@ -14,7 +21,9 @@ Bot::~Bot()
 void Bot::reInitialize(Vector2 position, int maxSize, int type)
 {
     _lostSize = 0;
-    PlayerObject::reInitialize(position, maxSize);
+    setPosition(position);
+    _size = rand() % (maxSize + 1) + 5;
+    _velocity = Vector2(0,0);
 }
 
 void Bot::updateAbilities()
@@ -77,15 +86,30 @@ int Bot::getAgility()
 
 void Bot::move(const Vector2& deltaPosition)
 {
-    PlayerObject::move(deltaPosition);
+    setPosition( getPosition() + deltaPosition );
 }
 
-void Bot::eat(spPlayerObject other)
+void Bot::eat(spBot other)
 {
-    PlayerObject::eat(other);
+    double cSize = other->getSize();
+    _size += cSize / _size;
 }
 
-void Bot::accelerate(const Vector2& ys, double time)
+Vector2 Bot::getVelocity()
 {
-    PlayerObject::accelerate(ys, time);
+    return _velocity;
+}
+
+double Bot::getSize()
+{
+    return _size;
+}
+
+
+void Bot::accelerate(const Vector2& acceleration, double time)
+{
+    _velocity += acceleration / 2;
+    setPosition( getPosition() + _velocity );
+    _velocity.x -=  _velocity.x * _size / 250;
+    _velocity.y -= _velocity.y * _size / 250;
 }
