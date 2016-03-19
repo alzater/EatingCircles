@@ -1,34 +1,34 @@
-#ifndef __BOT_H__
-#define __BOT_H__
+#ifndef __UNIT_H__
+#define __UNIT_H__
 
 #include "GameObject.h"
 
 using namespace oxygine;
 
-DECLARE_SMART(Bot, spBot)
-class BotEvent: public Event
+DECLARE_SMART(Unit, spUnit)
+class UnitEvent: public Event
 {
 public:
     enum
     {
-        EATED = eventID('B', 'E', 'E', 't'),
-        MOVED = eventID('B', 'E', 'M', 'o'),
-        NEW_SIZE  = eventID('B', 'E', 'N', 'S'),
+        EATED = eventID('U', 'E', 'E', 't'),
+        MOVED = eventID('U', 'E', 'M', 'o'),
+        NEW_SIZE  = eventID('U', 'E', 'N', 'S'),
     };
 
-    BotEvent(int type): Event(type) {}
+    UnitEvent(int type): Event(type) {}
 };
 
-class Bot : public GameObject
+class Unit : public GameObject
 {
     public:
-        Bot(const Vector2& position, int size, int type = 0);
+        Unit(const Vector2& position, int size, int type = 0);
         void reInitialize(const Vector2& position, int maxSize, int type = 0);
-        virtual ~Bot();
+        virtual ~Unit();
 
         virtual void move(const Vector2& deltaPosition);
 
-        void eat(spBot other);
+        void eat(spUnit other);
         void accelerate(const Vector2& acceleration, double time);
 
         double getSize();

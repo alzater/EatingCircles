@@ -1,11 +1,11 @@
 #include "AI.h"
 
-void AI::makeRandomTurn(spBot player)
+void AI::makeRandomTurn(spUnit player)
 {
     player->accelerate(Vector2( rand() % 3 - 1 , rand() % 3 - 1 ), 1.0 / 100);
 }
 
-void AI::makeLinerTurn(spBot player, float deviation)
+void AI::makeLinerTurn(spUnit player, float deviation)
 {
     Vector2 velocity = player->getVelocity();
     if(velocity.x == 0 && velocity.y == 0)
@@ -39,7 +39,7 @@ void AI::makeLinerTurn(spBot player, float deviation)
     player->accelerate(result, 1.0 / 100);
 }
 
-void AI::makeIntellectualTurn(spBot player, const std::vector <spBot>& others, float stupidity)
+void AI::makeIntellectualTurn(spUnit player, const std::vector <spUnit>& others, float stupidity)
 {
     if (stupidity < 0 || stupidity > 1)
         stupidity = 0;

@@ -1,6 +1,6 @@
-#include "Bot.h"
+#include "Unit.h"
 
-Bot::Bot(const Vector2& position, int size, int type):
+Unit::Unit(const Vector2& position, int size, int type):
     GameObject(position),
     _lostSize(0),
     _mana(200),
@@ -15,12 +15,12 @@ Bot::Bot(const Vector2& position, int size, int type):
     _velocity = Vector2(0,0);
 }
 
-Bot::~Bot()
+Unit::~Unit()
 {
     dispatchEated();
 }
 
-void Bot::reInitialize(const Vector2& position, int maxSize, int type)
+void Unit::reInitialize(const Vector2& position, int maxSize, int type)
 {
     _lostSize = 0;
     setPosition(position);
@@ -29,13 +29,13 @@ void Bot::reInitialize(const Vector2& position, int maxSize, int type)
     dispatchMoved();
 }
 
-void Bot::updateAbilities()
+void Unit::updateAbilities()
 {
     loseMass();
     updateBooster();
 }
 
-void Bot::loseMass()
+void Unit::loseMass()
 {
     double changeSize = _size * ((double)( 200 - getPower() )) / 2000000.0;
     _lostSize += changeSize;
@@ -47,24 +47,24 @@ void Bot::loseMass()
     }
 }
 
-void Bot::updateBooster()
+void Unit::updateBooster()
 {
     _booster += 0.02 * (double) getMana();
     if(_booster >= 1000 + getMana()) //TODO MAX_BOOSTER_SIZE
         _booster = 1000 + getMana();
 }
 
-double Bot::getBonusSpeed()
+double Unit::getBonusSpeed()
 {
     return (double) getAgility() / 255.0;
 }
 
-double Bot::getBoosterSize()
+double Unit::getBoosterSize()
 {
     return _booster;
 }
 
-void Bot::boost()
+void Unit::boost()
 {
     _velocity *= 1.0 + getBoosterSize();
     _booster -= 50;
@@ -73,46 +73,46 @@ void Bot::boost()
 }
 
 
-int Bot::getPower()
+int Unit::getPower()
 {
     return _power;
 }
 
-int Bot::getMana()
+int Unit::getMana()
 {
     return _mana;
 }
 
-int Bot::getAgility()
+int Unit::getAgility()
 {
     return _agility;
 }
 
-void Bot::move(const Vector2& deltaPosition)
+void Unit::move(const Vector2& deltaPosition)
 {
     setPosition( getPosition() + deltaPosition );
     dispatchMoved();
 }
 
-void Bot::eat(spBot other)
+void Unit::eat(spUnit other)
 {
     double cSize = other->getSize();
     _size += cSize / _size;
     dispatchNewSize();
 }
 
-const Vector2& Bot::getVelocity()
+const Vector2& Unit::getVelocity()
 {
     return _velocity;
 }
 
-double Bot::getSize()
+double Unit::getSize()
 {
     return _size;
 }
 
 
-void Bot::accelerate(const Vector2& acceleration, double time)
+void Unit::accelerate(const Vector2& acceleration, double time)
 {
     _velocity += acceleration / 2;
     setPosition( getPosition() + _velocity );
@@ -121,20 +121,20 @@ void Bot::accelerate(const Vector2& acceleration, double time)
     dispatchMoved();
 }
 
-void Bot::dispatchEated()
+void Unit::dispatchEated()
 {
-    BotEvent be(BotEvent::EATED);
-    dispatchEvent(&be);
+    UnitEvent ue(UnitEvent::EATED);
+    dispatchEvent(&ue);
 }
 
-void Bot::dispatchMoved()
+void Unit::dispatchMoved()
 {
-    BotEvent be(BotEvent::MOVED);
-    dispatchEvent(&be);
+    UnitEvent ue(UnitEvent::MOVED);
+    dispatchEvent(&ue);
 }
 
-void Bot::dispatchNewSize()
+void Unit::dispatchNewSize()
 {
-    BotEvent be(BotEvent::NEW_SIZE);
-    dispatchEvent(&be);
+    UnitEvent ue(UnitEvent::NEW_SIZE);
+    dispatchEvent(&ue);
 }

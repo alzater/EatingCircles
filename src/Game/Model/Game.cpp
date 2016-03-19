@@ -20,9 +20,9 @@ Game::Game(int gameStrategy):
     //TODO _level(level),
     _gameStrategy(gameStrategy),
     _score(0),
-    _nBots(0),
+    _nUnits(0),
     _nStars(20),
-    _bots(_nBots),
+    _units(_nUnits),
     _stars(_nStars),
     _stageSize(core::getDisplaySize()),
     _nEated(100),
@@ -32,12 +32,12 @@ Game::Game(int gameStrategy):
     _lastTime = getTimeMS();
 
     _maxMainSize = 71;
-    _player = new Bot(getStage()->getSize() / 2, 40, 1);
+    _player = new Unit(getStage()->getSize() / 2, 40, 1);
 
 
     srand(time(0));
-    for(int i = 0; i < _nBots; ++i)
-        _bots[i] = new Bot( Vector2( rand() % 1000, rand() % 1000 ), rand() % (_nEated + 10) + 1 );
+    for(int i = 0; i < _nUnits; ++i)
+        _units[i] = new Unit( Vector2( rand() % 1000, rand() % 1000 ), rand() % (_nEated + 10) + 1 );
     for(int i = 0; i < _nStars; ++i)
         _stars[i] = new Star(Vector2(rand() % 1000, rand() % 1000));
 }
@@ -52,7 +52,7 @@ int Game::update()
 
     makeTurn();
     checkEaters();
-    checkBotsPositions();
+    checkUnitsPositions();
     if(!checkMainCircle())
         return 1; //game losed
     if(_player->getSize() > _maxMainSize)
@@ -62,8 +62,8 @@ int Game::update()
 
 void Game::makeTurn()
 {
-    for(int i = 0; i < _nBots; ++i){
-        AI::makeIntellectualTurn(_bots[i], _bots, 0);
+    for(int i = 0; i < _nUnits; ++i){
+        AI::makeIntellectualTurn(_units[i], _units, 0);
     }
     mainCircleTurn();
 }
@@ -80,12 +80,12 @@ void Game::mainCircleTurn()
     if (data[SDL_SCANCODE_SPACE]) _velocity *= 1.1;
     _velocity += displacement - _velocity * 0.04;
 
-    for(int i = 0; i < _nBots; ++i)
+    for(int i = 0; i < _nUnits; ++i)
     {
-        _bots[i]->move(_velocity);
+        _units[i]->move(_velocity);
     }
 
-    for(int i = 0; i < _nBots; ++i)
+    for(int i = 0; i < _nUnits; ++i)
     {
         _stars[i]->move(_velocity * 0.1);
     }
@@ -95,12 +95,12 @@ void Game::mainCircleTurn()
 
 bool Game::checkMainCircle()
 {
-    for(int i = 0; i < _nBots; ++i)
+    for(int i = 0; i < _nUnits; ++i)
     {
         Vector2 mainCoords = _player->getPosition();
-        Vector2 iCoords = _bots[i]->getPosition();
+        Vector2 iCoords = _units[i]->getPosition();
         double mainSize = _player->getSize();
-        double iSize = _bots[i]->getSize();
+        double iSize = _units[i]->getSize();
 
         double distance = std::sqrt(std::pow(mainCoords.x - iCoords.x, 2) +
                 std::pow(mainCoords.y - iCoords.y, 2) );
@@ -113,8 +113,8 @@ bool Game::checkMainCircle()
             if(mainSize > iSize)
             {
                 //std::cout << i << " was eated by MAIN" << std::endl;
-                _player->eat(_bots[i]);
-                _bots[i]->reInitialize( getRandomCoords(), _nEated );
+                _player->eat(_units[i]);
+                _units[i]->reInitialize( getRandomCoords(), _nEated );
                 _nEated++;
             }
         }
@@ -124,14 +124,14 @@ bool Game::checkMainCircle()
 
 void Game::checkEaters()
 {
-    for(int i = 1; i < _nBots; ++i)
+    for(int i = 1; i < _nUnits; ++i)
     {
         for(int j = 0; j < i; ++j)
         {
-            Vector2 jCoords = _bots[j]->getPosition();
-            Vector2 iCoords = _bots[i]->getPosition();
-            double jSize = _bots[j]->getSize();
-            double iSize = _bots[i]->getSize();
+            Vector2 jCoords = _units[j]->getPosition();
+            Vector2 iCoords = _units[i]->getPosition();
+            double jSize = _units[j]->getSize();
+            double iSize = _units[i]->getSize();
             double distance = std::sqrt(std::pow(iCoords.x - jCoords.x, 2) +
                     std::pow(iCoords.y - jCoords.y, 2) );
 
@@ -139,14 +139,14 @@ void Game::checkEaters()
             {
                 if(jSize < iSize)
                 {
-                    _bots[i]->eat(_bots[j]);
-                    _bots[j]->reInitialize( getRandomCoords(), _nEated );
+                    _units[i]->eat(_units[j]);
+                    _units[j]->reInitialize( getRandomCoords(), _nEated );
                     //std::cout << i << " was eated by " << j << std::endl;
                 }
                 if(jSize > iSize)
                 {
-                    _bots[j]->eat(_bots[i]);
-                    _bots[i]->reInitialize( getRandomCoords(), _nEated);
+                    _units[j]->eat(_units[i]);
+                    _units[i]->reInitialize( getRandomCoords(), _nEated);
                     //std::cout << j << " was eated by " << i << std::endl;
                 }
             }
@@ -206,14 +206,14 @@ Vector2 Game::getRandomCoords()
     return Vector2( (float)x, (float)y );
 }
 
-void Game::checkBotsPositions()
+void Game::checkUnitsPositions()
 {
-    for(int i = 0; i < _nBots; ++i)
+    for(int i = 0; i < _nUnits; ++i)
     {
-        if( !_bots[i]->isInRectangle( Vector2(-400, -400), 
+        if( !_units[i]->isInRectangle( Vector2(-400, -400),
                     Vector2(_stageSize.x + 400, _stageSize.y + 400) ) )
         {
-            _bots[i]->reInitialize( getRandomCoords(), _nEated);
+            _units[i]->reInitialize( getRandomCoords(), _nEated);
         }
     }
 }

@@ -1,7 +1,9 @@
-#pragma once
+#ifndef __GAME_H__
+#define __GAME_H__
+
 #include "oxygine-framework.h"
 #include <functional>
-#include "Bot.h"
+#include "Unit.h"
 #include "Polygon.h"
 #include "../View/ExtraObjects/star.h"
 #include "AI.h"
@@ -20,13 +22,13 @@ class Game : public Object
         void pause();
         void resume();
     private:
-        int _level, _score, _nBots, _nEated, _nStars, _maxMainSize;
+        int _level, _score, _nUnits, _nEated, _nStars, _maxMainSize;
         int _gameStrategy;
         bool _pause;
         Vector2 _velocity;
         Vector2 _stageSize;
-        spBot _player;
-        std::vector <spBot> _bots;
+        spUnit _player;
+        std::vector <spUnit> _units;
         std::vector <spStar> _stars;
         timeMS _lastTime;
         double _timeMultiplier;
@@ -35,7 +37,7 @@ class Game : public Object
         void mainCircleTurn();
         void makeTurn();
         bool checkMainCircle();
-        void checkBotsPositions();
+        void checkUnitsPositions();
         void checkEaters();
         Color genCircleColor();
         Color genStarColor();
@@ -44,3 +46,4 @@ class Game : public Object
 
 DECLARE_SMART(Game, spGame)
 
+#endif
