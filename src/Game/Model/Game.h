@@ -6,7 +6,7 @@
 #include "Unit.h"
 #include "Polygon.h"
 #include "../View/ExtraObjects/star.h"
-#include "AI.h"
+#include "UnitController/AI.h"
 #include <vector>
 #include "../../Controls/DTO.h"
 
@@ -16,9 +16,14 @@ class Game : public Object
 {
     public:
         Game(int gameStrategy = 0);
+
         int update();
-        GameResults getResult();
+
+        int move();
         double getFrameTimeMultiplier();
+
+        GameResults getResult();
+
         void pause();
         void resume();
     private:

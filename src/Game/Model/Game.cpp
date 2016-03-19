@@ -9,7 +9,6 @@
 #include <cstdlib>
 
 #include "Game.h"
-#include "AI.h"
 #include "../View/ExtraObjects/star.h"
 #include "../../Controls/DTO.h"
 

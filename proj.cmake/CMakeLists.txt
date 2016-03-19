@@ -23,7 +23,8 @@ add_executable(EatingCircles
         ../src/Game/Model/Game.cpp
         ../src/Game/Model/GameObject.cpp
         ../src/Game/Model/Unit.cpp
-        ../src/Game/Model/AI.cpp
+        ../src/Game/Model/UnitController/AI.cpp
+        ../src/Game/Model/UnitController/UnitController.cpp
         ../src/Game/Presenter/GamePresenter.cpp
         ../src/Game/View/GameView.cpp
         ../src/Game/View/Gui/Circle.cpp
