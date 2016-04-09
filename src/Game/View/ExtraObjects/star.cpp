@@ -14,7 +14,6 @@ Star::Star(Vector2 position)
 {
   setPosition(position);
   setColor( Color(rand() % 216 + 20, rand() % 216 + 20, rand() % 216 + 20) );
-  setInputEnabled(false);
   setUserData(0);
 
   switch(rand() % 3){

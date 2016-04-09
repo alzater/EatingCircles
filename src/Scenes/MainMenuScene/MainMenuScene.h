@@ -1,8 +1,8 @@
 #ifndef __MAIN_MENU_SCENE_H__
 #define __MAIN_MENU_SCENE_H__
 
-#include "flow.h"
-#include "Scene.h"
+#include "flow/flow.h"
+#include "flow/Scene.h"
 #include "../../Controls/menu.h"
 
 DECLARE_SMART(MainMenuScene, spMainMenuScene);

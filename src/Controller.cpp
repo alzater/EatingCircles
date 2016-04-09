@@ -13,9 +13,9 @@ using namespace oxygine;
 
 Resources gameResources;
 
-Controller* Controller::_instance;
+Controller *Controller::_instance;
 
-Controller* Controller::getController()
+Controller *Controller::getController()
 {
   if (_instance == NULL) _instance = new Controller();
   return _instance;
@@ -35,7 +35,7 @@ void Controller::init()
     gameResources.loadXML("res.xml");
 
     flow::init();
-    changeScene(Scenes::MAIN_MENU_SCENE);
+    flow::show(new MainMenuScene);
 
     _item = new TextField();
     _item->setPosition(0, 600);
@@ -47,7 +47,6 @@ void Controller::init()
 int Controller::update()
 {
 
-    int temp = 0;
     flow::update();
     if(Controller::_game)
         Controller::_game->update();
@@ -71,31 +70,3 @@ void Controller::removeGame(spGame game)
     if(_game == game)
         _game = nullptr;
 }
-
-void Controller::changeScene(Scenes newScene)
-{
-    if(_gameScene)
-        _gameScene->finish();
-    _gameScene = nullptr;
-
-    if(_mainMenuScene)
-        _mainMenuScene->finish();
-    _mainMenuScene = nullptr;
-
-    switch(newScene)
-    {
-        case Scenes::CONTINUE_GAME_SCENE:
-            _gameScene = new GameScene;
-            flow::show(_gameScene);
-            break;
-        case Scenes::NEW_GAME_SCENE:
-            _gameScene = new GameScene;
-            flow::show(_gameScene);
-            break;
-        case Scenes::MAIN_MENU_SCENE:
-            _mainMenuScene = new MainMenuScene;
-            flow::show(_mainMenuScene);
-            break;
-    }
-}
-

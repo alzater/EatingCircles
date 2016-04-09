@@ -2,7 +2,7 @@
 #define __CONFIRM_NEW_GAME_DIALOG_H__
 
 #include "oxygine-framework.h"
-#include "Scene.h"
+#include "flow/Scene.h"
 #include "../../Controls/menu.h"
 
 using namespace oxygine;

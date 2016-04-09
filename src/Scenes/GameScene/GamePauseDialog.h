@@ -5,10 +5,16 @@
 
 DECLARE_SMART(GamePauseDialog, spGamePauseDialog);
 
+class IGamePauseDialogContext
+{
+    public:
+        virtual void restartGame() = 0;
+};
+
 class GamePauseDialog : public MenuSceneBase
 {
     public:
-        GamePauseDialog();
+        GamePauseDialog(IGamePauseDialogContext *context);
 };
 
 #endif

@@ -11,7 +11,7 @@ GameScene::GameScene() :
     _sceneView->setSize(getStage()->getSize());
     _sceneView->attachTo(_holder);
 
-    _gamePresenter = new GamePresenter();
+    _gamePresenter = new GamePresenter;
     _gamePresenter->getView()->attachTo(_sceneView);
 
     spColorRectSprite blackBackground = new ColorRectSprite;
@@ -40,6 +40,11 @@ GameScene::GameScene() :
 GameScene::~GameScene()
 {
     getStage()->removeEventListener(KeyEvent::KEY_EVENT::KEY_DOWN, CLOSURE(this, &GameScene::onPause));
+}
+
+void GameScene::restartGame()
+{
+    _gamePresenter = new GamePresenter;
 }
 
 void GameScene::onGameWait(Event *e)
@@ -77,7 +82,7 @@ void GameScene::onPause(Event* e)
         return;
 
     _gamePresenter->pauseGame();
-    _gamePauseDialog = new GamePauseDialog();
+    _gamePauseDialog = new GamePauseDialog(this);
     flow::show(_gamePauseDialog, [this](Event *e){
         _gamePresenter->resumeGame();
     });

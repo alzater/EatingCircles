@@ -10,7 +10,6 @@
 
 #include "Game.h"
 #include "../View/ExtraObjects/star.h"
-#include "../../Controls/DTO.h"
 
 using namespace oxygine;
 
@@ -18,13 +17,11 @@ using namespace oxygine;
 Game::Game(int gameStrategy):
     //TODO _level(level),
     _gameStrategy(gameStrategy),
-    _score(0),
     _nUnits(0),
     _nStars(20),
     _units(_nUnits),
     _stars(_nStars),
     _stageSize(core::getDisplaySize()),
-    _nEated(100),
     _pause(true),
     _velocity(Vector2(0,0))
 {
@@ -36,7 +33,7 @@ Game::Game(int gameStrategy):
 
     srand(time(0));
     for(int i = 0; i < _nUnits; ++i)
-        _units[i] = new Unit( Vector2( rand() % 1000, rand() % 1000 ), rand() % (_nEated + 10) + 1 );
+        _units[i] = new Unit( Vector2( rand() % 1000, rand() % 1000 ), rand() % (10) + 1 );
     for(int i = 0; i < _nStars; ++i)
         _stars[i] = new Star(Vector2(rand() % 1000, rand() % 1000));
 }
@@ -57,6 +54,12 @@ int Game::update()
     if(_player->getSize() > _maxMainSize)
         return 2; //level passed
     return 0;
+}
+
+void Game::move(const Vector2& vector)
+{
+    for(int i = 0; i < _units.size(); ++i)
+        _units[i]->move(vector);
 }
 
 void Game::makeTurn()
@@ -113,8 +116,8 @@ bool Game::checkMainCircle()
             {
                 //std::cout << i << " was eated by MAIN" << std::endl;
                 _player->eat(_units[i]);
-                _units[i]->reInitialize( getRandomCoords(), _nEated );
-                _nEated++;
+                _units[i]->reInitialize( getRandomCoords(), 10 );
+                //_nEated++;
             }
         }
     }
@@ -139,13 +142,13 @@ void Game::checkEaters()
                 if(jSize < iSize)
                 {
                     _units[i]->eat(_units[j]);
-                    _units[j]->reInitialize( getRandomCoords(), _nEated );
+                    _units[j]->reInitialize( getRandomCoords(), 10 );
                     //std::cout << i << " was eated by " << j << std::endl;
                 }
                 if(jSize > iSize)
                 {
                     _units[j]->eat(_units[i]);
-                    _units[i]->reInitialize( getRandomCoords(), _nEated);
+                    _units[i]->reInitialize( getRandomCoords(), 10);
                     //std::cout << j << " was eated by " << i << std::endl;
                 }
             }
@@ -212,24 +215,14 @@ void Game::checkUnitsPositions()
         if( !_units[i]->isInRectangle( Vector2(-400, -400),
                     Vector2(_stageSize.x + 400, _stageSize.y + 400) ) )
         {
-            _units[i]->reInitialize( getRandomCoords(), _nEated);
+            _units[i]->reInitialize( getRandomCoords(), 10);
         }
     }
 }
 
-Color Game::genCircleColor()
-{
-    return Color( rand() % 200 + 55, rand() % 200 + 55, rand() % 200 + 55 );
-}
-
-Color Game::genStarColor()
-{
-    return genCircleColor();
-}
-
 GameResults Game::getResult()
 {
-    return GameResults(_level, _nEated, _score);
+    return GameResults();
 }
 
 bool Game::updateFrameTimeMultiplier()

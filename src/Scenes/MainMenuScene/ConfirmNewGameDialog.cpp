@@ -1,5 +1,5 @@
 #include "ConfirmNewGameDialog.h"
-#include "Transition.h"
+#include "flow/Transition.h"
 #include "../../Controller.h"
 
 ConfirmNewGameDialog::ConfirmNewGameDialog()
@@ -15,7 +15,7 @@ ConfirmNewGameDialog::ConfirmNewGameDialog()
     _menu->addItem(std::string("DO YOU REALY WANT TO START NEW GAME?\nYOU'LL LOSE YOUR PROGRESS!"));
     _menu->addItem(std::string("NEW GAME"), [this](Event*){
             finish();
-            Controller::getController()->changeScene(Scenes::NEW_GAME_SCENE);
+            flow::show(new GameScene);
         });
     _menu->addItem(std::string("BACK"), [this](Event*){
             finish();

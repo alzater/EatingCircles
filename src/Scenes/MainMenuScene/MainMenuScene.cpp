@@ -12,7 +12,7 @@ MainMenuScene::MainMenuScene()
 
     _menu->addItem(std::string("EATING CIRCLES"));
     _menu->addItem(std::string("CONTINUE"), [](Event*){
-            Controller::getController()->changeScene(Scenes::CONTINUE_GAME_SCENE);
+            flow::show(new GameScene);
         });
     _menu->addItem(std::string("NEW GAME"), [](Event*){
             spConfirmNewGameDialog dialog = new ConfirmNewGameDialog();

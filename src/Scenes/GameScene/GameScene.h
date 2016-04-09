@@ -1,12 +1,12 @@
 #ifndef __GAME_SCENE_H__
 #define __GAME_SCENE_H__
 
-#include "Scene.h"
-#include "flow.h"
+#include "flow/Scene.h"
+#include "flow/flow.h"
 #include "../../Game/Presenter/GamePresenter.h"
 #include "GamePauseDialog.h"
 
-class GameScene : public flow::Scene
+class GameScene : public flow::Scene, IGamePauseDialogContext
 {
     public:
         GameScene();
@@ -23,6 +23,7 @@ class GameScene : public flow::Scene
         spGamePauseDialog _gamePauseDialog;
 
         void gameWait();
+        virtual void restartGame();
 
         void onGameWait(Event *e);
         void onPause(Event* e);

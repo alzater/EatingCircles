@@ -8,9 +8,21 @@
 #include "../View/ExtraObjects/star.h"
 #include "UnitController/AI.h"
 #include <vector>
-#include "../../Controls/DTO.h"
 
 using namespace oxygine;
+
+class GameResults
+{
+public:
+    GameResults() : _score(0), _nEated(0) {}
+    void setScore(int score){_score = score;}
+    int getScore(){return _score;}
+    void setNEated(int nEated){_nEated = nEated;}
+    void incNEated(){_nEated++;}
+
+private:
+    int _score, _nEated;
+};
 
 class Game : public Object
 {
@@ -19,7 +31,7 @@ class Game : public Object
 
         int update();
 
-        int move();
+        void move(const Vector2& vector);
         double getFrameTimeMultiplier();
 
         GameResults getResult();
@@ -27,7 +39,7 @@ class Game : public Object
         void pause();
         void resume();
     private:
-        int _level, _score, _nUnits, _nEated, _nStars, _maxMainSize;
+        int _level, _nUnits, _nStars, _maxMainSize;
         int _gameStrategy;
         bool _pause;
         Vector2 _velocity;
@@ -37,6 +49,7 @@ class Game : public Object
         std::vector <spStar> _stars;
         timeMS _lastTime;
         double _timeMultiplier;
+        GameResults _results;
 
         Vector2 getRandomCoords();
         void mainCircleTurn();
@@ -44,8 +57,6 @@ class Game : public Object
         bool checkMainCircle();
         void checkUnitsPositions();
         void checkEaters();
-        Color genCircleColor();
-        Color genStarColor();
         bool updateFrameTimeMultiplier();
 };
 
