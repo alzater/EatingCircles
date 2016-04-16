@@ -1,6 +1,5 @@
 cmake_minimum_required (VERSION 2.6)
 project (EatingCircles)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -ggdb")
 add_subdirectory(../../oxygine/oxygine-framework/ oxygine-framework)
 add_definitions(${OXYGINE_DEFINITIONS})
 include_directories(${OXYGINE_INCLUDE_DIRS})
@@ -9,6 +8,7 @@ link_directories(${OXYGINE_LIBRARY_DIRS})
 add_subdirectory(../../oxygine/oxygine-flow oxygine-flow)
 include_directories(${OXYGINE_FLOW_INCLUDE_DIRS})
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -ggdb")
 
 add_executable(EatingCircles
         ../src/entry_point.cpp

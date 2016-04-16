@@ -21,10 +21,9 @@ Controller *Controller::getController()
   return _instance;
 }
 
-Controller::Controller()
-{
-    exit = false;
-}
+Controller::Controller() :
+    exit(false)
+{}
 
 void Controller::preinit()
 {}

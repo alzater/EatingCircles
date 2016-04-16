@@ -23,7 +23,10 @@ class GameScene : public flow::Scene, IGamePauseDialogContext
         spGamePauseDialog _gamePauseDialog;
 
         void gameWait();
+
+        //from IGamePauseDialogContext
         virtual void restartGame();
+        virtual void finishGame();
 
         void onGameWait(Event *e);
         void onPause(Event* e);

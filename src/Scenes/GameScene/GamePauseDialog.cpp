@@ -9,10 +9,11 @@ GamePauseDialog::GamePauseDialog(IGamePauseDialogContext *context)
 
     _menu->addItem(std::string("GAME PAUSED"));
     _menu->addItem(std::string("RESUME"), [this](Event*){finish();});
-    _menu->addItem(std::string("RESTART GAME"), [context](Event*){
+    _menu->addItem(std::string("RESTART GAME"), [this, context](Event*){
         context->restartGame();
     });
-    _menu->addItem(std::string("MAIN MENU"), [this](Event*){
+    _menu->addItem(std::string("MAIN MENU"), [this, context](Event*){
         finish();
+        context->finishGame();
     });
 }

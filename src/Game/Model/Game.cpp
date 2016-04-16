@@ -28,7 +28,7 @@ Game::Game(int gameStrategy):
     _lastTime = getTimeMS();
 
     _maxMainSize = 71;
-    _player = new Unit(getStage()->getSize() / 2, 40, 1);
+    _player = new Unit(getStage()->getSize() / 2, 40);
 
 
     srand(time(0));
@@ -116,7 +116,7 @@ bool Game::checkMainCircle()
             {
                 //std::cout << i << " was eated by MAIN" << std::endl;
                 _player->eat(_units[i]);
-                _units[i]->reInitialize( getRandomCoords(), 10 );
+                _units[i]->reinitialize( getRandomCoords(), 10 );
                 //_nEated++;
             }
         }
@@ -142,13 +142,13 @@ void Game::checkEaters()
                 if(jSize < iSize)
                 {
                     _units[i]->eat(_units[j]);
-                    _units[j]->reInitialize( getRandomCoords(), 10 );
+                    _units[j]->reinitialize( getRandomCoords(), 10 );
                     //std::cout << i << " was eated by " << j << std::endl;
                 }
                 if(jSize > iSize)
                 {
                     _units[j]->eat(_units[i]);
-                    _units[i]->reInitialize( getRandomCoords(), 10);
+                    _units[i]->reinitialize( getRandomCoords(), 10);
                     //std::cout << j << " was eated by " << i << std::endl;
                 }
             }
@@ -215,7 +215,7 @@ void Game::checkUnitsPositions()
         if( !_units[i]->isInRectangle( Vector2(-400, -400),
                     Vector2(_stageSize.x + 400, _stageSize.y + 400) ) )
         {
-            _units[i]->reInitialize( getRandomCoords(), 10);
+            _units[i]->reinitialize( getRandomCoords(), 10);
         }
     }
 }

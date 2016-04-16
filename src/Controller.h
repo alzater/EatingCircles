@@ -12,12 +12,6 @@
 
 using namespace oxygine;
 
-enum class Scenes {
-    CONTINUE_GAME_SCENE,
-    NEW_GAME_SCENE,
-    MAIN_MENU_SCENE
-};
-
 class Controller{
   public:
     static Controller *getController();
@@ -29,8 +23,6 @@ class Controller{
 
     void setGame(spGame game);
     void removeGame(spGame game);
-
-    void changeScene(Scenes newScene);
 
   private:
     static Controller *_instance;

@@ -9,6 +9,7 @@ class IGamePauseDialogContext
 {
     public:
         virtual void restartGame() = 0;
+        virtual void finishGame() = 0;
 };
 
 class GamePauseDialog : public MenuSceneBase

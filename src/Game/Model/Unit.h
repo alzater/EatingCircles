@@ -11,7 +11,7 @@ class UnitEvent: public Event
 public:
     enum
     {
-        EATED = eventID('U', 'E', 'E', 't'),
+        REINITIALIZED = eventID('U', 'E', 'E', 't'),
         MOVED = eventID('U', 'E', 'M', 'o'),
         NEW_SIZE  = eventID('U', 'E', 'N', 'S'),
     };
@@ -22,12 +22,13 @@ public:
 class Unit : public GameObject
 {
     public:
-        Unit(const Vector2& position, int size, int type = 0);
-        void reInitialize(const Vector2& position, int maxSize, int type = 0);
-        virtual ~Unit();
+        Unit(const Vector2& position, int size);
+        void reinitialize(const Vector2& position, int size);
+        ~Unit();
 
-        virtual void move(const Vector2& deltaPosition);
 
+//main game abilities
+        void move(const Vector2& deltaPosition);
         void eat(spUnit other);
         void accelerate(const Vector2& acceleration, double time);
 
@@ -36,6 +37,7 @@ class Unit : public GameObject
         const Vector2& getVelocity();
         void setVelocity(const Vector2& velocity);
 
+        //abilities
         int getPower();
         int getMana();
         int getAgility();
@@ -45,9 +47,10 @@ class Unit : public GameObject
         double getBonusSpeed();
         double getBoosterSize();
 
-        void dispatchEated();
+        //event dispatchers
         void dispatchMoved();
         void dispatchNewSize();
+        void dispatchReinitialized();
 
     private:
         double _size;
@@ -59,6 +62,7 @@ class Unit : public GameObject
 
         void loseMass(); // from red-power
         void updateBooster();
+        void initialize(int size);
 };
 
 #endif

@@ -1,32 +1,35 @@
 #include "Unit.h"
 
-Unit::Unit(const Vector2& position, int size, int type):
-    GameObject(position),
-    _lostSize(0),
-    _mana(200),
-    _agility(200),
-    _power(200)
+Unit::Unit(const Vector2& position, int size):
+    GameObject(position)
+{
+    initialize(size);
+}
+
+Unit::~Unit()
+{
+}
+
+void Unit::initialize( int size )
 {
     if(size <= 0 || size > 100)
         _size = rand() % 85 + 4; //TODO
     else
         _size = size;
 
-    _velocity = Vector2(0,0);
-}
-
-Unit::~Unit()
-{
-    dispatchEated();
-}
-
-void Unit::reInitialize(const Vector2& position, int maxSize, int type)
-{
     _lostSize = 0;
-    setPosition(position);
-    _size = rand() % (maxSize + 1) + 5;
+    _mana = 0;
+    _agility = 0;
+    _power = 0;
     _velocity = Vector2(0,0);
-    dispatchMoved();
+}
+
+void Unit::reinitialize(const Vector2& position, int size)
+{
+    setPosition(position);
+    initialize(size);
+
+    dispatchReinitialized();
 }
 
 void Unit::updateAbilities()
@@ -118,12 +121,13 @@ void Unit::accelerate(const Vector2& acceleration, double time)
     setPosition( getPosition() + _velocity );
     _velocity.x -=  _velocity.x * _size / 250;
     _velocity.y -= _velocity.y * _size / 250;
+
     dispatchMoved();
 }
 
-void Unit::dispatchEated()
+void Unit::dispatchReinitialized()
 {
-    UnitEvent ue(UnitEvent::EATED);
+    UnitEvent ue(UnitEvent::REINITIALIZED);
     dispatchEvent(&ue);
 }
 

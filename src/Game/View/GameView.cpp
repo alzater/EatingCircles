@@ -4,7 +4,7 @@
 GameView::GameView()
 {
     _background = new ColorRectSprite();
-    _background->setColor(Color(10, 10, 10));
+    _background->setColor(Color(240, 250, 240));
     addChild(_background);
 }
 

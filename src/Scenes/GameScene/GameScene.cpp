@@ -47,6 +47,12 @@ void GameScene::restartGame()
     _gamePresenter = new GamePresenter;
 }
 
+void GameScene::finishGame()
+{
+    _gamePresenter = nullptr;
+    finish();
+}
+
 void GameScene::onGameWait(Event *e)
 {
     gameWait();
