@@ -22,7 +22,8 @@ Controller *Controller::getController()
 }
 
 Controller::Controller() :
-    exit(false)
+    exit(false),
+    _lastTime(getTimeMS())
 {}
 
 void Controller::preinit()
@@ -47,6 +48,8 @@ int Controller::update()
 {
 
     flow::update();
+
+    updateFrameTimeMultiplier();
     if(Controller::_game)
         Controller::_game->update();
 
@@ -68,4 +71,17 @@ void Controller::removeGame(spGame game)
 {
     if(_game == game)
         _game = nullptr;
+}
+
+void Controller::updateFrameTimeMultiplier()
+{
+    timeMS deltaTime = getTimeMS() - _lastTime;
+
+    _timeMultiplier = (double)deltaTime / 1000;
+    _lastTime = getTimeMS();
+}
+
+double Controller::getFrameTimeMultiplier()
+{
+    return _timeMultiplier;
 }

@@ -94,6 +94,7 @@ int Unit::getAgility()
 void Unit::move(const Vector2& deltaPosition)
 {
     setPosition( getPosition() + deltaPosition );
+
     dispatchMoved();
 }
 
@@ -101,6 +102,7 @@ void Unit::eat(spUnit other)
 {
     double cSize = other->getSize();
     _size += cSize / _size;
+
     dispatchNewSize();
 }
 

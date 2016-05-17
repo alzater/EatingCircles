@@ -23,15 +23,17 @@ Game::Game(int gameStrategy):
     _stars(_nStars),
     _stageSize(core::getDisplaySize()),
     _pause(true),
-    _velocity(Vector2(0,0))
+    _velocity(Vector2(0,0)),
+    _maxMainSize(71)
 {
-    _lastTime = getTimeMS();
+    srand(time(0));
 
-    _maxMainSize = 71;
+}
+
+void Game::initialize()
+{
     _player = new Unit(getStage()->getSize() / 2, 40);
 
-
-    srand(time(0));
     for(int i = 0; i < _nUnits; ++i)
         _units[i] = new Unit( Vector2( rand() % 1000, rand() % 1000 ), rand() % (10) + 1 );
     for(int i = 0; i < _nStars; ++i)
@@ -41,9 +43,6 @@ Game::Game(int gameStrategy):
 int Game::update()
 {
     if(_pause)
-        return 0;
-
-    if(!updateFrameTimeMultiplier())
         return 0;
 
     makeTurn();
@@ -56,7 +55,7 @@ int Game::update()
     return 0;
 }
 
-void Game::move(const Vector2& vector)
+void Game::moveAll(const Vector2& vector)
 {
     for(int i = 0; i < _units.size(); ++i)
         _units[i]->move(vector);
@@ -156,7 +155,7 @@ void Game::checkEaters()
     }
 }
 
-Vector2 Game::getRandomCoords()
+const Vector2& Game::getRandomCoords() const
 {
     int x = 0, y = 0, sx = _stageSize.x, sy = _stageSize.y, division, tempX, tempY;
 
@@ -220,27 +219,9 @@ void Game::checkUnitsPositions()
     }
 }
 
-GameResults Game::getResult()
+const GameResults& Game::getResult() const
 {
     return GameResults();
-}
-
-bool Game::updateFrameTimeMultiplier()
-{
-    timeMS newTime = getTimeMS();
-    if(_lastTime == newTime)
-        return false;
-
-    timeMS deltaTime = newTime - _lastTime;
-    _timeMultiplier = (double)deltaTime / 1000;
-    _lastTime = newTime; 
-    //std::cout << timeMultiplier << std::endl;
-    return true;  
-}
-
-double Game::getFrameTimeMultiplier()
-{
-    return _timeMultiplier;
 }
 
 void Game::pause()

@@ -21,6 +21,8 @@ class Controller{
     void destroy();
     int update();
 
+    double getFrameTimeMultiplier();
+
     void setGame(spGame game);
     void removeGame(spGame game);
 
@@ -36,6 +38,11 @@ class Controller{
 
     bool exit;
     int nextLevel;
+
+    // for calc frameTimeMultiplier
+    timeMS _lastTime;
+    double _timeMultiplier;
+    void updateFrameTimeMultiplier();
 };
 
 #endif
