@@ -1,8 +1,7 @@
 #ifndef __GAME_SCENE_H__
 #define __GAME_SCENE_H__
 
-#include "flow/Scene.h"
-#include "flow/flow.h"
+#include "oxygine-flow.h"
 #include "../../Game/Presenter/GamePresenter.h"
 #include "GamePauseDialog.h"
 

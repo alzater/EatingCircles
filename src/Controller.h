@@ -2,7 +2,7 @@
 #define __CONTROLLER_H__
 
 #include "oxygine-framework.h"
-#include "flow/flow.h"
+#include "oxygine-flow.h"
 
 #include "Game/Model/Game.h"
 #include "Controls/menu.h"

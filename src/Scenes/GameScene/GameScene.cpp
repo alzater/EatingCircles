@@ -20,10 +20,10 @@ GameScene::GameScene() :
     blackBackground->attachTo(_sceneView);
 
     TextStyle style;
-    style.font = gameResources.getResFont("invaders")->getFont();
+    style.font = gameResources.getResFont("invaders");
     style.color = Color::White;
     style.vAlign = TextStyle::VALIGN_MIDDLE;
-    style.hAlign = TextStyle::HALIGN_CENTER;
+    style.hAlign = TextStyle::HALIGN_MIDDLE;
 
     _gameWaitTimer = new TextField;
     _gameWaitTimer->attachTo(_sceneView);

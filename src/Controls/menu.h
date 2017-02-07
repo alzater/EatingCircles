@@ -12,7 +12,7 @@ public:
     void addItem(std::string text);
     void addToActor(spActor actor);
 
-    void setFont(Font* f, int sw = 0);// 0 - both, 1 - label, 2 - button
+    void setFont(ResFont* f, int sw = 0);// 0 - both, 1 - label, 2 - button
     void setTextColor(Color c, int sw = 0);// 0 - both, 1 - label, 2 - button
     void setHAlign(TextStyle::HorizontalAlign ha, int sw = 0);// 0 - both, 1 - label, 2 - button
     void setVAlign(TextStyle::VerticalAlign va, int sw = 0);// 0 - both, 1 - label, 2 - button

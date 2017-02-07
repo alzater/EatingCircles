@@ -2,7 +2,7 @@
 #define __MENU_SCENE_BASE_H__
 
 #include "oxygine-framework.h"
-#include "flow/Scene.h"
+#include "oxygine-flow.h"
 #include "../Controls/menu.h"
 
 
