@@ -17,6 +17,7 @@ public:
     void setHAlign(TextStyle::HorizontalAlign ha, int sw = 0);// 0 - both, 1 - label, 2 - button
     void setVAlign(TextStyle::VerticalAlign va, int sw = 0);// 0 - both, 1 - label, 2 - button
     void setTextScale(int sc, int sw);// 0 - both, 1 - label, 2 - button
+
 private:
     int lastHPos;
     TextStyle labelStyle, buttonStyle;
